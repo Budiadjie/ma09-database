@@ -21,129 +21,196 @@
   <style>
     :root {
       --primary: #065f46;
+      --primary-deep: #064e3b;
       --primary-mid: #059669;
       --teal: #0d9488;
+      --emerald-soft: #ecfdf5;
       --gold: #d97706;
       --rose: #e11d48;
       --bg: #f1f5f9;
       --card: #ffffff;
       --text: #0f172a;
-      --muted: #475569;
+      --muted: #64748b;
+      --muted-dark: #475569;
       --border: #e2e8f0;
       --radius: 20px;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 12px 28px -6px rgba(15, 23, 42, 0.10);
+      --shadow-sm: 0 2px 10px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 14px 30px -8px rgba(15, 23, 42, 0.11);
+      --shadow-card-hover: 0 12px 24px -6px rgba(6, 95, 70, 0.14);
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image: radial-gradient(rgba(148, 163, 184, 0.18) 1px, transparent 1px);
+      background-size: 22px 22px;
       color: var(--text);
-      margin: 0; padding: 0;
+      font-size: 15px;
       line-height: 1.5;
+      -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
     }
-    body.dash-active { padding-bottom: 96px; }
+    body.dash-active { padding-bottom: 98px; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(10px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* BANNER PASANG PWA */
-    #pwa-banner {
-      display: none; background: #0f172a; color: white;
-      padding: 0.72rem 1rem; font-size: 0.82rem;
-    }
-    .pwa-inner {
-      max-width: 1140px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
-    }
-    .btn-install-pwa {
-      background: #10b981; color: white; border: none; border-radius: 99px;
-      padding: 0.45rem 0.9rem; font-weight: 800; font-size: 0.78rem; cursor: pointer; white-space: nowrap;
-    }
-
-    /* 1. LAYAR LOGIN PIN */
+    /* ============================================================
+       1. LAYAR LOGIN PIN (ELEGANT GLASSY EMERALD)
+       ============================================================ */
     #login-screen {
       min-height: 100vh;
+      width: 100%;
       display: flex; align-items: center; justify-content: center;
       padding: 1.25rem;
-      background: linear-gradient(145deg, #064e3b 0%, #047857 55%, #0d9488 100%);
+      background:
+        radial-gradient(circle at 18% 18%, rgba(16, 185, 129, 0.34), transparent 45%),
+        radial-gradient(circle at 85% 82%, rgba(251, 191, 36, 0.22), transparent 42%),
+        linear-gradient(145deg, #022c22 0%, #065f46 52%, #0f766e 100%);
     }
     .login-box {
       width: 100%; max-width: 400px;
-      background: white; border-radius: 24px;
-      padding: 2rem 1.6rem; text-align: center;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28);
-      animation: fadeUp 0.35s ease;
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: 26px;
+      padding: 2.1rem 1.65rem 1.75rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.65);
+      box-shadow: 0 28px 56px rgba(2, 44, 34, 0.42);
+      animation: fadeUp 0.38s ease;
+    }
+    .login-logo-ring {
+      width: 86px; height: 86px; margin: 0 auto 1rem;
+      border-radius: 50%; padding: 4px;
+      background: linear-gradient(135deg, #10b981, #fbbf24);
+      box-shadow: 0 8px 20px rgba(6, 95, 70, 0.22);
     }
     .login-logo {
-      width: 76px; height: 76px; border-radius: 50%; object-fit: cover;
-      border: 3px solid #a7f3d0; padding: 3px; background: white;
-      margin: 0 auto 0.9rem; display: block;
+      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+      background: white; padding: 3px; display: block;
     }
-    .login-box h1 { margin: 0; font-size: 1.35rem; font-weight: 800; color: var(--primary); }
-    .login-box p { margin: 6px 0 1.4rem; font-size: 0.86rem; color: var(--muted); }
+    .login-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0;
+      padding: 3px 12px; border-radius: 99px; font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.4px; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .login-box h1 { margin: 0; font-size: 1.45rem; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+    .login-box p { margin: 6px 0 1.35rem; font-size: 0.86rem; color: var(--muted-dark); }
+
     .pin-wrap { position: relative; margin-bottom: 1rem; }
     .pin-wrap input {
-      width: 100%; padding: 0.95rem 2.8rem 0.95rem 1rem;
-      border: 2px solid #cbd5e1; border-radius: 14px;
-      font-size: 1.2rem; font-weight: 800; text-align: center;
-      letter-spacing: 5px; outline: none; background: #f8fafc;
+      width: 100%; padding: 1rem 3rem 1rem 1rem;
+      border: 2px solid #cbd5e1; border-radius: 15px;
+      font-size: 1.25rem; font-weight: 800; text-align: center;
+      letter-spacing: 6px; outline: none; background: #f8fafc; color: var(--text);
+      transition: all 0.2s;
     }
-    .pin-wrap input:focus { border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.14); }
+    .pin-wrap input:focus { border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.15); }
     .btn-eye {
       position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
-      border: none; background: transparent; color: #64748b; cursor: pointer; font-size: 1rem;
+      border: none; background: transparent; color: #64748b; cursor: pointer; font-size: 1.05rem;
+      padding: 6px;
     }
     .btn-login {
-      width: 100%; padding: 1rem; border: none; border-radius: 14px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-mid));
+      width: 100%; padding: 1.02rem; border: none; border-radius: 15px;
+      background: linear-gradient(135deg, #065f46 0%, #059669 100%);
       color: white; font-size: 1rem; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 6px 16px rgba(6, 95, 70, 0.28);
+      box-shadow: 0 8px 20px rgba(6, 95, 70, 0.30); transition: transform 0.15s, filter 0.15s;
     }
-    .btn-login:disabled { opacity: 0.65; cursor: not-allowed; }
+    .btn-login:hover { transform: translateY(-1px); filter: brightness(1.04); }
+    .btn-login:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
 
-    /* 2. DASBOR UTAMA */
-    #dashboard-screen { display: none; }
+    .btn-install-login {
+      width: 100%; margin-top: 12px; padding: 0.82rem 1rem;
+      border-radius: 14px; border: 1.5px solid #cbd5e1;
+      background: #f8fafc; color: #0f172a;
+      font-size: 0.84rem; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: all 0.18s;
+    }
+    .btn-install-login:hover { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
+
+    /* ============================================================
+       2. DASBOR UTAMA
+       ============================================================ */
+    #dashboard-screen { display: none; width: 100%; max-width: 100%; }
+
     .topbar {
-      background: linear-gradient(135deg, #064e3b 0%, #047857 62%, #0d9488 100%);
-      color: white; padding: 1.2rem 1rem 2.25rem;
-      border-bottom-left-radius: 26px; border-bottom-right-radius: 26px;
+      width: 100%;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(52, 211, 153, 0.28), transparent 45%),
+        radial-gradient(circle at 88% 15%, rgba(253, 230, 138, 0.18), transparent 40%),
+        linear-gradient(135deg, #022c22 0%, #065f46 58%, #0d9488 100%);
+      color: white; padding: 1.2rem 1rem 2.45rem;
+      border-bottom-left-radius: 28px; border-bottom-right-radius: 28px;
       box-shadow: var(--shadow-md);
     }
     .topbar-inner {
-      max-width: 1140px; margin: 0 auto;
-      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+      width: 100%; max-width: 1140px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .topbar h1 { margin: 0; font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+    .brand-cluster { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .brand-mini-logo {
+      width: 44px; height: 44px; border-radius: 14px; object-fit: cover;
+      background: white; padding: 2px; border: 2px solid rgba(255,255,255,0.65); flex-shrink: 0;
+    }
+    .topbar h1 { margin: 0; font-size: 1.18rem; font-weight: 800; letter-spacing: -0.2px; }
     .topbar-sub { font-size: 0.78rem; opacity: 0.9; margin-top: 2px; font-weight: 600; }
-    .topbar-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-    .btn-top {
-      background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.28);
-      padding: 0.5rem 0.78rem; border-radius: 10px; font-weight: 700; font-size: 0.78rem;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;
-    }
-    .btn-top:hover { background: rgba(255,255,255,0.26); }
 
-    .container { max-width: 1140px; margin: -1.4rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
+    .topbar-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .btn-top {
+      background: rgba(255, 255, 255, 0.15); color: white;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      backdrop-filter: blur(6px);
+      padding: 0.5rem 0.8rem; border-radius: 11px; font-weight: 700; font-size: 0.78rem;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 5px; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn-top:hover { background: rgba(255, 255, 255, 0.26); }
+    .btn-top-install {
+      background: rgba(251, 191, 36, 0.22); border-color: rgba(253, 230, 138, 0.55); color: #fef3c7;
+    }
+    .btn-top-logout {
+      background: rgba(254, 226, 226, 0.94); color: #b91c1c; border-color: #fecaca;
+    }
+    .btn-top-logout:hover { background: #ffffff; }
+
+    .container {
+      width: 100%; max-width: 1140px; margin: -1.55rem auto 0; padding: 0 0.95rem;
+      position: relative; z-index: 10; min-width: 0;
+    }
 
     /* NAVIGASI DESKTOP */
     .desktop-nav {
-      display: none; background: white; border: 1px solid var(--border);
-      border-radius: 16px; padding: 6px; gap: 6px; margin-bottom: 1.1rem;
+      display: none; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(8px);
+      border: 1px solid var(--border);
+      border-radius: 18px; padding: 6px; gap: 6px; margin-bottom: 1.15rem;
       box-shadow: var(--shadow-sm);
     }
     .dnav-btn {
-      flex: 1; padding: 0.78rem 1rem; border: none; border-radius: 12px;
-      background: transparent; color: var(--muted); font-weight: 800; font-size: 0.88rem;
+      flex: 1; padding: 0.82rem 1rem; border: none; border-radius: 13px;
+      background: transparent; color: var(--muted-dark); font-weight: 800; font-size: 0.88rem;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all 0.2s;
     }
-    .dnav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(6,95,70,0.22); }
+    .dnav-btn:hover { background: #f8fafc; color: var(--primary); }
+    .dnav-btn.active {
+      background: linear-gradient(135deg, #065f46, #059669); color: white;
+      box-shadow: 0 5px 12px rgba(6, 95, 70, 0.24);
+    }
     .nav-pill-count {
       background: #ef4444; color: white; font-size: 0.7rem; font-weight: 800;
       padding: 1px 7px; border-radius: 99px; display: none;
@@ -152,19 +219,20 @@
     /* NAVIGASI BAWAH HP */
     .bottom-nav {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 900;
-      background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px);
+      width: 100%; max-width: 100vw;
+      background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(14px);
       border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
-      box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.08);
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+      padding: 7px 6px calc(8px + env(safe-area-inset-bottom));
+      box-shadow: 0 -8px 24px rgba(15, 23, 42, 0.08);
     }
     .bnav-btn {
       position: relative; border: none; background: transparent; color: #64748b;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 3px; padding: 7px 4px; border-radius: 12px; cursor: pointer;
-      font-size: 0.72rem; font-weight: 700;
+      gap: 3px; padding: 7px 4px; border-radius: 14px; cursor: pointer;
+      font-size: 0.74rem; font-weight: 700; transition: all 0.15s;
     }
-    .bnav-btn i { font-size: 1.15rem; }
+    .bnav-btn i { font-size: 1.2rem; }
     .bnav-btn.active { color: var(--primary); background: #ecfdf5; font-weight: 800; }
     .bnav-dot {
       position: absolute; top: 4px; right: 22%;
@@ -173,149 +241,171 @@
     }
 
     /* VIEW PANES */
-    .main-view { display: none; animation: fadeUp 0.25s ease; }
+    .main-view { display: none; width: 100%; min-width: 0; animation: fadeUp 0.25s ease; }
     .main-view.active { display: block; }
 
     /* ============================================================
-       TAB 1: BERANDA (BENTO ANALITIK KAMAR)
+       TAB 1: BERANDA ANALITIK KAMAR (BENTO ELEGAN)
        ============================================================ */
-    .kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
-    .kpi-card {
-      background: white; border: 1px solid var(--border); border-radius: 18px;
-      padding: 1rem; box-shadow: var(--shadow-sm);
-      display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
+    .kpi-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-bottom: 14px;
     }
-    .kpi-lbl { font-size: 0.72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
-    .kpi-val { font-size: 1.45rem; font-weight: 800; color: var(--text); line-height: 1.15; }
-    .kpi-sub { font-size: 0.74rem; color: var(--muted); font-weight: 600; }
-    .kpi-card.k-teal .kpi-val { color: #0f766e; }
-    .kpi-card.k-hijau .kpi-val { color: #047857; }
-    .kpi-card.k-merah .kpi-val { color: #be123c; }
-    .kpi-card.k-emas .kpi-val { color: #b45309; }
+    .kpi-card {
+      background: white; border: 1px solid var(--border); border-radius: 20px;
+      padding: 1rem 1.05rem; box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; justify-content: space-between; gap: 6px;
+      position: relative; overflow: hidden;
+    }
+    .kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .kpi-ico {
+      width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+    }
+    .k-teal .kpi-ico { background: #ccfbf1; color: #0f766e; }
+    .k-hijau .kpi-ico { background: #dcfce7; color: #047857; }
+    .k-merah .kpi-ico { background: #ffe4e6; color: #be123c; }
+    .k-emas .kpi-ico { background: #fef3c7; color: #b45309; }
 
-    .bento-2col { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; }
+    .kpi-lbl { font-size: 0.72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+    .kpi-val { font-size: 1.5rem; font-weight: 800; color: var(--text); line-height: 1.15; letter-spacing: -0.4px; }
+    .kpi-sub { font-size: 0.75rem; color: var(--muted-dark); font-weight: 600; }
+    .k-teal .kpi-val { color: #0f766e; }
+    .k-hijau .kpi-val { color: #047857; }
+    .k-merah .kpi-val { color: #be123c; }
+    .k-emas .kpi-val { color: #b45309; }
+
+    .bento-2col {
+      display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-bottom: 14px;
+    }
     .bento-box {
       background: white; border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 1.15rem; box-shadow: var(--shadow-sm);
+      padding: 1.2rem; box-shadow: var(--shadow-sm); width: 100%; min-width: 0;
     }
     .box-title {
-      margin: 0 0 12px; font-size: 0.94rem; font-weight: 800; color: var(--text);
+      margin: 0 0 13px; font-size: 0.96rem; font-weight: 800; color: var(--text);
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
-    .box-title span { display: inline-flex; align-items: center; gap: 7px; }
+    .box-title span { display: inline-flex; align-items: center; gap: 8px; }
 
-    .top-list { display: flex; flex-direction: column; gap: 8px; }
+    /* AVATAR MINI SANTRI */
+    .santri-ava {
+      width: 40px; height: 40px; border-radius: 13px; object-fit: cover; flex-shrink: 0;
+      border: 2px solid #e2e8f0; background: #ecfdf5;
+    }
+    .santri-ava-sm {
+      width: 34px; height: 34px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
+      border: 1.5px solid #e2e8f0; background: #ecfdf5;
+    }
+
+    .top-list { display: flex; flex-direction: column; gap: 9px; }
     .top-item {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 0.75rem 0.9rem; border-radius: 14px; background: #f8fafc;
-      border: 1px solid var(--border); cursor: pointer; transition: all 0.15s;
+      padding: 0.75rem 0.9rem; border-radius: 15px; background: #f8fafc;
+      border: 1px solid var(--border); cursor: pointer; transition: all 0.18s;
     }
-    .top-item:hover { border-color: #6ee7b7; background: #f0fdf4; }
+    .top-item:hover { border-color: #6ee7b7; background: #f0fdf4; transform: translateY(-1px); }
     .top-rank {
-      width: 30px; height: 30px; border-radius: 10px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.84rem;
+      width: 28px; height: 28px; border-radius: 9px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.8rem;
     }
-    .rank-1 { background: #fef3c7; color: #b45309; border: 1px solid #fcd34d; }
+    .rank-1 { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; border: 1px solid #f59e0b; }
     .rank-2 { background: #e2e8f0; color: #334155; }
     .rank-3 { background: #ffedd5; color: #9a3412; }
     .top-info { flex: 1; min-width: 0; }
-    .top-name { font-size: 0.88rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .top-meta { font-size: 0.74rem; color: var(--muted); font-weight: 600; }
+    .top-name { font-size: 0.88rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--text); }
+    .top-meta { font-size: 0.74rem; color: var(--muted-dark); font-weight: 600; }
     .top-delta {
       background: #d1fae5; color: #065f46; font-weight: 800; font-size: 0.78rem;
-      padding: 4px 10px; border-radius: 99px; white-space: nowrap;
+      padding: 4px 10px; border-radius: 99px; white-space: nowrap; flex-shrink: 0;
     }
 
     .perhatian-item {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
-      padding: 0.7rem 0.9rem; border-radius: 12px; background: #fff1f2;
-      border: 1px solid #fecdd3; cursor: pointer; margin-bottom: 7px;
+      padding: 0.72rem 0.9rem; border-radius: 14px; background: #fff1f2;
+      border: 1px solid #fecdd3; cursor: pointer; margin-bottom: 8px; transition: all 0.15s;
     }
+    .perhatian-item:hover { background: #ffe4e6; }
     .perhatian-item:last-child { margin-bottom: 0; }
     .perhatian-badge {
       background: white; color: #be123c; border: 1px solid #fda4af;
-      font-size: 0.73rem; font-weight: 800; padding: 3px 9px; border-radius: 99px; white-space: nowrap;
+      font-size: 0.72rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; white-space: nowrap; flex-shrink: 0;
     }
 
-    .sebaran-chart-wrap { position: relative; height: 215px; width: 100%; }
+    .sebaran-chart-wrap { position: relative; height: 220px; width: 100%; }
 
     /* ============================================================
-       TAB 2: MODE INPUT MASSAL (1 LAYAR UNTUK 24 SANTRI)
+       TAB 2: MODE INPUT MASSAL (1 LAYAR, RAPI & ANTI-HILANG)
        ============================================================ */
     .mass-header-card {
       background: white; border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 1.1rem; margin-bottom: 12px; box-shadow: var(--shadow-sm);
+      padding: 1.15rem; margin-bottom: 12px; box-shadow: var(--shadow-sm);
       display: flex; flex-direction: column; gap: 10px;
     }
-    .mass-top-controls {
-      display: grid; grid-template-columns: 1fr; gap: 10px;
-    }
-    .mass-field label { display: block; font-size: 0.76rem; font-weight: 800; color: #065f46; margin-bottom: 4px; }
+    .mass-top-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .mass-field label { display: block; font-size: 0.78rem; font-weight: 800; color: #065f46; margin-bottom: 4px; }
     .mass-field input {
-      width: 100%; padding: 0.7rem 0.85rem; border: 2px solid #cbd5e1; border-radius: 11px;
-      font-family: inherit; font-size: 0.9rem; font-weight: 700; outline: none; background: #f8fafc;
+      width: 100%; padding: 0.74rem 0.9rem; border: 2px solid #cbd5e1; border-radius: 12px;
+      font-family: inherit; font-size: 0.92rem; font-weight: 700; outline: none; background: #f8fafc;
     }
-    .mass-field input:focus { border-color: var(--primary-mid); background: white; }
+    .mass-field input:focus { border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); }
 
     .mass-tools-row {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
-      padding-top: 8px; border-top: 1px dashed var(--border);
+      padding-top: 9px; border-top: 1px dashed var(--border);
     }
-    .chk-inline { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 700; color: #334155; cursor: pointer; }
-    .chk-inline input { width: 16px; height: 16px; accent-color: var(--primary); }
+    .chk-inline { display: inline-flex; align-items: center; gap: 7px; font-size: 0.82rem; font-weight: 700; color: #334155; cursor: pointer; }
+    .chk-inline input { width: 17px; height: 17px; accent-color: var(--primary); }
     .mass-btn-group { display: flex; flex-wrap: wrap; gap: 6px; }
     .btn-mini-tool {
-      padding: 0.42rem 0.75rem; border-radius: 9px; border: 1.5px solid #cbd5e1;
-      background: #f8fafc; color: #334155; font-size: 0.76rem; font-weight: 800; cursor: pointer;
+      padding: 0.46rem 0.8rem; border-radius: 10px; border: 1.5px solid #cbd5e1;
+      background: #f8fafc; color: #334155; font-size: 0.77rem; font-weight: 800; cursor: pointer;
+      transition: all 0.15s;
     }
     .btn-mini-tool:hover { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
 
-    .mass-list { display: flex; flex-direction: column; gap: 10px; padding-bottom: 72px; }
+    .mass-list { display: flex; flex-direction: column; gap: 10px; padding-bottom: 78px; }
     .mass-row {
-      background: white; border: 1.5px solid var(--border); border-radius: 16px;
-      padding: 0.9rem; box-shadow: var(--shadow-sm); transition: border-color 0.15s, background 0.15s;
+      background: white; border: 1.5px solid var(--border); border-left: 4px solid #cbd5e1;
+      border-radius: 17px; padding: 0.95rem; box-shadow: var(--shadow-sm);
+      transition: border-color 0.18s, background 0.18s;
     }
-    .mass-row.is-checked { border-color: #10b981; background: #f0fdf4; }
-    .mass-row.is-error { border-color: #e11d48; background: #fff1f2; }
+    .mass-row.is-checked { border-color: #6ee7b7; border-left-color: #059669; background: #f0fdf4; }
+    .mass-row.is-error { border-color: #fda4af; border-left-color: #e11d48; background: #fff1f2; }
 
-    .mr-head {
-      display: flex; align-items: center; justify-content: space-between; gap: 8px;
-      margin-bottom: 8px;
-    }
+    .mr-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 9px; }
     .mr-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
     .mr-chk { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
-    .mr-name { font-size: 0.92rem; font-weight: 800; color: var(--text); line-height: 1.25; }
-    .mr-prev { font-size: 0.74rem; color: var(--muted); font-weight: 600; }
+    .mr-name { font-size: 0.93rem; font-weight: 800; color: var(--text); line-height: 1.25; }
+    .mr-prev { font-size: 0.75rem; color: var(--muted-dark); font-weight: 600; }
 
     .delta-chip {
-      font-size: 0.73rem; font-weight: 800; padding: 3px 9px; border-radius: 99px; white-space: nowrap;
-      background: #e2e8f0; color: #475569;
+      font-size: 0.74rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; white-space: nowrap;
+      background: #e2e8f0; color: #475569; flex-shrink: 0;
     }
     .delta-chip.d-naik { background: #d1fae5; color: #065f46; }
     .delta-chip.d-nol { background: #ffe4e6; color: #9f1239; }
     .delta-chip.d-khatam { background: #fef3c7; color: #92400e; }
 
-    .mr-inputs {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px;
-    }
-    .mr-inp-group label { display: block; font-size: 0.67rem; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 2px; }
+    .mr-inputs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .mr-inp-group label { display: block; font-size: 0.68rem; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 3px; }
     .mr-inp-group input {
-      width: 100%; padding: 0.55rem 0.6rem; border: 1.5px solid #cbd5e1; border-radius: 9px;
-      font-family: inherit; font-size: 0.85rem; font-weight: 700; background: white; outline: none;
+      width: 100%; padding: 0.58rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 10px;
+      font-family: inherit; font-size: 0.86rem; font-weight: 700; background: white; outline: none;
     }
-    .mr-inp-group input:focus { border-color: var(--primary-mid); }
+    .mr-inp-group input:focus { border-color: var(--primary-mid); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); }
     .mr-span-2 { grid-column: span 2; }
     .mr-span-3 { grid-column: span 3; }
 
     /* BAR SIMPAN MASSAL MELAYANG */
     .mass-save-bar {
-      position: fixed; left: 0; right: 0; bottom: 68px; z-index: 880;
-      padding: 0 1rem; pointer-events: none;
+      position: fixed; left: 0; right: 0; bottom: 72px; z-index: 880;
+      padding: 0 0.95rem; pointer-events: none;
     }
     .mass-save-inner {
-      max-width: 1108px; margin: 0 auto; pointer-events: auto;
-      background: #0f172a; color: white; border-radius: 16px;
-      padding: 0.75rem 1rem; box-shadow: 0 12px 28px rgba(15, 23, 42, 0.32);
+      max-width: 1110px; margin: 0 auto; pointer-events: auto;
+      background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(10px);
+      color: white; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 0.78rem 1rem; box-shadow: 0 14px 32px rgba(15, 23, 42, 0.35);
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
     }
     .mass-save-info { font-size: 0.84rem; font-weight: 700; }
@@ -324,65 +414,68 @@
       background: linear-gradient(135deg, #059669, #10b981); color: white;
       font-size: 0.86rem; font-weight: 800; cursor: pointer;
       display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
     }
-    .btn-save-mass:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-save-mass:disabled { opacity: 0.45; cursor: not-allowed; box-shadow: none; }
 
     /* ============================================================
        TAB 3: DAFTAR SANTRI, RAPOR PDF & WA
        ============================================================ */
     .sent-progress-card {
-      background: white; border: 1px solid var(--border); border-radius: 16px;
-      padding: 0.9rem 1rem; margin-bottom: 12px; box-shadow: var(--shadow-sm);
+      background: white; border: 1px solid var(--border); border-radius: 18px;
+      padding: 0.95rem 1.1rem; margin-bottom: 12px; box-shadow: var(--shadow-sm);
     }
-    .sp-head { display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; font-weight: 800; margin-bottom: 6px; }
-    .sp-track { width: 100%; height: 9px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
-    .sp-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #059669, #10b981); border-radius: 99px; transition: width 0.35s ease; }
+    .sp-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 0.84rem; font-weight: 800; margin-bottom: 7px; }
+    .sp-track { width: 100%; height: 10px; background: #e2e8f0; border-radius: 99px; overflow: hidden; }
+    .sp-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #059669, #10b981, #34d399); border-radius: 99px; transition: width 0.4s ease; }
 
     .toolbar {
-      background: white; border: 1px solid var(--border); border-radius: 16px;
-      padding: 0.95rem; margin-bottom: 12px; box-shadow: var(--shadow-sm);
+      background: white; border: 1px solid var(--border); border-radius: 18px;
+      padding: 0.95rem; margin-bottom: 13px; box-shadow: var(--shadow-sm);
       display: flex; flex-direction: column; gap: 10px;
     }
     .search-input {
-      width: 100%; padding: 0.78rem 1rem; border: 2px solid #cbd5e1; border-radius: 12px;
-      font-size: 0.94rem; font-weight: 600; outline: none;
+      width: 100%; padding: 0.8rem 1rem; border: 2px solid #cbd5e1; border-radius: 13px;
+      font-family: inherit; font-size: 0.94rem; font-weight: 600; outline: none; background: #f8fafc;
     }
-    .search-input:focus { border-color: var(--primary-mid); }
+    .search-input:focus { border-color: var(--primary-mid); background: white; }
     .filter-chips { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
     .chip {
-      padding: 0.42rem 0.82rem; border-radius: 99px; border: 1.5px solid #cbd5e1;
-      background: #f8fafc; color: var(--muted); font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      padding: 0.44rem 0.85rem; border-radius: 99px; border: 1.5px solid #cbd5e1;
+      background: #f8fafc; color: var(--muted-dark); font-size: 0.79rem; font-weight: 700; cursor: pointer;
+      transition: all 0.15s;
     }
-    .chip.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(6,95,70,0.22); }
 
-    .santri-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .santri-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
     .santri-card {
-      background: white; border: 1.5px solid var(--border); border-radius: 18px;
-      padding: 1.05rem; box-shadow: var(--shadow-sm);
-      display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
-      transition: transform 0.15s, border-color 0.15s;
+      background: white; border: 1.5px solid var(--border); border-radius: 20px;
+      padding: 1.1rem; box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; justify-content: space-between; gap: 11px;
+      transition: transform 0.18s, border-color 0.18s, box-shadow 0.18s;
     }
-    .santri-card:hover { border-color: #99f6e4; transform: translateY(-2px); }
-    .santri-card.sudah-dikirim { border-color: #86efac; background: #f0fdf4; }
+    .santri-card:hover { border-color: #6ee7b7; transform: translateY(-2px); box-shadow: var(--shadow-card-hover); }
+    .santri-card.sudah-dikirim { border-color: #86efac; background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%); }
 
-    .sc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
-    .sc-name { font-size: 0.98rem; font-weight: 800; color: var(--text); margin: 0; line-height: 1.3; }
-    .sc-meta { font-size: 0.76rem; color: var(--muted); font-weight: 600; margin-top: 2px; }
+    .sc-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
+    .sc-identity { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+    .sc-name { font-size: 0.96rem; font-weight: 800; color: var(--text); margin: 0; line-height: 1.28; }
+    .sc-meta { font-size: 0.76rem; color: var(--muted-dark); font-weight: 600; margin-top: 2px; }
     .badges-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
-    .sent-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 99px; background: #dcfce7; color: #166534; }
+    .sent-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.7rem; font-weight: 800; padding: 3px 8px; border-radius: 99px; background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
     .plg-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.69rem; font-weight: 800; padding: 2px 7px; border-radius: 99px; background: #ffe4e6; color: #be123c; }
 
-    .sc-stats { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 13px; padding: 0.75rem 0.85rem; }
+    .sc-stats { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 0.8rem 0.9rem; }
     .sc-total-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-    .sc-total { font-size: 1.06rem; font-weight: 800; color: #0f766e; }
+    .sc-total { font-size: 1.08rem; font-weight: 800; color: #0f766e; }
     .sc-total.khatam { color: #b45309; }
-    .sc-pct { font-size: 0.74rem; font-weight: 800; color: #475569; }
-    .mini-bar-track { width: 100%; height: 6px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 5px 0 6px; }
+    .sc-pct { font-size: 0.75rem; font-weight: 800; color: #475569; background: white; padding: 1px 7px; border-radius: 99px; border: 1px solid #e2e8f0; }
+    .mini-bar-track { width: 100%; height: 7px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 6px 0 7px; }
     .mini-bar-fill { height: 100%; background: linear-gradient(90deg, #0d9488, #10b981); border-radius: 99px; }
     .mini-bar-fill.khatam { background: linear-gradient(90deg, #d97706, #fbbf24); }
-    .sc-pos { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+    .sc-pos { font-size: 0.78rem; color: var(--muted-dark); font-weight: 600; }
 
-    .tren-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 99px; font-size: 0.73rem; font-weight: 800; margin-top: 6px; }
+    .tren-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 0.73rem; font-weight: 800; margin-top: 7px; }
     .tp-khatam { background: #fef3c7; color: #92400e; }
     .tp-naik { background: #d1fae5; color: #065f46; }
     .tp-stabil { background: #e0f2fe; color: #075985; }
@@ -390,75 +483,82 @@
     .tp-kosong { background: #ffe4e6; color: #9f1239; }
     .tp-awal { background: #e2e8f0; color: #475569; }
 
-    .sc-actions { display: grid; grid-template-columns: 1fr 1.25fr; gap: 8px; }
+    .sc-actions { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 8px; }
     .btn-card-input {
-      padding: 0.7rem 0.6rem; border: 1.5px solid #0d9488; border-radius: 12px;
-      background: #f0fdfa; color: #0f766e; font-size: 0.81rem; font-weight: 800; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 0.74rem 0.6rem; border: 1.5px solid #0d9488; border-radius: 13px;
+      background: #f0fdfa; color: #0f766e; font-size: 0.82rem; font-weight: 800; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 5px; transition: all 0.15s;
     }
     .btn-card-input:hover { background: #ccfbf1; }
     .btn-card-open {
-      padding: 0.7rem 0.6rem; border: none; border-radius: 12px;
-      background: linear-gradient(135deg, #0f766e, #0d9488); color: white;
-      font-size: 0.81rem; font-weight: 800; cursor: pointer;
+      padding: 0.74rem 0.6rem; border: none; border-radius: 13px;
+      background: linear-gradient(135deg, #065f46, #0d9488); color: white;
+      font-size: 0.82rem; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 6px;
+      box-shadow: 0 4px 10px rgba(6, 95, 70, 0.22); transition: filter 0.15s;
     }
+    .btn-card-open:hover { filter: brightness(1.06); }
 
-    /* MODAL MULTI-TAB */
+    /* ============================================================
+       3. MODAL MULTI-TAB
+       ============================================================ */
     .modal-backdrop {
-      display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(3px); z-index: 1000;
-      align-items: flex-start; justify-content: center; padding: 1rem; overflow-y: auto;
+      display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.68);
+      backdrop-filter: blur(4px); z-index: 1000;
+      align-items: flex-start; justify-content: center; padding: 0.85rem; overflow-y: auto;
     }
     .modal-backdrop.open { display: flex; }
     .modal-box {
-      width: 100%; max-width: 740px; background: white; border-radius: 22px;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.28); overflow: hidden; margin: auto;
+      width: 100%; max-width: 740px; background: white; border-radius: 24px;
+      box-shadow: 0 28px 56px rgba(0, 0, 0, 0.30); overflow: hidden; margin: auto;
+      animation: fadeUp 0.22s ease;
     }
     .modal-header {
-      background: linear-gradient(135deg, #065f46, #0d9488);
+      background: linear-gradient(135deg, #064e3b, #0d9488);
       color: white; padding: 1.1rem 1.3rem;
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
     }
-    .modal-header h2 { margin: 0; font-size: 1.08rem; font-weight: 800; }
-    .modal-header small { display: block; opacity: 0.9; font-size: 0.78rem; }
+    .modal-head-left { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .modal-header h2 { margin: 0; font-size: 1.06rem; font-weight: 800; line-height: 1.25; }
+    .modal-header small { display: block; opacity: 0.9; font-size: 0.78rem; margin-top: 1px; }
     .btn-close-modal {
-      width: 36px; height: 36px; border-radius: 10px; border: none;
+      width: 36px; height: 36px; border-radius: 11px; border: none; flex-shrink: 0;
       background: rgba(255,255,255,0.2); color: white; font-size: 1.1rem; cursor: pointer;
     }
 
     .modal-tabs {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
       background: #f1f5f9; padding: 8px; gap: 6px; border-bottom: 1px solid var(--border);
     }
     .mtab-btn {
-      padding: 0.62rem 0.5rem; border: none; border-radius: 10px;
-      background: transparent; color: var(--muted); font-weight: 800; font-size: 0.81rem;
+      padding: 0.64rem 0.5rem; border: none; border-radius: 11px;
+      background: transparent; color: var(--muted-dark); font-weight: 800; font-size: 0.81rem;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
+      transition: all 0.15s;
     }
-    .mtab-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+    .mtab-btn.active { background: white; color: var(--primary); box-shadow: 0 2px 8px rgba(15,23,42,0.08); }
     .mtab-btn.tab-plg.active { color: #be123c; }
 
-    .modal-pane { display: none; padding: 1.2rem 1.3rem; flex-direction: column; gap: 13px; }
+    .modal-pane { display: none; padding: 1.2rem 1.25rem; flex-direction: column; gap: 13px; }
     .modal-pane.active { display: flex; }
 
-    .modal-induk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .mini-box { background: #f0fdfa; border: 1.5px solid #99f6e4; border-radius: 13px; padding: 0.8rem; }
+    .modal-induk-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .mini-box { background: #f0fdfa; border: 1.5px solid #99f6e4; border-radius: 14px; padding: 0.82rem; }
     .mini-box-title { font-size: 0.7rem; font-weight: 800; color: #0f766e; text-transform: uppercase; }
-    .mini-box-val { font-size: 1.04rem; font-weight: 800; color: var(--text); margin-top: 2px; }
-    .mini-box-sub { font-size: 0.76rem; color: var(--muted); font-weight: 600; }
+    .mini-box-val { font-size: 1.02rem; font-weight: 800; color: var(--text); margin-top: 2px; }
+    .mini-box-sub { font-size: 0.76rem; color: var(--muted-dark); font-weight: 600; }
 
-    .preview-chart-wrap { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 0.85rem; }
-    .preview-chart-title { font-size: 0.81rem; font-weight: 800; color: #0f766e; margin: 0 0 8px; }
+    .preview-chart-wrap { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 15px; padding: 0.9rem; width: 100%; min-width: 0; }
+    .preview-chart-title { font-size: 0.82rem; font-weight: 800; color: #0f766e; margin: 0 0 8px; }
     .preview-chart-box { position: relative; height: 175px; width: 100%; }
     .preview-chart-empty {
       display: none; text-align: center; padding: 1.2rem; font-size: 0.84rem;
-      color: var(--muted); background: #f8fafc; border-radius: 10px; border: 1px dashed #cbd5e1;
+      color: var(--muted-dark); background: #f8fafc; border-radius: 11px; border: 1px dashed #cbd5e1;
     }
 
     .eval-box label, .form-group label { display: block; font-size: 0.81rem; font-weight: 800; color: #065f46; margin-bottom: 5px; }
     .eval-box textarea, .form-group input, .form-group select, .form-group textarea {
-      width: 100%; padding: 0.72rem 0.85rem; border: 2px solid #cbd5e1; border-radius: 11px;
+      width: 100%; padding: 0.74rem 0.85rem; border: 2px solid #cbd5e1; border-radius: 12px;
       font-family: inherit; font-size: 0.91rem; font-weight: 600; color: var(--text); outline: none; background: #f8fafc;
     }
     .eval-box textarea { border-color: #a7f3d0; min-height: 80px; resize: vertical; font-weight: 500; }
@@ -466,60 +566,61 @@
       border-color: var(--primary-mid); background: white;
     }
 
-    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+    .form-grid-2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .form-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
     .form-hint {
       background: #ecfdf5; border: 1px solid #a7f3d0; color: #065f46;
-      padding: 0.65rem 0.85rem; border-radius: 10px; font-size: 0.8rem; font-weight: 700;
+      padding: 0.68rem 0.88rem; border-radius: 11px; font-size: 0.8rem; font-weight: 700;
     }
     .form-hint.warn { background: #fff1f2; border-color: #fecdd3; color: #9f1239; }
 
     .btn-save-sheet {
-      width: 100%; padding: 0.95rem; border: none; border-radius: 12px;
+      width: 100%; padding: 0.96rem; border: none; border-radius: 13px;
       background: linear-gradient(135deg, #065f46, #059669); color: white;
       font-size: 0.94rem; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
+      box-shadow: 0 5px 14px rgba(6, 95, 70, 0.25);
     }
-    .btn-save-sheet.danger { background: linear-gradient(135deg, #be123c, #e11d48); }
+    .btn-save-sheet.danger { background: linear-gradient(135deg, #be123c, #e11d48); box-shadow: 0 5px 14px rgba(190, 18, 60, 0.25); }
     .btn-save-sheet:disabled { opacity: 0.6; cursor: not-allowed; }
 
-    .recent-plg-list { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 12px; padding: 0.85rem; }
+    .recent-plg-list { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 13px; padding: 0.85rem; }
     .recent-plg-list h4 { margin: 0 0 8px; font-size: 0.81rem; color: #9f1239; font-weight: 800; }
-    .plg-item { background: white; border-radius: 8px; padding: 0.55rem 0.75rem; font-size: 0.79rem; border-left: 3px solid #e11d48; margin-bottom: 6px; }
+    .plg-item { background: white; border-radius: 9px; padding: 0.58rem 0.78rem; font-size: 0.8rem; border-left: 3px solid #e11d48; margin-bottom: 6px; }
     .plg-item:last-child { margin-bottom: 0; }
 
-    .quick-templates { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .quick-templates { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
     .btn-tpl {
-      font-size: 0.73rem; font-weight: 700; padding: 4px 9px; border-radius: 8px;
+      font-size: 0.74rem; font-weight: 700; padding: 5px 10px; border-radius: 9px;
       border: 1px solid #cbd5e1; background: #f8fafc; color: #334155; cursor: pointer;
     }
     .btn-tpl:hover { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
 
     .action-panel {
-      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 1rem;
+      background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 15px; padding: 1rem;
       display: flex; flex-direction: column; gap: 10px;
     }
-    .step-hint { font-size: 0.77rem; font-weight: 700; color: var(--muted); }
+    .step-hint { font-size: 0.78rem; font-weight: 700; color: var(--muted-dark); }
     .btn-pdf {
-      width: 100%; padding: 0.94rem 1rem; border: none; border-radius: 12px;
+      width: 100%; padding: 0.96rem 1rem; border: none; border-radius: 13px;
       background: linear-gradient(135deg, #b91c1c, #dc2626); color: white;
       font-size: 0.95rem; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      box-shadow: 0 5px 14px rgba(220, 38, 38, 0.26);
     }
-    .wa-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .wa-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
     .btn-wa {
-      padding: 0.84rem 0.75rem; border: none; border-radius: 12px; color: white;
+      padding: 0.86rem 0.75rem; border: none; border-radius: 13px; color: white;
       font-size: 0.85rem; font-weight: 800; cursor: pointer;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
     }
     .btn-wa-ayah { background: linear-gradient(135deg, #15803d, #16a34a); }
     .btn-wa-ibu { background: linear-gradient(135deg, #0369a1, #0284c7); }
-    .btn-wa small { font-size: 0.71rem; font-weight: 600; opacity: 0.92; }
+    .btn-wa small { font-size: 0.71rem; font-weight: 600; opacity: 0.92; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .btn-wa:disabled { background: #cbd5e1; color: #64748b; cursor: not-allowed; opacity: 0.75; }
 
     .btn-mark-done {
-      width: 100%; padding: 0.7rem; border-radius: 10px;
+      width: 100%; padding: 0.72rem; border-radius: 11px;
       border: 1.5px solid #86efac; background: #f0fdf4; color: #166534;
       font-size: 0.82rem; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 6px;
@@ -530,63 +631,70 @@
     }
 
     @media (min-width: 768px) {
-      body.dash-active { padding-bottom: 3rem; }
+      body.dash-active { padding-bottom: 3.5rem; }
       .bottom-nav { display: none; }
       .desktop-nav { display: flex; }
       .mass-save-bar { bottom: 16px; }
-      .kpi-grid { grid-template-columns: repeat(4, 1fr); }
-      .bento-2col { grid-template-columns: 1fr 1.2fr; }
-      .mass-top-controls { grid-template-columns: 220px 1fr; }
+      .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .bento-2col { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+      .mass-top-controls { grid-template-columns: 230px minmax(0, 1fr); }
       .mr-inputs { grid-template-columns: 76px 76px 96px 1.2fr 1fr 1.4fr; }
       .mr-span-2, .mr-span-3 { grid-column: auto; }
       .toolbar { flex-direction: row; align-items: center; justify-content: space-between; }
       .search-input { max-width: 320px; }
-      .santri-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+      .santri-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
     }
     @media (min-width: 1024px) {
-      .santri-grid { grid-template-columns: repeat(3, 1fr); }
+      .santri-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
   </style>
 </head>
 <body>
 
-  <!-- BANNER INSTAL PWA -->
-  <div id="pwa-banner">
-    <div class="pwa-inner">
-      <span><i class="fa-solid fa-mobile-screen-button"></i> Pasang <b>Pembina MA 09</b> di layar utama HP agar langsung buka penuh.</span>
-      <button type="button" class="btn-install-pwa" onclick="installPwaApp()">Pasang</button>
-    </div>
-  </div>
-
   <!-- 1. GERBANG PIN PEMBINA -->
   <div id="login-screen">
     <div class="login-box">
-      <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="Logo MA09" class="login-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
-      <h1>Dasbor Pembina</h1>
-      <p>Kamar Maqomin Amin 09<br>Masukkan PIN untuk analitik kamar, input massal, rapor PDF &amp; WA.</p>
+      <div class="login-logo-ring">
+        <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="Logo MA09" class="login-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
+      </div>
+      <div class="login-badge"><i class="fa-solid fa-shield-halved"></i> Akses Khusus Pembina</div>
+      <h1>Kamar Maqomin Amin 09</h1>
+      <p>Analitik Kamar &bull; Input Massal 24 Santri &bull; Rapor PDF &amp; WA</p>
+
       <div class="pin-wrap">
         <input type="password" id="inputPin" autocomplete="off" inputmode="numeric" placeholder="••••••" onkeydown="if(event.key==='Enter'){ event.preventDefault(); masukPembina(); }">
         <button type="button" class="btn-eye" onclick="togglePin()"><i id="eyeIcon" class="fa-regular fa-eye"></i></button>
       </div>
+
       <button type="button" id="btnLogin" class="btn-login" onclick="masukPembina()">
         <i class="fa-solid fa-right-to-bracket"></i> Masuk Dasbor
+      </button>
+
+      <button type="button" id="btnInstallLogin" class="btn-install-login" onclick="pasangAplikasiPembina()">
+        <i class="fa-solid fa-download" style="color:#059669;"></i> Pasang Aplikasi Pembina di HP
       </button>
     </div>
   </div>
 
-  <!-- 2. DASBOR PEMBINA v2 -->
+  <!-- 2. DASBOR PEMBINA v2.1 -->
   <div id="dashboard-screen">
     <div class="topbar">
       <div class="topbar-inner">
-        <div>
-          <h1><i class="fa-solid fa-mosque"></i> Dasbor Pembina MA 09</h1>
-          <div class="topbar-sub" id="topbarSubtitle">Kamar Maqomin Amin 09 &bull; Sinkron Otomatis dengan Spreadsheet</div>
+        <div class="brand-cluster">
+          <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="MA09" class="brand-mini-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
+          <div>
+            <h1>Dasbor Pembina MA 09</h1>
+            <div class="topbar-sub" id="topbarSubtitle">Kamar Maqomin Amin 09 &bull; Sinkron Spreadsheet</div>
+          </div>
         </div>
         <div class="topbar-actions">
+          <button type="button" id="btnInstallTop" class="btn-top btn-top-install" onclick="pasangAplikasiPembina()" title="Pasang Aplikasi di HP">
+            <i class="fa-solid fa-download"></i> Pasang App
+          </button>
           <a href="./index.html" target="_blank" class="btn-top"><i class="fa-solid fa-globe"></i> Portal Wali</a>
           <button type="button" class="btn-top" onclick="konfirmasiMuatUlang()"><i class="fa-solid fa-rotate"></i> Segarkan</button>
           <button type="button" class="btn-top" onclick="resetTandaTerkirim()"><i class="fa-solid fa-eraser"></i> Reset Ceklis</button>
-          <button type="button" class="btn-top" onclick="keluarPembina()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
+          <button type="button" class="btn-top btn-top-logout" onclick="konfirmasiKeluarPembina()"><i class="fa-solid fa-right-from-bracket"></i> Keluar</button>
         </div>
       </div>
     </div>
@@ -607,27 +715,39 @@
       </div>
 
       <!-- ============================================================
-           VIEW 1: BERANDA (BENTO ANALITIK KAMAR)
+           VIEW 1: BERANDA ANALITIK KAMAR
            ============================================================ -->
       <section id="view-beranda" class="main-view active">
         <div class="kpi-grid">
           <div class="kpi-card k-teal">
-            <div class="kpi-lbl">Rata-rata Progres</div>
+            <div class="kpi-top">
+              <div class="kpi-lbl">Rata-rata Progres</div>
+              <div class="kpi-ico"><i class="fa-solid fa-book-open-reader"></i></div>
+            </div>
             <div class="kpi-val" id="kpiAvgPersen">0%</div>
             <div class="kpi-sub" id="kpiAvgJuz">Rata-rata 0 Juz (0 Santri)</div>
           </div>
           <div class="kpi-card k-hijau">
-            <div class="kpi-lbl">Rata-rata Pekan Ini</div>
+            <div class="kpi-top">
+              <div class="kpi-lbl">Capaian Pekan Ini</div>
+              <div class="kpi-ico"><i class="fa-solid fa-arrow-trend-up"></i></div>
+            </div>
             <div class="kpi-val" id="kpiAvgPekan">+0 hal</div>
             <div class="kpi-sub" id="kpiAvgKamar">Histori kamar: 0 hal/pkn</div>
           </div>
           <div class="kpi-card k-merah">
-            <div class="kpi-lbl">Perlu Perhatian</div>
+            <div class="kpi-top">
+              <div class="kpi-lbl">Perlu Perhatian</div>
+              <div class="kpi-ico"><i class="fa-solid fa-bell"></i></div>
+            </div>
             <div class="kpi-val" id="kpiPerhatian">0</div>
             <div class="kpi-sub">Santri stagnan / menurun</div>
           </div>
           <div class="kpi-card k-emas">
-            <div class="kpi-lbl">Khatam 30 Juz</div>
+            <div class="kpi-top">
+              <div class="kpi-lbl">Khatam 30 Juz</div>
+              <div class="kpi-ico"><i class="fa-solid fa-award"></i></div>
+            </div>
             <div class="kpi-val" id="kpiKhatam">0</div>
             <div class="kpi-sub" id="kpiNaikCount">0 santri meningkat/stabil</div>
           </div>
@@ -653,7 +773,7 @@
 
         <div class="bento-box">
           <h3 class="box-title">
-            <span><i class="fa-solid fa-bell" style="color:#be123c;"></i> Daftar Prioritas Motivasi (Stagnan / Menurun)</span>
+            <span><i class="fa-solid fa-heart-pulse" style="color:#be123c;"></i> Prioritas Motivasi (Stagnan / Menurun)</span>
             <button type="button" class="btn-mini-tool" onclick="bukaFilterPerhatian()">Lihat Semua</button>
           </h3>
           <div id="listPerhatianBeranda"></div>
@@ -661,7 +781,7 @@
       </section>
 
       <!-- ============================================================
-           VIEW 2: MODE INPUT MASSAL (1 LAYAR UNTUK SEMUA SANTRI)
+           VIEW 2: MODE INPUT MASSAL (1 LAYAR UNTUK 24 SANTRI)
            ============================================================ -->
       <section id="view-massal" class="main-view">
         <div class="mass-header-card">
@@ -671,8 +791,8 @@
               <input type="date" id="massTanggalGlobal">
             </div>
             <div class="mass-field">
-              <label for="massCariInput"><i class="fa-solid fa-magnifying-glass"></i> Filter Cepat Nama / NIS (Ketikan Tidak Hilang)</label>
-              <input type="text" id="massCariInput" placeholder="Cari nama santri untuk diisi..." oninput="terapkanFilterMassal()">
+              <label for="massCariInput"><i class="fa-solid fa-magnifying-glass"></i> Cari Nama / NIS (Ketikan Tidak Hilang)</label>
+              <input type="text" id="massCariInput" placeholder="Ketik nama santri yang mau diisi..." oninput="terapkanFilterMassal()">
             </div>
           </div>
 
@@ -697,7 +817,6 @@
 
         <div class="mass-list" id="massListContainer"></div>
 
-        <!-- BAR SIMPAN MELAYANG -->
         <div class="mass-save-bar">
           <div class="mass-save-inner">
             <div class="mass-save-info" id="massSaveCounter">0 santri dicentang untuk disimpan</div>
@@ -709,13 +828,13 @@
       </section>
 
       <!-- ============================================================
-           VIEW 3: SANTRI, RAPOR PDF & WA
+           VIEW 3: DAFTAR SANTRI, RAPOR PDF & WA
            ============================================================ -->
       <section id="view-santri" class="main-view">
         <div class="sent-progress-card">
           <div class="sp-head">
-            <span><i class="fa-brands fa-whatsapp" style="color:#16a34a;"></i> Progres Distribusi Rapor Pekan Ini</span>
-            <span id="sentProgressText">0 / 0 Santri Terkirim</span>
+            <span><i class="fa-brands fa-whatsapp" style="color:#16a34a;"></i> Progres Kirim Rapor Pekan Ini</span>
+            <span id="sentProgressText">0 / 0 Santri</span>
           </div>
           <div class="sp-track"><div class="sp-fill" id="sentProgressBar"></div></div>
         </div>
@@ -750,13 +869,16 @@
     </nav>
   </div>
 
-  <!-- 3. MODAL SANTRI (3 TAB: RAPOR PDF & WA | CATAT HAFALAN | CATAT PELANGGARAN) -->
+  <!-- 3. MODAL SANTRI (3 TAB: RAPOR PDF & WA | + HAFALAN | + PELANGGARAN) -->
   <div id="modalRapor" class="modal-backdrop" onclick="if(event.target === this) tutupModal()">
     <div class="modal-box">
       <div class="modal-header">
-        <div>
-          <h2 id="mNama">-</h2>
-          <small id="mMeta">-</small>
+        <div class="modal-head-left">
+          <img id="mAvatar" class="santri-ava" src="" alt="Foto" referrerpolicy="no-referrer" style="border-color:rgba(255,255,255,0.65);">
+          <div style="min-width:0;">
+            <h2 id="mNama">-</h2>
+            <small id="mMeta">-</small>
+          </div>
         </div>
         <button type="button" class="btn-close-modal" onclick="tutupModal()"><i class="fa-solid fa-xmark"></i></button>
       </div>
@@ -782,7 +904,7 @@
             <div class="mini-box-sub" id="mTren">-</div>
           </div>
           <div class="mini-box">
-            <div class="mini-box-title">Posisi &amp; Progres 30 Juz</div>
+            <div class="mini-box-title">Posisi &amp; Pembaruan</div>
             <div class="mini-box-val" id="mPosisi">-</div>
             <div class="mini-box-sub" id="mTanggal">-</div>
           </div>
@@ -928,7 +1050,7 @@
     // KONFIGURASI SERVER API & PORTAL WALI
     // =========================================================================
     var API_URL = "https://script.google.com/macros/s/AKfycbwkimilgQq9LSHB_76eTzzjItmk-Jc_jOC8BMi6HlL7_LP-oFcop5CIBk8WilwSZygk/exec";
-    // Ganti ke "https://budiadjie.github.io/ma09-database/" kapan pun Anda ingin mengganti footer PDF ke link GitHub
+    // Ubah ke "https://budiadjie.github.io/ma09-database/" bila ingin footer PDF mengarah ke link GitHub Pages
     var PORTAL_WALI_URL = "https://tinyurl.com/MA09Database";
 
     var pinAktif = "";
@@ -959,28 +1081,140 @@
       "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=256&output=png",
       "https://cdn-icons-png.flaticon.com/512/8251/8251508.png"
     ];
-    var logoStep = 0;
     function fallbackLogo(el) {
-      if (logoStep < LOGO_FALLBACKS.length) el.src = LOGO_FALLBACKS[logoStep++];
-      else el.onerror = null;
+      var step = parseInt(el.getAttribute("data-step") || "0", 10);
+      if (step < LOGO_FALLBACKS.length) {
+        el.setAttribute("data-step", String(step + 1));
+        el.src = LOGO_FALLBACKS[step];
+      } else {
+        el.onerror = null;
+      }
     }
 
-    // PWA Install Prompt
-    window.addEventListener("beforeinstallprompt", function(e) {
-      e.preventDefault();
-      deferredPwaPrompt = e;
-      document.getElementById("pwa-banner").style.display = "block";
-    });
-    function installPwaApp() {
-      if (!deferredPwaPrompt) return;
-      deferredPwaPrompt.prompt();
-      deferredPwaPrompt.userChoice.then(function() {
-        deferredPwaPrompt = null;
-        document.getElementById("pwa-banner").style.display = "none";
+    // Avatar Inisial SVG + Fallback Berlapis untuk Foto Santri
+    function buatSvgInisial(nama) {
+      var kata = String(nama || "S").trim().split(/\s+/);
+      var inisial = ((kata[0] ? kata[0][0] : "S") + (kata[1] ? kata[1][0] : "")).toUpperCase();
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">' +
+        '<rect width="80" height="80" rx="22" fill="#d1fae5"/>' +
+        '<text x="40" y="49" font-family="sans-serif" font-size="28" font-weight="800" fill="#065f46" text-anchor="middle">' + inisial.replace(/[^A-Z0-9]/g, "") + '</text>' +
+        '</svg>';
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    function getUrlFotoAwal(urlRaw, nama) {
+      var u = String(urlRaw || "").trim();
+      if (!u || u === "-" || u.indexOf("http") !== 0) return buatSvgInisial(nama);
+      return u;
+    }
+
+    function fallbackAvatarImg(el) {
+      var raw = el.getAttribute("data-raw") || "";
+      var nama = el.getAttribute("data-nama") || "S";
+      var step = parseInt(el.getAttribute("data-step") || "0", 10);
+      var nextUrl = "";
+
+      if (step === 0 && raw.indexOf("i.ibb.co.com/") !== -1) {
+        nextUrl = raw.replace("i.ibb.co.com/", "i.ibb.co/");
+      } else if (step <= 1 && (raw.indexOf("i.ibb.co") !== -1)) {
+        var std = raw.replace("i.ibb.co.com/", "i.ibb.co/");
+        nextUrl = "https://wsrv.nl/?url=" + encodeURIComponent(std) + "&w=120&h=120&fit=cover&output=jpg";
+        step = 1;
+      } else if (step === 0 && raw.indexOf("drive.google.com/thumbnail?id=") !== -1) {
+        var m = raw.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+        if (m && m[1]) nextUrl = "https://lh3.googleusercontent.com/d/" + m[1] + "=w160";
+      }
+
+      if (nextUrl) {
+        el.setAttribute("data-step", String(step + 1));
+        el.src = nextUrl;
+      } else {
+        el.onerror = null;
+        el.src = buatSvgInisial(nama);
+      }
+    }
+
+    function buildAvatarTag(urlRaw, nama, cls) {
+      var src = getUrlFotoAwal(urlRaw, nama);
+      return '<img class="' + cls + '" src="' + escapeHTML(src) + '" data-raw="' + escapeHTML(urlRaw || "") + '" data-nama="' + escapeHTML(nama || "") + '" alt="Foto" referrerpolicy="no-referrer" loading="lazy" onerror="fallbackAvatarImg(this)">';
+    }
+
+    // =========================================================================
+    // PWA (SERVICE WORKER & TOMBOL PASANG APLIKASI)
+    // =========================================================================
+    function isStandaloneApp() {
+      return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+    }
+    function isIosDevice() {
+      return /iPad|iPhone|iPod/.test(navigator.userAgent || "") && !window.MSStream;
+    }
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function() {
+        navigator.serviceWorker.register("./sw.js").catch(function() {});
       });
     }
 
-    // API POST bebas preflight CORS
+    function sembunyikanTombolInstall() {
+      var b1 = document.getElementById("btnInstallLogin");
+      var b2 = document.getElementById("btnInstallTop");
+      if (b1) b1.style.display = "none";
+      if (b2) b2.style.display = "none";
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+      if (isStandaloneApp()) sembunyikanTombolInstall();
+    });
+
+    window.addEventListener("beforeinstallprompt", function(e) {
+      e.preventDefault();
+      deferredPwaPrompt = e;
+    });
+
+    window.addEventListener("appinstalled", function() {
+      deferredPwaPrompt = null;
+      sembunyikanTombolInstall();
+      Swal.fire({
+        icon: 'success',
+        title: 'Aplikasi Pembina Terpasang!',
+        text: 'Ikon Pembina MA 09 kini tersedia langsung di layar utama HP Anda.',
+        confirmButtonColor: '#065f46'
+      });
+    });
+
+    function pasangAplikasiPembina() {
+      if (deferredPwaPrompt) {
+        deferredPwaPrompt.prompt();
+        deferredPwaPrompt.userChoice.then(function(choice) {
+          if (choice && choice.outcome === "accepted") deferredPwaPrompt = null;
+        });
+        return;
+      }
+      if (isIosDevice()) {
+        Swal.fire({
+          icon: 'info',
+          title: 'Pasang di iPhone (Safari)',
+          html: '<div style="text-align:left; font-size:0.88rem; line-height:1.6;">' +
+            '<b>1.</b> Ketuk ikon <b>Bagikan (Share ⎋)</b> di bawah layar Safari.<br>' +
+            '<b>2.</b> Pilih <b>Tambah ke Layar Utama</b> → <b>Tambah</b>.</div>',
+          confirmButtonColor: '#065f46'
+        });
+        return;
+      }
+      Swal.fire({
+        icon: 'info',
+        title: 'Cara Pasang di Layar Utama',
+        html: '<div style="text-align:left; font-size:0.88rem; line-height:1.6;">' +
+          '<b>1.</b> Ketuk ikon <b>titik tiga (⋮)</b> di pojok kanan atas Chrome.<br>' +
+          '<b>2.</b> Pilih <b>Tambahkan ke layar utama</b> atau <b>Instal aplikasi</b>.<br>' +
+          '<b>3.</b> Ketuk <b>Instal / Tambah</b> agar terbuka layar penuh seperti aplikasi.</div>',
+        confirmButtonColor: '#065f46'
+      });
+    }
+
+    // =========================================================================
+    // HELPER API, TEKS & RUMUS SELISIH
+    // =========================================================================
     function apiPost(payload) {
       return fetch(API_URL, {
         method: "POST",
@@ -1041,7 +1275,6 @@
       else doc.text(str, x, y);
     }
 
-    // Replikasi akurat rumus selisih halaman Kode.gs untuk pratinjau langsung di Input Massal
     function hitungSelisihPreview(prevJuz, prevHal, currJuz, currHal) {
       if (isNaN(prevJuz) || isNaN(prevHal) || isNaN(currJuz) || isNaN(currHal)) return null;
       if (currJuz < 1 || currJuz > 30 || currHal < 1 || currHal > 20) return null;
@@ -1066,7 +1299,7 @@
       else { inp.type = "password"; ico.className = "fa-regular fa-eye"; }
     }
 
-    // --- LOGIN & MUAT DATA SERVER ---
+    // --- LOGIN, MUAT ULANG & KELUAR ---
     function masukPembina() {
       var pin = String(document.getElementById("inputPin").value || "").trim();
       if (!pin) {
@@ -1091,6 +1324,25 @@
       } else {
         muatDataDariServer(pinAktif);
       }
+    }
+
+    function konfirmasiKeluarPembina() {
+      var jumlahDicentang = hitungCentangMassal();
+      var pesan = jumlahDicentang > 0
+        ? ('Masih ada ' + jumlahDicentang + ' setoran di Input Massal yang belum disimpan. Yakin ingin keluar?')
+        : 'Anda akan keluar dari Dasbor Pembina dan perlu memasukkan PIN lagi saat masuk.';
+      Swal.fire({
+        icon: jumlahDicentang > 0 ? 'warning' : 'question',
+        title: 'Keluar dari Dasbor?',
+        text: pesan,
+        showCancelButton: true,
+        confirmButtonColor: '#dc2626',
+        cancelButtonColor: '#64748b',
+        confirmButtonText: 'Ya, Keluar',
+        cancelButtonText: 'Batal'
+      }).then(function(r) {
+        if (r.isConfirmed) keluarPembina();
+      });
     }
 
     function muatDataDariServer(pin, callbackSelesai) {
@@ -1176,9 +1428,7 @@
         btns[j].classList.toggle("active", btns[j].getAttribute("data-view") === nama);
       }
 
-      if (nama === "beranda") {
-        setTimeout(renderGrafikSebaran, 50);
-      }
+      if (nama === "beranda") setTimeout(renderGrafikSebaran, 50);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1216,7 +1466,7 @@
       document.getElementById("kpiKhatam").innerText = khatam;
       document.getElementById("kpiNaikCount").innerText = naik + " santri meningkat/stabil";
 
-      // Top 3 Santri Pekan Ini
+      // Top 3 Santri Pekan Ini (dengan foto mini)
       var topBox = document.getElementById("listTopSantri");
       var topArr = Array.isArray(rk.topSantri) ? rk.topSantri : [];
       if (topArr.length === 0) {
@@ -1224,8 +1474,11 @@
       } else {
         topBox.innerHTML = topArr.map(function(t, idx) {
           var rkCls = idx === 0 ? "rank-1" : (idx === 1 ? "rank-2" : "rank-3");
+          var sObj = semuaSantri.find(function(x) { return x.nis === t.nis; });
+          var ava = buildAvatarTag(sObj ? sObj.foto : "", t.nama, "santri-ava-sm");
           return '<div class="top-item" onclick="bukaModalRapor(\'' + escapeHTML(t.nis) + '\', \'rapor\')">' +
             '<div class="top-rank ' + rkCls + '">#' + (idx + 1) + '</div>' +
+            ava +
             '<div class="top-info">' +
               '<div class="top-name">' + escapeHTML(t.nama) + '</div>' +
               '<div class="top-meta">Total: ' + escapeHTML(t.totalLabel) + ' (' + escapeHTML(t.persenKhatam) + '%)</div>' +
@@ -1243,9 +1496,12 @@
         perBox.innerHTML = listPerhatian.slice(0, 6).map(function(s) {
           var st = s.hafalanStats || {};
           return '<div class="perhatian-item" onclick="bukaModalRapor(\'' + escapeHTML(s.nis) + '\', \'rapor\')">' +
-            '<div style="min-width:0;">' +
-              '<div style="font-size:0.86rem; font-weight:800; color:#0f172a;">' + escapeHTML(s.nama) + '</div>' +
-              '<div style="font-size:0.74rem; color:#64748b; font-weight:600;">' + escapeHTML(st.totalLabel) + ' &bull; ' + escapeHTML(st.posisiTerakhirLabel) + '</div>' +
+            '<div style="display:flex; align-items:center; gap:9px; min-width:0;">' +
+              buildAvatarTag(s.foto, s.nama, "santri-ava-sm") +
+              '<div style="min-width:0;">' +
+                '<div style="font-size:0.86rem; font-weight:800; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + escapeHTML(s.nama) + '</div>' +
+                '<div style="font-size:0.74rem; color:#64748b; font-weight:600;">' + escapeHTML(st.totalLabel) + ' &bull; ' + escapeHTML(st.posisiTerakhirLabel) + '</div>' +
+              '</div>' +
             '</div>' +
             '<span class="perhatian-badge">' + escapeHTML(st.teksTren) + '</span>' +
           '</div>';
@@ -1274,17 +1530,26 @@
           datasets: [{
             label: 'Jumlah Santri',
             data: values,
-            backgroundColor: ['#94a3b8', '#0d9488', '#059669', '#047857', '#0284c7', '#d97706'],
-            borderRadius: 8,
-            maxBarThickness: 38
+            backgroundColor: ['#94a3b8', '#14b8a6', '#10b981', '#059669', '#0284c7', '#f59e0b'],
+            borderRadius: 10,
+            borderSkipped: false,
+            maxBarThickness: 36
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
-          plugins: { legend: { display: false } },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#0f172a',
+              padding: 10,
+              cornerRadius: 8,
+              callbacks: { label: function(c) { return " " + c.raw + " santri"; } }
+            }
+          },
           scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0, color: '#475569' }, grid: { color: '#f1f5f9' } },
+            y: { beginAtZero: true, ticks: { stepSize: 1, precision: 0, color: '#64748b' }, grid: { color: '#f1f5f9' } },
             x: { ticks: { color: '#334155', font: { weight: 'bold', size: 11 } }, grid: { display: false } }
           }
         }
@@ -1444,8 +1709,7 @@
     }
 
     function hitungCentangMassal() {
-      var chks = document.querySelectorAll(".mr-chk:checked");
-      return chks.length;
+      return document.querySelectorAll(".mr-chk:checked").length;
     }
 
     function perbaruiCounterMassal() {
@@ -1505,15 +1769,8 @@
         }
 
         items.push({
-          nis: nis,
-          nama: nama,
-          tanggal: tglGlobal,
-          juz: juzNum,
-          surat: surat,
-          halaman: halNum,
-          ayat: ayat,
-          kualitas: kual,
-          catatan: cat
+          nis: nis, nama: nama, tanggal: tglGlobal, juz: juzNum,
+          surat: surat, halaman: halNum, ayat: ayat, kualitas: kual, catatan: cat
         });
       }
 
@@ -1551,7 +1808,6 @@
             return;
           }
 
-          // Sinkronkan draft evaluasi dari catatan massal yang baru diisi
           items.forEach(function(it) {
             if (it.catatan) draftEvalMap[it.nis] = it.catatan;
             else delete draftEvalMap[it.nis];
@@ -1561,10 +1817,10 @@
             Swal.fire({
               icon: 'success',
               title: res.jumlahTersimpan + ' Setoran Tersimpan!',
-              text: 'Seluruh grafik & rapor PDF sudah otomatis diperbarui. Lanjut kirim rapor WA?',
+              text: 'Seluruh grafik & rapor PDF sudah diperbarui. Lanjut kirim rapor WA?',
               showCancelButton: true,
               confirmButtonColor: '#065f46',
-              confirmButtonText: 'Buka Daftar Santri & WA',
+              confirmButtonText: 'Buka Santri & WA',
               cancelButtonText: 'Tetap di Sini'
             }).then(function(nav) {
               if (nav.isConfirmed) pindahView("santri");
@@ -1578,7 +1834,7 @@
     }
 
     // =========================================================================
-    // TAB 3: DAFTAR SANTRI, FILTER, PROGRES TERKIRIM
+    // TAB 3: DAFTAR SANTRI, FILTER & PROGRES TERKIRIM
     // =========================================================================
     function setFilter(jenis, btnEl) {
       filterAktif = jenis;
@@ -1606,7 +1862,7 @@
         if (petaTerkirim[semuaSantri[i].nis]) sent++;
       }
       var pct = total > 0 ? Math.round((sent / total) * 100) : 0;
-      document.getElementById("sentProgressText").innerText = sent + " / " + total + " Santri Terkirim (" + pct + "%)";
+      document.getElementById("sentProgressText").innerText = sent + " / " + total + " Santri (" + pct + "%)";
       document.getElementById("sentProgressBar").style.width = pct + "%";
     }
 
@@ -1638,9 +1894,12 @@
 
         html += '<div class="' + cardClass + '">' +
           '<div class="sc-head">' +
-            '<div>' +
-              '<h3 class="sc-name">' + escapeHTML(item.nama) + '</h3>' +
-              '<div class="sc-meta">NIS ' + escapeHTML(item.nis) + ' &bull; ' + escapeHTML(item.kelas) + '</div>' +
+            '<div class="sc-identity">' +
+              buildAvatarTag(item.foto, item.nama, "santri-ava") +
+              '<div style="min-width:0;">' +
+                '<h3 class="sc-name">' + escapeHTML(item.nama) + '</h3>' +
+                '<div class="sc-meta">NIS ' + escapeHTML(item.nis) + ' &bull; ' + escapeHTML(item.kelas) + '</div>' +
+              '</div>' +
             '</div>' +
             '<div class="badges-right">' + sentTag + plgTag + '</div>' +
           '</div>' +
@@ -1665,13 +1924,13 @@
       }
 
       if (tampilCount === 0) {
-        html = '<div style="grid-column:1/-1; text-align:center; padding:2.5rem; background:white; border-radius:16px; color:#64748b; font-weight:700;">Tidak ada santri yang sesuai dengan filter.</div>';
+        html = '<div style="grid-column:1/-1; text-align:center; padding:2.5rem; background:white; border-radius:18px; color:#64748b; font-weight:700;">Tidak ada santri yang sesuai dengan filter.</div>';
       }
       grid.innerHTML = html;
     }
 
     // =========================================================================
-    // MODAL SANTRI (RAPOR PDF & WA + INPUT SATUAN + PELANGGARAN)
+    // MODAL SANTRI
     // =========================================================================
     function pindahModalTab(namaTab) {
       var tabs = ["rapor", "hafalan", "pelanggaran"];
@@ -1693,6 +1952,13 @@
       var ortu = santriAktif.ortu || {};
       var last = santriAktif.lastEntry || {};
       var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
+
+      var mAva = document.getElementById("mAvatar");
+      mAva.setAttribute("data-raw", santriAktif.foto || "");
+      mAva.setAttribute("data-nama", santriAktif.nama || "S");
+      mAva.setAttribute("data-step", "0");
+      mAva.onerror = function() { fallbackAvatarImg(this); };
+      mAva.src = getUrlFotoAwal(santriAktif.foto, santriAktif.nama);
 
       document.getElementById("mNama").innerText = santriAktif.nama;
       document.getElementById("mMeta").innerText = "NIS " + santriAktif.nis + " • Kelas " + santriAktif.kelas;
@@ -1905,7 +2171,7 @@
       renderDaftarSantri();
     }
 
-    // --- PRATINJAU GRAFIK MODAL (DENGAN GARIS RATA-RATA KAMAR) ---
+    // --- PRATINJAU GRAFIK MODAL ---
     function renderChartModal(stats) {
       if (modalChartInstance) { modalChartInstance.destroy(); modalChartInstance = null; }
       var box = document.getElementById("mChartBox");
@@ -1964,7 +2230,7 @@
       });
     }
 
-    // --- GRAFIK PNG TAJAM UNTUK PDF (DENGAN GARIS RATA-RATA KAMAR) ---
+    // --- GRAFIK PNG TAJAM UNTUK PDF ---
     function buatGambarGrafikUntukPdf(stats) {
       if (!stats || !Array.isArray(stats.chartData) || stats.chartData.length === 0) return null;
       if (pdfChartInstance) { pdfChartInstance.destroy(); pdfChartInstance = null; }
@@ -2070,7 +2336,7 @@
       var tglCetakPdf = bersihkanTeksPdf(tanggalCetakServer);
       var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
 
-      // 1. KOP KAMAR (Y: 10..34mm)
+      // 1. KOP KAMAR
       doc.setFillColor(6, 95, 70);
       doc.roundedRect(14, 10, 182, 24, 3, 3, 'F');
       doc.setFillColor(217, 119, 6);
@@ -2091,7 +2357,7 @@
       doc.setFontSize(9.2);
       doc.text("LAPORAN PERKEMBANGAN HAFALAN AL-QUR'AN MINGGUAN", 105, 29, { align: "center" });
 
-      // 2. IDENTITAS SANTRI (KIRI) & DATA INDUK HAFALAN (KANAN) (Y: 38..78mm)
+      // 2. IDENTITAS SANTRI & DATA INDUK HAFALAN
       doc.setFillColor(248, 250, 252);
       doc.setDrawColor(203, 213, 225);
       doc.setLineWidth(0.35);
@@ -2130,7 +2396,6 @@
       doc.text("Tgl Cetak", 18, 74);
       tulisTeksPasLebar(doc, ": " + tglCetakPdf, 36, 74, 74, 7.8, 6.4);
 
-      // Kotak Kanan: Data Induk + Progres 30 Juz
       if (st.isKhatam) { doc.setFillColor(255, 251, 235); doc.setDrawColor(217, 119, 6); }
       else { doc.setFillColor(240, 253, 250); doc.setDrawColor(13, 148, 136); }
       doc.setLineWidth(0.5);
@@ -2144,7 +2409,6 @@
       doc.setTextColor(st.isKhatam ? 180 : 6, st.isKhatam ? 83 : 95, st.isKhatam ? 9 : 70);
       tulisTeksPasLebar(doc, st.totalLabel, 157, 50.5, 72, 13.8, 9.8, { align: "center" });
 
-      // Progress Bar Mini menuju 30 Juz di dalam kartu kanan
       doc.setFillColor(226, 232, 240);
       doc.roundedRect(124, 52.8, 66, 2.2, 1, 1, 'F');
       var fillW = Math.max(2, (Math.min(Math.max(persen, 0), 100) / 100) * 66);
@@ -2169,7 +2433,7 @@
       tulisTeksPasLebar(doc, (st.isKhatam ? "Capaian: " : "Juz Belakang: ") + bersihkanTeksPdf(st.hafalanBelakangLabel), 157, 70.5, 72, 7.5, 6.2, { align: "center" });
       tulisTeksPasLebar(doc, (st.isKhatam ? "Fokus: " : "Posisi Terakhir: ") + bersihkanTeksPdf(st.posisiTerakhirLabel), 157, 75.2, 72, 7.5, 6.2, { align: "center" });
 
-      // 3. GRAFIK MINGGUAN (Y: 83..133.5mm)
+      // 3. GRAFIK MINGGUAN
       doc.setTextColor(15, 118, 110);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(8.3);
@@ -2264,7 +2528,7 @@
         pageBreak: 'avoid'
       });
 
-      // 5. KOTAK EVALUASI PEMBINA (DINAMIS ANTI-OVERLAP)
+      // 5. KOTAK EVALUASI PEMBINA
       var finalY = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY : 206;
       var evalStartY = finalY + 5.5;
       var sisaRuang = 281 - evalStartY;
