@@ -661,7 +661,7 @@
         <button type="button" class="dnav-btn" data-tab="pelanggaran" onclick="pindahTab('pelanggaran')"><i class="fa-solid fa-clipboard-check"></i> Pelanggaran</button>
       </div>
 
-      <!-- TAB 1: HAFALAN -->
+      <!-- TAB 1: HAFALAN (STANDAR 604 HALAMAN MUSHAF POJOK 15 BARIS) -->
       <div id="pane-hafalan" class="app-pane active">
         <div class="bento-grid-haf">
           <div class="bento-card hero-hafalan-card" id="kartuHeroHafalan">
@@ -680,7 +680,7 @@
               <div class="progress-track">
                 <div class="progress-fill" id="hfProgressFill"></div>
               </div>
-              <div class="progress-sub" id="hfProgressSub">0 dari 600 halaman Al-Qur'an</div>
+              <div class="progress-sub" id="hfProgressSub">0 dari 604 halaman Al-Qur'an</div>
             </div>
 
             <div class="hf-mini-grid">
@@ -830,6 +830,7 @@
   <script>
     var API_URL = "https://script.google.com/macros/s/AKfycbwkimilgQq9LSHB_76eTzzjItmk-Jc_jOC8BMi6HlL7_LP-oFcop5CIBk8WilwSZygk/exec";
     var WA_PEMBINA = "6285706244701";
+    var TOTAL_HALAMAN_QURAN = 604;
 
     var nisAktif = "";
     var currentHafalanStats = null;
@@ -878,7 +879,6 @@
       return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
     }
 
-    // Daftarkan Service Worker agar syarat instalasi PWA di Chrome Android terpenuhi
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", function() {
         navigator.serviceWorker.register("./sw.js").catch(function() {});
@@ -905,7 +905,6 @@
     });
 
     window.addEventListener("DOMContentLoaded", function() {
-      // Hapus sisa simpanan NIS versi lama agar selalu wajib ketik NIS
       try { localStorage.removeItem("ma09_wali_saved_nis"); } catch (e) {}
 
       if (isStandaloneApp()) {
@@ -1191,7 +1190,7 @@
       document.getElementById("resPekerjaanIbu").innerText = ortu.pekerjaanIbu || "-";
       document.getElementById("resHpIbu").innerText = ortu.hpIbu || "-";
 
-      // Tab Hafalan
+      // Tab Hafalan (Standar 604 halaman Mushaf Pojok 15 Baris)
       currentHafalanStats = st;
       var heroCard = document.getElementById("kartuHeroHafalan");
       heroCard.classList.remove("mode-khatam");
@@ -1209,9 +1208,12 @@
       document.getElementById("hfValKiri").innerText = st.hafalanBelakangLabel || "-";
       document.getElementById("hfValKanan").innerText = st.posisiTerakhirLabel || "-";
 
-      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
+      var totalHal = st.totalHalaman || 0;
+      var persen = typeof st.persenKhatam === "number"
+        ? st.persenKhatam
+        : Math.round((totalHal / TOTAL_HALAMAN_QURAN) * 1000) / 10;
       document.getElementById("hfPersen").innerText = persen + "%";
-      document.getElementById("hfProgressSub").innerText = (st.totalHalaman || 0) + " dari 600 halaman Al-Qur'an";
+      document.getElementById("hfProgressSub").innerText = totalHal + " dari " + TOTAL_HALAMAN_QURAN + " halaman Al-Qur'an";
       setTimeout(function() {
         document.getElementById("hfProgressFill").style.width = Math.min(Math.max(persen, 0), 100) + "%";
       }, 80);
