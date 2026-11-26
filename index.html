@@ -30,20 +30,30 @@
       --muted: #475569;
       --border: #e2e8f0;
       --radius: 20px;
-      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
-      --shadow-md: 0 12px 28px -6px rgba(15, 23, 42, 0.10);
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+      --shadow-md: 0 12px 28px -6px rgba(15, 23, 42, 0.11);
     }
 
-    * { box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      margin: 0; padding: 0;
+      font-size: 16px;
       line-height: 1.55;
+      -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
     }
-    body.app-mode { padding-bottom: 92px; }
+    body.app-mode { padding-bottom: 96px; }
 
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(10px); }
@@ -56,7 +66,7 @@
     /* LOADING OVERLAY */
     #loading-overlay {
       display: none; position: fixed; inset: 0; z-index: 9999;
-      background: rgba(248, 250, 252, 0.94); backdrop-filter: blur(6px);
+      background: rgba(248, 250, 252, 0.95); backdrop-filter: blur(6px);
       flex-direction: column; align-items: center; justify-content: center; text-align: center;
       padding: 1.5rem;
     }
@@ -66,7 +76,7 @@
       animation: spin 0.8s linear infinite; margin-bottom: 14px;
     }
     .spinner-sm {
-      width: 28px; height: 28px; border-radius: 50%;
+      width: 30px; height: 30px; border-radius: 50%;
       border: 3px solid #cbd5e1; border-top-color: var(--primary);
       animation: spin 0.8s linear infinite;
     }
@@ -74,7 +84,7 @@
     /* BANNER PASANG PWA */
     #pwa-banner {
       display: none; background: #0f172a; color: white;
-      padding: 0.75rem 1rem; font-size: 0.82rem;
+      padding: 0.75rem 1rem; font-size: 0.85rem;
     }
     .pwa-inner {
       max-width: 980px; margin: 0 auto;
@@ -82,175 +92,203 @@
     }
     .btn-install-pwa {
       background: #10b981; color: white; border: none; border-radius: 99px;
-      padding: 0.45rem 0.9rem; font-weight: 800; font-size: 0.78rem; cursor: pointer;
+      padding: 0.5rem 1rem; font-weight: 800; font-size: 0.82rem; cursor: pointer;
       white-space: nowrap;
     }
 
     /* ============================================================
-       LAYAR 1: HALAMAN AWAL (INPUT NIS & AKSES CEPAT PUBLIK)
+       LAYAR 1: HALAMAN DEPAN (INPUT NIS + KEUANGAN & INVENTARIS)
        ============================================================ */
-    #home-screen { display: block; padding-bottom: 2.5rem; }
+    #home-screen { display: block; width: 100%; padding-bottom: 2.5rem; }
     .hero-home {
       background: linear-gradient(145deg, #064e3b 0%, #047857 58%, #0d9488 100%);
-      color: white; padding: 2.4rem 1.25rem 3.4rem; text-align: center;
-      border-bottom-left-radius: 32px; border-bottom-right-radius: 32px;
+      color: white; padding: 2.3rem 1.25rem 3.4rem; text-align: center;
+      border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
       box-shadow: var(--shadow-md);
     }
     .hero-logo {
-      width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
-      background: white; padding: 4px; border: 3px solid rgba(255,255,255,0.75);
+      width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+      background: white; padding: 4px; border: 3px solid rgba(255,255,255,0.78);
       box-shadow: 0 8px 20px rgba(0,0,0,0.22); margin-bottom: 10px;
     }
-    .hero-home h1 { margin: 0; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.3px; }
+    .hero-home h1 { margin: 0; font-size: 1.55rem; font-weight: 800; letter-spacing: -0.3px; }
     .hero-pill {
       display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
-      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28);
-      padding: 4px 14px; border-radius: 99px; font-size: 0.84rem; font-weight: 700;
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+      padding: 5px 15px; border-radius: 99px; font-size: 0.88rem; font-weight: 700;
     }
 
-    .home-wrap { max-width: 560px; margin: -2.1rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
-    .bento-login {
-      background: white; border-radius: 24px; padding: 1.5rem;
-      border: 1px solid var(--border); box-shadow: var(--shadow-md);
-      animation: fadeUp 0.4s ease;
+    .home-wrap { width: 100%; max-width: 560px; margin: -2.1rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
+
+    /* KARTU LANJUT CEPAT JIKA BARU KELUAR KE BERANDA */
+    #resume-card {
+      display: none; background: #ecfdf5; border: 2px solid #6ee7b7;
+      border-radius: 18px; padding: 1rem 1.1rem; margin-bottom: 12px;
+      box-shadow: var(--shadow-sm); animation: fadeUp 0.25s ease;
     }
-    .bento-login h2 { margin: 0 0 4px; font-size: 1.12rem; font-weight: 800; color: var(--primary); text-align: center; }
-    .bento-login .sub { margin: 0 0 1.2rem; font-size: 0.86rem; color: var(--muted); text-align: center; }
+    .resume-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .resume-name { font-size: 0.96rem; font-weight: 800; color: #065f46; }
+    .resume-sub { font-size: 0.78rem; color: #047857; font-weight: 600; }
+    .btn-resume {
+      background: var(--primary); color: white; border: none; border-radius: 12px;
+      padding: 0.65rem 1rem; font-size: 0.84rem; font-weight: 800; cursor: pointer;
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    .bento-login {
+      background: white; border-radius: 22px; padding: 1.5rem 1.35rem;
+      border: 1px solid var(--border); box-shadow: var(--shadow-md);
+      animation: fadeUp 0.35s ease;
+    }
+    .bento-login h2 { margin: 0 0 6px; font-size: 1.18rem; font-weight: 800; color: var(--primary); text-align: center; }
+    .bento-login .sub { margin: 0 0 1.2rem; font-size: 0.9rem; color: var(--muted); text-align: center; }
 
     .nis-input-box {
-      width: 100%; padding: 1rem; border-radius: 14px; border: 2px solid #cbd5e1;
-      background: #f8fafc; font-size: 1.15rem; font-weight: 800; text-align: center;
+      width: 100%; padding: 1.05rem; border-radius: 14px; border: 2px solid #cbd5e1;
+      background: #f8fafc; font-size: 1.18rem; font-weight: 800; text-align: center;
       color: var(--text); outline: none; transition: all 0.2s; letter-spacing: 1px;
     }
     .nis-input-box:focus { border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.14); }
-    .nis-input-box::placeholder { font-weight: 500; font-size: 0.94rem; letter-spacing: 0; color: #94a3b8; }
+    .nis-input-box::placeholder { font-weight: 500; font-size: 0.96rem; letter-spacing: 0; color: #94a3b8; }
 
     .remember-row {
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin: 0.9rem 0 1.1rem; font-size: 0.84rem; font-weight: 700; color: #334155; cursor: pointer;
+      margin: 0.95rem 0 1.15rem; font-size: 0.88rem; font-weight: 700; color: #334155; cursor: pointer;
     }
-    .remember-row input { width: 17px; height: 17px; accent-color: var(--primary); cursor: pointer; }
+    .remember-row input { width: 18px; height: 18px; accent-color: var(--primary); cursor: pointer; }
 
     .btn-primary-full {
-      width: 100%; padding: 1rem; border: none; border-radius: 14px;
+      width: 100%; padding: 1.05rem; border: none; border-radius: 14px;
       background: linear-gradient(135deg, #065f46, #059669); color: white;
-      font-size: 1rem; font-weight: 800; cursor: pointer;
+      font-size: 1.04rem; font-weight: 800; cursor: pointer;
       display: flex; align-items: center; justify-content: center; gap: 8px;
-      box-shadow: 0 6px 16px rgba(6, 95, 70, 0.28); transition: transform 0.15s;
+      box-shadow: 0 6px 16px rgba(6, 95, 70, 0.28);
     }
-    .btn-primary-full:hover { transform: translateY(-1px); }
     .btn-primary-full:disabled { opacity: 0.65; cursor: not-allowed; }
 
     .home-divider {
-      text-align: center; font-size: 0.74rem; font-weight: 800; color: #64748b;
-      text-transform: uppercase; letter-spacing: 0.8px; margin: 1.4rem 0 0.75rem;
+      text-align: center; font-size: 0.78rem; font-weight: 800; color: #64748b;
+      text-transform: uppercase; letter-spacing: 0.8px; margin: 1.5rem 0 0.8rem;
     }
-    .home-public-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .home-public-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
     .pub-tile {
       background: white; border: 1.5px solid var(--border); border-radius: 18px;
-      padding: 1rem; text-align: left; cursor: pointer; box-shadow: var(--shadow-sm);
-      display: flex; flex-direction: column; gap: 8px; transition: all 0.2s;
+      padding: 1.1rem; text-align: left; cursor: pointer; box-shadow: var(--shadow-sm);
+      display: flex; flex-direction: column; gap: 9px; transition: all 0.2s;
     }
     .pub-tile:hover { transform: translateY(-2px); border-color: #99f6e4; }
     .pub-tile-ico {
-      width: 40px; height: 40px; border-radius: 12px;
-      display: flex; align-items: center; justify-content: center; font-size: 1.15rem; color: white;
+      width: 44px; height: 44px; border-radius: 13px;
+      display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: white;
     }
     .ico-keu { background: linear-gradient(135deg, #047857, #10b981); }
     .ico-inv { background: linear-gradient(135deg, #4338ca, #6366f1); }
-    .pub-tile strong { font-size: 0.9rem; color: var(--text); display: block; line-height: 1.25; }
-    .pub-tile span { font-size: 0.74rem; color: var(--muted); font-weight: 600; }
+    .pub-tile strong { font-size: 0.96rem; color: var(--text); display: block; line-height: 1.25; }
+    .pub-tile span { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
 
     /* ============================================================
-       LAYAR 2: MODE PUBLIK TANPA NIS (KEUANGAN / INVENTARIS)
+       LAYAR 2: MODE PUBLIK (KEUANGAN & INVENTARIS SAJA, DI LUAR DATA ANAK)
        ============================================================ */
-    #public-standalone-screen { display: none; max-width: 980px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+    #public-standalone-screen {
+      display: none; width: 100%; max-width: 980px; margin: 0 auto; padding: 1rem 1rem 3rem;
+    }
     .btn-back-pill {
       display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1rem;
       background: white; color: #dc2626; border: 1.5px solid #fecaca;
-      padding: 0.65rem 1.15rem; border-radius: 99px; font-weight: 800; font-size: 0.86rem;
+      padding: 0.72rem 1.2rem; border-radius: 99px; font-weight: 800; font-size: 0.9rem;
       cursor: pointer; box-shadow: var(--shadow-sm);
     }
 
     /* ============================================================
-       LAYAR 3: MODE APLIKASI SANTRI (BENTO + NAVIGASI BAWAH)
+       LAYAR 3: MODE DATA SANTRI (MURNI 4 MENU: HAFALAN, BIODATA, ORTU, PELANGGARAN)
        ============================================================ */
-    #app-screen { display: none; }
+    #app-screen { display: none; width: 100%; max-width: 100%; }
 
     .app-topbar {
+      width: 100%;
       background: linear-gradient(135deg, #064e3b 0%, #047857 65%, #0d9488 100%);
-      color: white; padding: 1rem 1rem 2.1rem;
+      color: white; padding: 1.05rem 1rem 2.15rem;
       border-bottom-left-radius: 26px; border-bottom-right-radius: 26px;
       box-shadow: var(--shadow-md);
     }
     .app-topbar-inner {
-      max-width: 1020px; margin: 0 auto;
+      width: 100%; max-width: 980px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
     }
-    .student-chip { display: flex; align-items: center; gap: 11px; min-width: 0; }
+    .student-chip { display: flex; align-items: center; gap: 11px; min-width: 0; flex: 1; }
     .mini-avatar {
-      width: 46px; height: 46px; border-radius: 14px; object-fit: cover;
-      border: 2px solid rgba(255,255,255,0.75); background: #e2e8f0; flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 14px; object-fit: cover;
+      border: 2px solid rgba(255,255,255,0.78); background: #e2e8f0; flex-shrink: 0;
     }
-    .student-chip-text { min-width: 0; }
+    .student-chip-text { min-width: 0; flex: 1; }
     .student-chip-name {
-      font-size: 0.98rem; font-weight: 800; margin: 0;
+      font-size: 1.02rem; font-weight: 800; margin: 0; line-height: 1.25;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .student-chip-meta { font-size: 0.76rem; opacity: 0.9; font-weight: 600; }
+    .student-chip-meta { font-size: 0.8rem; opacity: 0.92; font-weight: 600; margin-top: 1px; }
 
-    .topbar-btns { display: flex; gap: 6px; flex-shrink: 0; }
+    .topbar-btns { display: flex; gap: 7px; flex-shrink: 0; }
     .btn-ico-top {
-      background: rgba(255,255,255,0.16); color: white; border: 1px solid rgba(255,255,255,0.28);
-      border-radius: 11px; padding: 0.5rem 0.7rem; font-size: 0.78rem; font-weight: 700;
-      cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 12px; padding: 0.56rem 0.78rem; font-size: 0.84rem; font-weight: 800;
+      cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
     }
-    .btn-ico-top:hover { background: rgba(255,255,255,0.26); }
+    .btn-ico-top:hover { background: rgba(255,255,255,0.28); }
     .btn-ico-top .lbl { display: none; }
 
-    .app-container { max-width: 1020px; margin: -1.35rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
+    .app-container {
+      width: 100%; max-width: 980px; margin: -1.35rem auto 0; padding: 0 0.9rem;
+      position: relative; z-index: 10; min-width: 0;
+    }
 
-    /* NAVIGASI DESKTOP (TERSEMBUNYI DI HP) */
+    /* NAVIGASI DESKTOP (4 PILIHAN) */
     .desktop-nav {
       display: none; background: white; border: 1px solid var(--border);
       border-radius: 16px; padding: 6px; gap: 6px; margin-bottom: 1.15rem;
       box-shadow: var(--shadow-sm);
     }
     .dnav-btn {
-      flex: 1; padding: 0.75rem 0.85rem; border: none; border-radius: 12px;
-      background: transparent; color: var(--muted); font-weight: 800; font-size: 0.86rem;
+      flex: 1; padding: 0.82rem 1rem; border: none; border-radius: 12px;
+      background: transparent; color: var(--muted); font-weight: 800; font-size: 0.92rem;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
       transition: all 0.2s;
     }
     .dnav-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 10px rgba(6,95,70,0.22); }
 
-    /* NAVIGASI BAWAH HP (FIXED BOTTOM BAR) */
+    /* NAVIGASI BAWAH HP (MURNI 4 PILIHAN BESAR & LEGA) */
     .bottom-nav {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 900;
-      background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(12px);
+      width: 100%; max-width: 100vw;
+      background: rgba(255, 255, 255, 0.97); backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: repeat(5, 1fr);
-      padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+      padding: 7px 6px calc(8px + env(safe-area-inset-bottom));
       box-shadow: 0 -6px 20px rgba(15, 23, 42, 0.08);
     }
     .bnav-btn {
       border: none; background: transparent; color: #64748b;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 3px; padding: 6px 2px; border-radius: 12px; cursor: pointer;
-      font-size: 0.68rem; font-weight: 700; transition: all 0.15s;
+      gap: 4px; padding: 8px 4px; border-radius: 13px; cursor: pointer;
+      font-size: 0.78rem; font-weight: 700; transition: all 0.15s;
     }
-    .bnav-btn i { font-size: 1.15rem; }
+    .bnav-btn i { font-size: 1.25rem; }
     .bnav-btn.active { color: var(--primary); background: #ecfdf5; font-weight: 800; }
 
-    /* TAB PANES */
-    .app-pane { display: none; animation: fadeUp 0.28s ease; }
+    /* TAB PANES & KARTU ANTI-OVERFLOW */
+    .app-pane { display: none; width: 100%; min-width: 0; animation: fadeUp 0.25s ease; }
     .app-pane.active { display: block; }
 
-    /* BENTO CARDS */
-    .bento-grid-haf { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 14px; }
+    .bento-grid-haf {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      margin-bottom: 14px;
+      width: 100%;
+    }
     .bento-card {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 1.2rem; box-shadow: var(--shadow-sm);
+      border-radius: var(--radius); padding: 1.2rem 1.1rem; box-shadow: var(--shadow-sm);
+      width: 100%; min-width: 0; max-width: 100%;
     }
 
     /* KARTU HERO HAFALAN + PROGRESS BAR 30 JUZ */
@@ -263,35 +301,33 @@
       background: linear-gradient(145deg, #065f46 0%, #047857 52%, #b45309 100%);
       border: 2px solid #fde68a; box-shadow: 0 10px 26px rgba(180, 83, 9, 0.26);
     }
-    .hf-top-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; }
-    .hf-kicker { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; opacity: 0.9; }
-    .hf-big-val { font-size: 1.75rem; font-weight: 800; line-height: 1.15; margin-top: 3px; }
-    .hf-date { font-size: 0.75rem; opacity: 0.88; font-weight: 600; margin-top: 4px; }
+    .hf-kicker { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.7px; opacity: 0.92; }
+    .hf-big-val { font-size: 1.9rem; font-weight: 800; line-height: 1.15; margin-top: 4px; }
+    .hf-date { font-size: 0.82rem; opacity: 0.9; font-weight: 600; margin-top: 6px; }
 
     .tren-pill {
-      display: inline-flex; align-items: center; gap: 5px;
-      padding: 5px 11px; border-radius: 99px; font-size: 0.75rem; font-weight: 800;
-      margin-top: 8px;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 13px; border-radius: 99px; font-size: 0.82rem; font-weight: 800;
+      margin-top: 9px;
     }
     .tp-khatam { background: #fef3c7; color: #92400e; }
     .tp-naik { background: #d1fae5; color: #065f46; }
     .tp-stabil { background: #e0f2fe; color: #075985; }
     .tp-turun { background: #ffedd5; color: #9a3412; }
     .tp-kosong { background: #ffe4e6; color: #9f1239; }
-    .tp-awal { background: rgba(255,255,255,0.2); color: white; }
+    .tp-awal { background: rgba(255,255,255,0.22); color: white; }
 
-    /* PROGRESS BAR MENUJU 30 JUZ */
     .progress-wrap {
-      background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.22);
-      border-radius: 14px; padding: 0.8rem 0.9rem;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 15px; padding: 0.85rem 0.95rem;
     }
     .progress-head {
       display: flex; justify-content: space-between; align-items: center;
-      font-size: 0.76rem; font-weight: 800; margin-bottom: 6px;
+      font-size: 0.84rem; font-weight: 800; margin-bottom: 7px;
     }
     .progress-track {
-      width: 100%; height: 10px; border-radius: 99px;
-      background: rgba(15, 23, 42, 0.24); overflow: hidden;
+      width: 100%; height: 11px; border-radius: 99px;
+      background: rgba(15, 23, 42, 0.25); overflow: hidden;
     }
     .progress-fill {
       height: 100%; width: 0%; border-radius: 99px;
@@ -299,43 +335,46 @@
       transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .mode-khatam .progress-fill { background: linear-gradient(90deg, #fef08a, #fbbf24); }
-    .progress-sub { font-size: 0.72rem; opacity: 0.9; margin-top: 5px; font-weight: 600; }
+    .progress-sub { font-size: 0.78rem; opacity: 0.92; margin-top: 6px; font-weight: 600; }
 
-    .hf-mini-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .hf-mini-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
     .hf-mini-box {
-      background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 12px; padding: 0.65rem 0.75rem;
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 13px; padding: 0.72rem 0.8rem;
     }
-    .hf-mini-lbl { font-size: 0.68rem; text-transform: uppercase; font-weight: 700; opacity: 0.88; }
-    .hf-mini-val { font-size: 0.9rem; font-weight: 800; margin-top: 2px; }
+    .hf-mini-lbl { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; }
+    .hf-mini-val { font-size: 0.96rem; font-weight: 800; margin-top: 2px; }
 
-    /* GRAFIK & BENCHMARK RATA-RATA KAMAR */
+    /* GRAFIK & BENCHMARK RATA-RATA KAMAR (TERKUNCI DI DALAM KARTU) */
     .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 10px; }
-    .chart-head h3 { margin: 0; font-size: 0.94rem; font-weight: 800; color: #0f766e; }
-    .chart-legend-row { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.72rem; font-weight: 700; color: var(--muted); }
+    .chart-head h3 { margin: 0; font-size: 1rem; font-weight: 800; color: #0f766e; }
+    .chart-legend-row { display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.76rem; font-weight: 700; color: var(--muted); }
     .benchmark-strip {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; margin-bottom: 12px;
     }
     .bm-pill {
-      background: #f8fafc; border: 1px solid var(--border); border-radius: 12px;
-      padding: 0.55rem 0.75rem; display: flex; align-items: center; justify-content: space-between; gap: 6px;
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 13px;
+      padding: 0.65rem 0.75rem; display: flex; flex-direction: column; gap: 2px;
     }
-    .bm-pill span { font-size: 0.72rem; font-weight: 700; color: var(--muted); }
-    .bm-pill strong { font-size: 0.88rem; font-weight: 800; color: #0f766e; }
+    .bm-pill span { font-size: 0.74rem; font-weight: 700; color: var(--muted); }
+    .bm-pill strong { font-size: 0.96rem; font-weight: 800; color: #0f766e; }
     .bm-pill.bm-kamar strong { color: #b45309; }
 
-    .chart-scroll { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .chart-box { position: relative; height: 215px; min-width: 100%; }
+    .chart-scroll {
+      width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+    }
+    .chart-box { position: relative; height: 225px; width: 100%; }
     .chart-empty {
       display: none; text-align: center; padding: 1.8rem 1rem; border-radius: 14px;
-      background: #f8fafc; border: 1px dashed #cbd5e1; font-size: 0.86rem; color: var(--muted); font-weight: 600;
+      background: #f8fafc; border: 1px dashed #cbd5e1; font-size: 0.9rem; color: var(--muted); font-weight: 600;
     }
     .chart-empty.khatam { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
 
-    /* PROFIL & ORANG TUA */
+    /* BIODATA & ORANG TUA (TERPISAH RAPI) */
     .profile-layout { display: flex; flex-direction: column; gap: 1.25rem; }
     .foto-frame {
-      position: relative; width: 142px; height: 188px; margin: 0 auto;
+      position: relative; width: 150px; height: 200px; margin: 0 auto;
       border-radius: 18px; overflow: hidden; border: 4px solid white;
       box-shadow: var(--shadow-md); background: #e2e8f0; flex-shrink: 0;
     }
@@ -343,67 +382,77 @@
     .foto-loader {
       position: absolute; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;
-      font-size: 0.72rem; font-weight: 700; color: #64748b; background: #f1f5f9;
+      font-size: 0.76rem; font-weight: 700; color: #64748b; background: #f1f5f9;
     }
 
-    .info-grid { display: grid; grid-template-columns: 1fr; gap: 10px; flex: 1; }
+    .info-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; flex: 1; }
     .info-tile {
-      background: #f8fafc; border: 1px solid var(--border); border-left: 4px solid #0284c7;
-      border-radius: 12px; padding: 0.75rem 0.95rem;
+      background: #f0f9ff; border: 1px solid #bae6fd; border-left: 5px solid #0284c7;
+      border-radius: 13px; padding: 0.85rem 1rem;
     }
     .info-tile.ortu-tile { background: #fffbeb; border-color: #fde68a; border-left-color: #d97706; }
-    .info-lbl { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; color: #0369a1; }
+    .info-lbl { font-size: 0.74rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px; color: #0369a1; }
     .ortu-tile .info-lbl { color: #92400e; }
-    .info-val { font-size: 0.96rem; font-weight: 700; color: var(--text); margin-top: 2px; word-break: break-word; }
+    .info-val { font-size: 1.02rem; font-weight: 700; color: var(--text); margin-top: 3px; word-break: break-word; }
 
-    .status-pill { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 0.8rem; font-weight: 800; }
+    .ortu-section-lbl {
+      font-size: 0.88rem; font-weight: 800; color: #b45309; text-transform: uppercase;
+      letter-spacing: 0.5px; margin: 0.3rem 0 0.65rem; padding-bottom: 0.4rem;
+      border-bottom: 2px dashed #fcd34d; display: flex; align-items: center; gap: 7px;
+    }
+
+    .status-pill { display: inline-block; padding: 4px 12px; border-radius: 99px; font-size: 0.86rem; font-weight: 800; }
     .sp-aktif { background: #dcfce7; color: #166534; }
     .sp-nonaktif { background: #fee2e2; color: #991b1b; }
 
-    /* DISIPLIN SUMMARY */
-    .plg-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+    /* PELANGGARAN SUMMARY */
+    .plg-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 14px; }
     .plg-stat {
-      background: white; border: 1px solid #fecdd3; border-radius: 16px;
-      padding: 0.9rem 0.75rem; text-align: center; box-shadow: var(--shadow-sm);
+      background: white; border: 1.5px solid #fecdd3; border-radius: 16px;
+      padding: 0.95rem 0.6rem; text-align: center; box-shadow: var(--shadow-sm);
     }
-    .plg-stat-lbl { font-size: 0.72rem; font-weight: 800; color: #9f1239; text-transform: uppercase; }
-    .plg-stat-val { font-size: 1.5rem; font-weight: 800; color: #be123c; margin-top: 2px; }
+    .plg-stat-lbl { font-size: 0.76rem; font-weight: 800; color: #9f1239; text-transform: uppercase; }
+    .plg-stat-val { font-size: 1.6rem; font-weight: 800; color: #be123c; margin-top: 2px; }
     .plg-stat.nihil { border-color: #bbf7d0; background: #f0fdf4; }
     .plg-stat.nihil .plg-stat-lbl, .plg-stat.nihil .plg-stat-val { color: #166534; }
 
     /* KEUANGAN & TABEL */
     .sec-title {
-      font-size: 1rem; font-weight: 800; color: var(--text);
-      margin: 0 0 0.85rem; display: flex; align-items: center; gap: 8px;
+      font-size: 1.05rem; font-weight: 800; color: var(--text);
+      margin: 0 0 0.9rem; display: flex; align-items: center; gap: 8px;
     }
     .sub-pill-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
     .sub-pill-btn {
-      flex: 1; padding: 0.8rem; border-radius: 12px; border: 1.5px solid var(--border);
-      background: #f8fafc; color: var(--muted); font-weight: 800; font-size: 0.86rem;
+      flex: 1; padding: 0.85rem 0.6rem; border-radius: 12px; border: 1.5px solid var(--border);
+      background: #f8fafc; color: var(--muted); font-weight: 800; font-size: 0.88rem;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
     }
     .sub-pill-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 
     .month-filter {
       background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 14px;
-      padding: 0.85rem 1rem; margin-bottom: 1rem;
-      display: flex; flex-direction: column; gap: 6px;
+      padding: 0.9rem 1rem; margin-bottom: 1rem;
+      display: flex; flex-direction: column; gap: 7px;
     }
-    .month-filter label { font-size: 0.84rem; font-weight: 800; color: #065f46; }
+    .month-filter label { font-size: 0.88rem; font-weight: 800; color: #065f46; }
     .month-filter select {
-      padding: 0.75rem; border-radius: 10px; border: 2px solid #86efac;
-      font-family: inherit; font-weight: 700; font-size: 0.94rem; background: white; outline: none;
+      padding: 0.8rem; border-radius: 10px; border: 2px solid #86efac;
+      font-family: inherit; font-weight: 700; font-size: 0.96rem; background: white; outline: none; width: 100%;
     }
 
     .swipe-tip {
       display: flex; align-items: center; justify-content: center; gap: 6px;
       background: #fffbeb; color: #b45309; border: 1px solid #fde68a;
-      border-radius: 10px; padding: 6px 10px; font-size: 0.76rem; font-weight: 700; margin-bottom: 10px;
+      border-radius: 10px; padding: 7px 10px; font-size: 0.8rem; font-weight: 700; margin-bottom: 10px;
+      text-align: center;
     }
-    .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: white; }
+    .table-wrap {
+      width: 100%; max-width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch;
+      border: 1px solid var(--border); border-radius: 14px; background: white;
+    }
     table { width: 100%; border-collapse: collapse; white-space: nowrap; }
-    th, td { padding: 0.78rem 0.75rem; border: 1px solid var(--border); text-align: center; font-size: 0.85rem; }
-    th { font-weight: 800; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.4px; }
+    th, td { padding: 0.82rem 0.78rem; border: 1px solid var(--border); text-align: center; font-size: 0.88rem; }
+    th { font-weight: 800; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.4px; }
 
     .tbl-hafalan th { background: linear-gradient(135deg, #0f766e, #0d9488); color: white; }
     .tbl-hafalan tbody tr:nth-child(even) { background: #f0fdfa; }
@@ -414,26 +463,27 @@
     .tbl-inventaris th { background: linear-gradient(135deg, #4338ca, #4f46e5); color: white; }
     .tbl-inventaris tbody tr:nth-child(even) { background: #eef2ff; }
 
-    .footer-brand { text-align: center; font-size: 0.78rem; color: #64748b; font-weight: 600; margin-top: 1.5rem; }
+    .footer-brand { text-align: center; font-size: 0.82rem; color: #64748b; font-weight: 600; margin-top: 1.5rem; }
 
     @media (min-width: 768px) {
       body.app-mode { padding-bottom: 2.5rem; }
       .bottom-nav { display: none; }
       .desktop-nav { display: flex; }
       .btn-ico-top .lbl { display: inline; }
-      .bento-grid-haf { grid-template-columns: 1fr 1.45fr; align-items: stretch; }
+      .bento-grid-haf { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); align-items: stretch; }
+      .bm-pill { flex-direction: row; align-items: center; justify-content: space-between; }
       .profile-layout { flex-direction: row; align-items: flex-start; }
-      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .info-tile.span-2 { grid-column: 1 / -1; }
       .month-filter { flex-direction: row; align-items: center; justify-content: space-between; }
-      .month-filter select { width: 260px; }
+      .month-filter select { width: 270px; }
       .swipe-tip { display: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- BANNER INSTAL APLIKASI (MUNCUL OTOMATIS DI HP ANDROID CHROME) -->
+  <!-- BANNER INSTAL PWA -->
   <div id="pwa-banner">
     <div class="pwa-inner">
       <span><i class="fa-solid fa-mobile-screen-button"></i> Pasang <b>Portal MA 09</b> di layar HP agar buka lebih cepat.</span>
@@ -444,12 +494,12 @@
   <!-- LOADING OVERLAY -->
   <div id="loading-overlay">
     <div class="loader-ring"></div>
-    <h3 id="loading-title" style="margin:0; font-size:1.05rem; color:#065f46; font-weight:800;">Memuat Data...</h3>
-    <p style="margin:4px 0 0; font-size:0.84rem; color:#475569;">Mohon tunggu sebentar, Bapak/Ibu...</p>
+    <h3 id="loading-title" style="margin:0; font-size:1.08rem; color:#065f46; font-weight:800;">Memuat Data...</h3>
+    <p style="margin:5px 0 0; font-size:0.88rem; color:#475569;">Mohon tunggu sebentar, Bapak/Ibu...</p>
   </div>
 
   <!-- ============================================================
-       1. HALAMAN AWAL (LOGIN NIS + AKSES CEPAT KEUANGAN/INVENTARIS)
+       1. HALAMAN DEPAN (INPUT NIS + KEUANGAN & INVENTARIS DI LUAR)
        ============================================================ -->
   <div id="home-screen">
     <div class="hero-home">
@@ -459,9 +509,22 @@
     </div>
 
     <div class="home-wrap">
+      <!-- KARTU LANJUT CEPAT (MUNCUL BILA WALI KEMBALI KE BERANDA DARI DATA SANTRI) -->
+      <div id="resume-card">
+        <div class="resume-top">
+          <div style="min-width:0;">
+            <div class="resume-name" id="resumeNama">-</div>
+            <div class="resume-sub" id="resumeMeta">Data santri masih terbuka</div>
+          </div>
+          <button type="button" class="btn-resume" onclick="kembaliKeDataSantri()">
+            Buka Data <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </div>
+
       <div class="bento-login">
         <h2>Assalamu’alaikum, Wali Santri 👋</h2>
-        <p class="sub">Masukkan NIS putra Bapak/Ibu sekali saja—HP otomatis mengingatnya untuk pekan berikutnya.</p>
+        <p class="sub">Masukkan NIS putra Bapak/Ibu untuk melihat Hafalan, Biodata, Orang Tua &amp; Pelanggaran.</p>
 
         <input type="text" id="inputNis" class="nis-input-box" autocomplete="off" inputmode="numeric" placeholder="Ketik Nomor Induk Santri (NIS)..." onkeydown="if(event.key==='Enter'){ event.preventDefault(); cariSantriDariInput(); }">
 
@@ -471,20 +534,20 @@
         </label>
 
         <button type="button" id="btnCariHome" class="btn-primary-full" onclick="cariSantriDariInput()">
-          <i class="fa-solid fa-arrow-right-to-bracket"></i> Masuk Portal Santri
+          <i class="fa-solid fa-magnifying-glass"></i> Lihat Data Santri
         </button>
       </div>
 
-      <div class="home-divider">Informasi Terbuka Kamar (Tanpa NIS)</div>
+      <div class="home-divider">Informasi Umum Kamar (Tanpa NIS)</div>
       <div class="home-public-grid">
-        <button type="button" class="pub-tile" onclick="bukaPublikMandiri('keuangan')">
+        <button type="button" class="pub-tile" onclick="bukaPublik('keuangan')">
           <div class="pub-tile-ico ico-keu"><i class="fa-solid fa-wallet"></i></div>
           <div>
             <strong>Laporan Keuangan</strong>
             <span>Iuran &amp; pengeluaran</span>
           </div>
         </button>
-        <button type="button" class="pub-tile" onclick="bukaPublikMandiri('inventaris')">
+        <button type="button" class="pub-tile" onclick="bukaPublik('inventaris')">
           <div class="pub-tile-ico ico-inv"><i class="fa-solid fa-boxes-stacked"></i></div>
           <div>
             <strong>Barang Inventaris</strong>
@@ -498,17 +561,56 @@
   </div>
 
   <!-- ============================================================
-       2. LAYAR PUBLIK MANDIRI (JIKA BUKA KEUANGAN/INVENTARIS TANPA NIS)
+       2. LAYAR PUBLIK (KHUSUS KEUANGAN & INVENTARIS DI LUAR DATA SANTRI)
        ============================================================ -->
   <div id="public-standalone-screen">
-    <button type="button" class="btn-back-pill" onclick="tutupPublikMandiri()">
-      <i class="fa-solid fa-arrow-left"></i> Kembali ke Halaman Awal
+    <button type="button" class="btn-back-pill" onclick="tutupPublik()">
+      <i class="fa-solid fa-arrow-left"></i> Kembali ke Halaman Depan
     </button>
-    <div id="public-standalone-slot"></div>
+
+    <div id="keuangan-module" class="bento-card" style="display:none;">
+      <h3 class="sec-title"><i class="fa-solid fa-wallet" style="color:#047857;"></i> Laporan Keuangan Kamar MA 09</h3>
+      <div class="sub-pill-tabs">
+        <button type="button" id="btnSubIuran" class="sub-pill-btn active" onclick="pindahSubKeuangan('iuran')">
+          <i class="fa-solid fa-money-check-dollar"></i> Rekap Iuran
+        </button>
+        <button type="button" id="btnSubRincian" class="sub-pill-btn" onclick="pindahSubKeuangan('rincian')">
+          <i class="fa-solid fa-cart-shopping"></i> Pengeluaran
+        </button>
+      </div>
+
+      <div id="boxIuranGlobal">
+        <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat bulan lainnya</div>
+        <div class="table-wrap">
+          <table><thead id="headKeuangan"></thead><tbody id="resKeuangan"></tbody></table>
+        </div>
+      </div>
+
+      <div id="boxRincianBulan" style="display:none;">
+        <div class="month-filter">
+          <label for="pilihBulan"><i class="fa-regular fa-calendar-days"></i> Pilih Bulan Pengeluaran:</label>
+          <select id="pilihBulan" onchange="muatPengeluaranBulan()">
+            <option value="" selected disabled>-- Ketuk untuk Pilih Bulan --</option>
+          </select>
+        </div>
+        <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel bila terpotong</div>
+        <div class="table-wrap">
+          <table><thead id="headPengeluaran"></thead><tbody id="resPengeluaran"></tbody></table>
+        </div>
+      </div>
+    </div>
+
+    <div id="inventaris-module" class="bento-card" style="display:none;">
+      <h3 class="sec-title"><i class="fa-solid fa-boxes-stacked" style="color:#4338ca;"></i> Data Barang Inventaris Kamar</h3>
+      <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat detail kondisi</div>
+      <div class="table-wrap">
+        <table class="tbl-inventaris"><thead id="headInventaris"></thead><tbody id="resInventaris"></tbody></table>
+      </div>
+    </div>
   </div>
 
   <!-- ============================================================
-       3. MODE APLIKASI SANTRI (BENTO + NAVIGASI BAWAH)
+       3. LAYAR DATA SANTRI (MURNI 4 PILIHAN: HAFALAN, BIODATA, ORTU, PELANGGARAN)
        ============================================================ -->
   <div id="app-screen">
     <div class="app-topbar">
@@ -521,27 +623,26 @@
           </div>
         </div>
         <div class="topbar-btns">
-          <button type="button" class="btn-ico-top" onclick="muatUlangSantriAktif()" title="Muat Ulang Data">
+          <button type="button" class="btn-ico-top" onclick="muatUlangSantriAktif()" title="Segarkan Data">
             <i class="fa-solid fa-rotate"></i><span class="lbl">Segarkan</span>
           </button>
-          <button type="button" class="btn-ico-top" onclick="gantiNis()" title="Ganti Santri / Keluar">
-            <i class="fa-solid fa-right-from-bracket"></i><span class="lbl">Ganti NIS</span>
+          <button type="button" class="btn-ico-top" onclick="keHalamanDepan()" title="Ke Halaman Depan / Keuangan / Ganti NIS">
+            <i class="fa-solid fa-house"></i><span class="lbl">Beranda</span>
           </button>
         </div>
       </div>
     </div>
 
     <div class="app-container">
-      <!-- NAVIGASI DESKTOP -->
+      <!-- NAVIGASI DESKTOP (4 TAB) -->
       <div class="desktop-nav">
         <button type="button" class="dnav-btn active" data-tab="hafalan" onclick="pindahTab('hafalan')"><i class="fa-solid fa-book-quran"></i> Hafalan</button>
-        <button type="button" class="dnav-btn" data-tab="profil" onclick="pindahTab('profil')"><i class="fa-solid fa-id-card"></i> Profil &amp; Ortu</button>
-        <button type="button" class="dnav-btn" data-tab="disiplin" onclick="pindahTab('disiplin')"><i class="fa-solid fa-clipboard-check"></i> Kedisiplinan</button>
-        <button type="button" class="dnav-btn" data-tab="keuangan" onclick="pindahTab('keuangan')"><i class="fa-solid fa-wallet"></i> Keuangan</button>
-        <button type="button" class="dnav-btn" data-tab="inventaris" onclick="pindahTab('inventaris')"><i class="fa-solid fa-boxes-stacked"></i> Inventaris</button>
+        <button type="button" class="dnav-btn" data-tab="biodata" onclick="pindahTab('biodata')"><i class="fa-solid fa-id-card"></i> Biodata</button>
+        <button type="button" class="dnav-btn" data-tab="ortu" onclick="pindahTab('ortu')"><i class="fa-solid fa-users"></i> Orang Tua</button>
+        <button type="button" class="dnav-btn" data-tab="pelanggaran" onclick="pindahTab('pelanggaran')"><i class="fa-solid fa-clipboard-check"></i> Pelanggaran</button>
       </div>
 
-      <!-- TAB 1: HAFALAN (BENTO DASHBOARD + PROGRESS 30 JUZ + GRAFIK BENCHMARK KAMAR) -->
+      <!-- TAB 1: HAFALAN (DETAIL LENGKAP + PROGRESS BAR + GRAFIK + TABEL) -->
       <div id="pane-hafalan" class="app-pane active">
         <div class="bento-grid-haf">
           <div class="bento-card hero-hafalan-card" id="kartuHeroHafalan">
@@ -619,9 +720,9 @@
         </div>
       </div>
 
-      <!-- TAB 2: PROFIL SANTRI & DATA ORANG TUA -->
-      <div id="pane-profil" class="app-pane">
-        <div class="bento-card" style="margin-bottom:14px;">
+      <!-- TAB 2: BIODATA SANTRI -->
+      <div id="pane-biodata" class="app-pane">
+        <div class="bento-card">
           <h3 class="sec-title"><i class="fa-solid fa-id-card" style="color:#0284c7;"></i> Biodata Lengkap Santri</h3>
           <div class="profile-layout">
             <div class="foto-frame">
@@ -642,14 +743,22 @@
             </div>
           </div>
         </div>
+      </div>
 
+      <!-- TAB 3: DATA ORANG TUA -->
+      <div id="pane-ortu" class="app-pane">
         <div class="bento-card">
           <h3 class="sec-title"><i class="fa-solid fa-users" style="color:#d97706;"></i> Data Orang Tua / Wali</h3>
-          <div class="info-grid">
+
+          <div class="ortu-section-lbl"><i class="fa-solid fa-user-tie"></i> Data Ayah</div>
+          <div class="info-grid" style="margin-bottom: 1.25rem;">
             <div class="info-tile ortu-tile span-2"><div class="info-lbl">Nama Ayah</div><div class="info-val" id="resAyah">-</div></div>
             <div class="info-tile ortu-tile"><div class="info-lbl">Pekerjaan Ayah</div><div class="info-val" id="resPekerjaanAyah">-</div></div>
             <div class="info-tile ortu-tile"><div class="info-lbl">Nomor HP Ayah</div><div class="info-val" id="resHpAyah">-</div></div>
+          </div>
 
+          <div class="ortu-section-lbl"><i class="fa-solid fa-user"></i> Data Ibu</div>
+          <div class="info-grid">
             <div class="info-tile ortu-tile span-2"><div class="info-lbl">Nama Ibu</div><div class="info-val" id="resIbu">-</div></div>
             <div class="info-tile ortu-tile"><div class="info-lbl">Pekerjaan Ibu</div><div class="info-val" id="resPekerjaanIbu">-</div></div>
             <div class="info-tile ortu-tile"><div class="info-lbl">Nomor HP Ibu</div><div class="info-val" id="resHpIbu">-</div></div>
@@ -657,8 +766,8 @@
         </div>
       </div>
 
-      <!-- TAB 3: KEDISIPLINAN -->
-      <div id="pane-disiplin" class="app-pane">
+      <!-- TAB 4: PELANGGARAN / KEDISIPLINAN -->
+      <div id="pane-pelanggaran" class="app-pane">
         <div class="plg-summary">
           <div class="plg-stat" id="cardPlgKamar"><div class="plg-stat-lbl">Kamar</div><div class="plg-stat-val" id="cntPlgKamar">0</div></div>
           <div class="plg-stat" id="cardPlgKomplek"><div class="plg-stat-lbl">Komplek</div><div class="plg-stat-val" id="cntPlgKomplek">0</div></div>
@@ -679,71 +788,22 @@
         </div>
       </div>
 
-      <!-- TAB 4: KEUANGAN KAMAR -->
-      <div id="pane-keuangan" class="app-pane">
-        <div id="keuangan-module" class="bento-card">
-          <h3 class="sec-title"><i class="fa-solid fa-wallet" style="color:#047857;"></i> Laporan Keuangan Kamar MA 09</h3>
-          <div class="sub-pill-tabs">
-            <button type="button" id="btnSubIuran" class="sub-pill-btn active" onclick="pindahSubKeuangan('iuran')">
-              <i class="fa-solid fa-money-check-dollar"></i> Rekap Iuran
-            </button>
-            <button type="button" id="btnSubRincian" class="sub-pill-btn" onclick="pindahSubKeuangan('rincian')">
-              <i class="fa-solid fa-cart-shopping"></i> Pengeluaran Bulanan
-            </button>
-          </div>
-
-          <div id="boxIuranGlobal">
-            <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat seluruh bulan</div>
-            <div class="table-wrap">
-              <table><thead id="headKeuangan"></thead><tbody id="resKeuangan"></tbody></table>
-            </div>
-          </div>
-
-          <div id="boxRincianBulan" style="display:none;">
-            <div class="month-filter">
-              <label for="pilihBulan"><i class="fa-regular fa-calendar-days"></i> Pilih Bulan Pengeluaran:</label>
-              <select id="pilihBulan" onchange="muatPengeluaranBulan()">
-                <option value="" selected disabled>-- Ketuk untuk Pilih Bulan --</option>
-              </select>
-            </div>
-            <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel bila terpotong</div>
-            <div class="table-wrap">
-              <table><thead id="headPengeluaran"></thead><tbody id="resPengeluaran"></tbody></table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- TAB 5: INVENTARIS KAMAR -->
-      <div id="pane-inventaris" class="app-pane">
-        <div id="inventaris-module" class="bento-card">
-          <h3 class="sec-title"><i class="fa-solid fa-boxes-stacked" style="color:#4338ca;"></i> Data Barang Inventaris Kamar</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat detail kondisi</div>
-          <div class="table-wrap">
-            <table class="tbl-inventaris"><thead id="headInventaris"></thead><tbody id="resInventaris"></tbody></table>
-          </div>
-        </div>
-      </div>
-
       <div class="footer-brand">Pengurus Kamar Maqomin Amin 09 &bull; PP Madrasatul Qur'an Tebuireng</div>
     </div>
 
-    <!-- NAVIGASI BAWAH HP -->
+    <!-- NAVIGASI BAWAH HP (MURNI 4 PILIHAN) -->
     <nav class="bottom-nav">
       <button type="button" class="bnav-btn active" data-tab="hafalan" onclick="pindahTab('hafalan')">
         <i class="fa-solid fa-book-quran"></i><span>Hafalan</span>
       </button>
-      <button type="button" class="bnav-btn" data-tab="profil" onclick="pindahTab('profil')">
-        <i class="fa-solid fa-id-card"></i><span>Profil</span>
+      <button type="button" class="bnav-btn" data-tab="biodata" onclick="pindahTab('biodata')">
+        <i class="fa-solid fa-id-card"></i><span>Biodata</span>
       </button>
-      <button type="button" class="bnav-btn" data-tab="disiplin" onclick="pindahTab('disiplin')">
-        <i class="fa-solid fa-clipboard-check"></i><span>Disiplin</span>
+      <button type="button" class="bnav-btn" data-tab="ortu" onclick="pindahTab('ortu')">
+        <i class="fa-solid fa-users"></i><span>Orang Tua</span>
       </button>
-      <button type="button" class="bnav-btn" data-tab="keuangan" onclick="pindahTab('keuangan')">
-        <i class="fa-solid fa-wallet"></i><span>Keuangan</span>
-      </button>
-      <button type="button" class="bnav-btn" data-tab="inventaris" onclick="pindahTab('inventaris')">
-        <i class="fa-solid fa-boxes-stacked"></i><span>Inventaris</span>
+      <button type="button" class="bnav-btn" data-tab="pelanggaran" onclick="pindahTab('pelanggaran')">
+        <i class="fa-solid fa-clipboard-check"></i><span>Pelanggaran</span>
       </button>
     </nav>
   </div>
@@ -753,6 +813,8 @@
     var STORAGE_KEY_NIS = "ma09_wali_saved_nis";
 
     var nisAktif = "";
+    var namaSantriAktif = "";
+    var kelasSantriAktif = "";
     var currentHafalanStats = null;
     var chartInstance = null;
     var cacheKeuangan = null;
@@ -782,7 +844,6 @@
       '</svg>'
     );
 
-    // Tangkap event instalasi PWA untuk memunculkan tombol "Pasang"
     window.addEventListener("beforeinstallprompt", function(e) {
       e.preventDefault();
       deferredPwaPrompt = e;
@@ -878,7 +939,7 @@
       cobaBerikutnya();
     }
 
-    // --- AUTO-LOGIN NIS TERSIMPAN SAAT HALAMAN DIBUKA ---
+    // AUTO-LOGIN NIS TERSIMPAN
     window.addEventListener("DOMContentLoaded", function() {
       try {
         var savedNis = localStorage.getItem(STORAGE_KEY_NIS);
@@ -903,21 +964,38 @@
 
     function muatUlangSantriAktif() {
       if (!nisAktif) return;
-      cacheKeuangan = null;
-      cacheInventaris = null;
       muatDataSantri(nisAktif, !!localStorage.getItem(STORAGE_KEY_NIS));
     }
 
-    function gantiNis() {
+    // Kembali ke halaman depan (akses Keuangan, Inventaris, atau Ganti NIS) tanpa menghapus data yang sudah dimuat
+    function keHalamanDepan() {
       activeRequestId++;
-      nisAktif = "";
-      try { localStorage.removeItem(STORAGE_KEY_NIS); } catch (e) {}
       document.body.classList.remove("app-mode");
       document.getElementById("app-screen").style.display = "none";
       document.getElementById("public-standalone-screen").style.display = "none";
       document.getElementById("home-screen").style.display = "block";
+
+      var resumeCard = document.getElementById("resume-card");
+      if (nisAktif && namaSantriAktif) {
+        document.getElementById("resumeNama").innerText = namaSantriAktif;
+        document.getElementById("resumeMeta").innerText = "NIS " + nisAktif + " • " + (kelasSantriAktif || "Kamar MA 09");
+        resumeCard.style.display = "block";
+      } else {
+        resumeCard.style.display = "none";
+      }
       document.getElementById("inputNis").value = "";
-      kembalikanModulPublikKeTab();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function kembaliKeDataSantri() {
+      if (!nisAktif) return;
+      document.getElementById("home-screen").style.display = "none";
+      document.getElementById("public-standalone-screen").style.display = "none";
+      document.getElementById("app-screen").style.display = "block";
+      document.body.classList.add("app-mode");
+      if (currentHafalanStats && document.getElementById("pane-hafalan").classList.contains("active")) {
+        setTimeout(function() { renderGrafik(currentHafalanStats); }, 60);
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -942,6 +1020,9 @@
           }
 
           nisAktif = res.bio.nis || nis;
+          namaSantriAktif = res.bio.nama || "-";
+          kelasSantriAktif = res.bio.kelas || "";
+
           if (simpanKeHp) {
             try { localStorage.setItem(STORAGE_KEY_NIS, nisAktif); } catch (e) {}
           } else {
@@ -949,7 +1030,6 @@
           }
 
           isiSemuaDataSantri(res);
-          kembalikanModulPublikKeTab();
 
           document.getElementById("home-screen").style.display = "none";
           document.getElementById("public-standalone-screen").style.display = "none";
@@ -976,7 +1056,7 @@
       document.getElementById("topMeta").innerText = "NIS " + (bio.nis || "-") + " • " + (bio.kelas || "Kamar MA 09");
       muatFoto(bio.foto);
 
-      // Profil & Ortu
+      // Tab Biodata
       document.getElementById("resNis").innerText = bio.nis || "-";
       document.getElementById("resNama").innerText = bio.nama || "-";
       document.getElementById("resPanggilan").innerText = bio.panggilan || "-";
@@ -990,6 +1070,7 @@
       document.getElementById("resTahun").innerText = bio.tahunMasuk || "-";
       document.getElementById("resAlamat").innerText = bio.alamat || "-";
 
+      // Tab Orang Tua
       document.getElementById("resAyah").innerText = ortu.ayah || "-";
       document.getElementById("resPekerjaanAyah").innerText = ortu.pekerjaanAyah || "-";
       document.getElementById("resHpAyah").innerText = ortu.hpAyah || "-";
@@ -997,7 +1078,7 @@
       document.getElementById("resPekerjaanIbu").innerText = ortu.pekerjaanIbu || "-";
       document.getElementById("resHpIbu").innerText = ortu.hpIbu || "-";
 
-      // Hero Hafalan + Progress Bar 30 Juz
+      // Tab Hafalan
       currentHafalanStats = st;
       var heroCard = document.getElementById("kartuHeroHafalan");
       heroCard.classList.remove("mode-khatam");
@@ -1033,7 +1114,6 @@
       badge.classList.add(cls);
       badge.innerHTML = '<i class="fa-solid ' + ico + '"></i> ' + escapeHTML(st.teksTren || "-");
 
-      // Benchmark rata-rata pribadi vs kamar
       var bmStrip = document.getElementById("benchmarkStrip");
       if (st.chartData && st.chartData.length > 0) {
         bmStrip.style.display = "grid";
@@ -1048,7 +1128,7 @@
         : "<tr><td colspan='7' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat setoran hafalan yang tercatat.</td></tr>";
       document.getElementById("resHafalan").innerHTML = res.hafalanHTML || emptyHaf;
 
-      // Kedisiplinan & ringkasan 3 kartu
+      // Tab Pelanggaran
       var tbodyPlg = document.getElementById("resPelanggaran");
       if (res.pelanggaranHTML) {
         tbodyPlg.innerHTML = res.pelanggaranHTML;
@@ -1075,7 +1155,7 @@
       else card.classList.remove("nihil");
     }
 
-    // --- GRAFIK MINGGUAN + GARIS PEMBANDING RATA-RATA KAMAR ---
+    // GRAFIK MINGGUAN (AMAN DI DALAM KARTU TANPA MELEBARKAN LAYAR HP)
     function renderGrafik(stats) {
       if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
       var scroll = document.getElementById("chartScroll");
@@ -1108,10 +1188,12 @@
         ? '<i class="fa-solid fa-chart-line"></i> Arsip Grafik Menuju Khatam'
         : '<i class="fa-solid fa-chart-line"></i> Grafik Mingguan (Hal / Pekan)';
 
-      box.style.minWidth = stats.chartLabels.length > 7 ? (stats.chartLabels.length * 52) + "px" : "100%";
+      var lebarScroll = scroll.clientWidth || 300;
+      var lebarButuh = stats.chartLabels.length > 6 ? (stats.chartLabels.length * 48) : lebarScroll;
+      box.style.width = Math.max(lebarScroll, lebarButuh) + "px";
 
       var ctx = document.getElementById("grafikHafalan").getContext("2d");
-      var grad = ctx.createLinearGradient(0, 0, 0, 210);
+      var grad = ctx.createLinearGradient(0, 0, 0, 215);
       grad.addColorStop(0, "rgba(13, 148, 136, 0.28)");
       grad.addColorStop(1, "rgba(13, 148, 136, 0.02)");
 
@@ -1131,7 +1213,6 @@
         pointHoverRadius: 7.5
       }];
 
-      // Tambahkan garis putus-putus Rata-rata Kamar bila tersedia
       var avgKamar = Number(stats.rataRataKamar || 0);
       if (avgKamar > 0) {
         datasets.push({
@@ -1175,10 +1256,10 @@
               beginAtZero: true,
               grace: '15%',
               suggestedMax: 6,
-              ticks: { stepSize: 1, precision: 0, color: '#475569', callback: function(v) { return v + ' hal'; } },
+              ticks: { stepSize: 1, precision: 0, color: '#475569', font: { size: 12 }, callback: function(v) { return v + ' hal'; } },
               grid: { color: '#f1f5f9' }
             },
-            x: { ticks: { color: '#475569' }, grid: { display: false } }
+            x: { ticks: { color: '#475569', font: { size: 11 } }, grid: { display: false } }
           }
         }
       });
@@ -1186,7 +1267,7 @@
       scroll.scrollLeft = scroll.scrollWidth;
     }
 
-    // --- NAVIGASI 5 TAB APLIKASI ---
+    // NAVIGASI 4 TAB SANTRI (HAFALAN, BIODATA, ORANG TUA, PELANGGARAN)
     function pindahTab(nama) {
       var panes = document.querySelectorAll(".app-pane");
       for (var i = 0; i < panes.length; i++) panes[i].classList.remove("active");
@@ -1194,57 +1275,38 @@
 
       var allBtns = document.querySelectorAll(".bnav-btn, .dnav-btn");
       for (var j = 0; j < allBtns.length; j++) {
-        if (allBtns[j].getAttribute("data-tab") === nama) allBtns[j].classList.add("active");
-        else allBtns[j].classList.remove("active");
+        allBtns[j].classList.toggle("active", allBtns[j].getAttribute("data-tab") === nama);
       }
 
       if (nama === "hafalan" && currentHafalanStats) {
         setTimeout(function() { renderGrafik(currentHafalanStats); }, 50);
-      } else if (nama === "keuangan") {
-        muatKeuangan();
-      } else if (nama === "inventaris") {
-        muatInventaris();
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // --- AKSES PUBLIK MANDIRI (TANPA NIS DARI HALAMAN AWAL) ---
-    function bukaPublikMandiri(jenis) {
+    // ============================================================
+    // LAYAR PUBLIK (KHUSUS KEUANGAN & INVENTARIS DI LUAR DATA SANTRI)
+    // ============================================================
+    function bukaPublik(jenis) {
       document.getElementById("home-screen").style.display = "none";
+      document.getElementById("app-screen").style.display = "none";
       document.getElementById("public-standalone-screen").style.display = "block";
-      var slot = document.getElementById("public-standalone-slot");
-      kembalikanModulPublikKeTab();
+      document.getElementById("keuangan-module").style.display = (jenis === "keuangan") ? "block" : "none";
+      document.getElementById("inventaris-module").style.display = (jenis === "inventaris") ? "block" : "none";
 
-      if (jenis === "keuangan") {
-        slot.appendChild(document.getElementById("keuangan-module"));
-        muatKeuangan();
-      } else {
-        slot.appendChild(document.getElementById("inventaris-module"));
-        muatInventaris();
-      }
+      if (jenis === "keuangan") muatKeuangan();
+      else muatInventaris();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function tutupPublikMandiri() {
+    function tutupPublik() {
       activeRequestId++;
       hideLoader();
-      kembalikanModulPublikKeTab();
       document.getElementById("public-standalone-screen").style.display = "none";
       document.getElementById("home-screen").style.display = "block";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function kembalikanModulPublikKeTab() {
-      var keuMod = document.getElementById("keuangan-module");
-      var invMod = document.getElementById("inventaris-module");
-      if (keuMod && keuMod.parentNode.id !== "pane-keuangan") {
-        document.getElementById("pane-keuangan").appendChild(keuMod);
-      }
-      if (invMod && invMod.parentNode.id !== "pane-inventaris") {
-        document.getElementById("pane-inventaris").appendChild(invMod);
-      }
-    }
-
-    // --- KEUANGAN & INVENTARIS ---
     function renderStyledTable(matrix, headId, bodyId) {
       var headEl = document.getElementById(headId);
       var bodyEl = document.getElementById(bodyId);
