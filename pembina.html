@@ -654,7 +654,7 @@
       .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .bento-2col { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
       .mass-top-controls { grid-template-columns: 230px minmax(0, 1fr); }
-      .mr-inputs { grid-template-columns: 76px 76px 96px 1.2fr 1fr 1.4fr; }
+      .mr-inputs { grid-template-columns: 76px 86px 96px 1.2fr 1fr 1.4fr; }
       .mr-span-2, .mr-span-3 { grid-column: auto; }
       .toolbar { flex-direction: row; align-items: center; justify-content: space-between; }
       .search-input { max-width: 320px; }
@@ -692,7 +692,7 @@
     </div>
   </div>
 
-  <!-- 2. DASBOR PEMBINA v2.2 -->
+  <!-- 2. DASBOR PEMBINA v2.3 (STANDAR 604 HALAMAN) -->
   <div id="dashboard-screen">
     <div class="topbar">
       <div class="topbar-inner">
@@ -986,10 +986,10 @@
         <div class="form-grid-3">
           <div class="form-group">
             <label for="inHafJuz">Juz (1-30)</label>
-            <input type="number" id="inHafJuz" min="1" max="30" inputmode="numeric" placeholder="1 - 30">
+            <input type="number" id="inHafJuz" min="1" max="30" inputmode="numeric" placeholder="1 - 30" oninput="perbaruiBatasHalSatuan()">
           </div>
           <div class="form-group">
-            <label for="inHafHal">Halaman (1-20)</label>
+            <label for="inHafHal" id="lblInHafHal">Halaman (1-20)</label>
             <input type="number" id="inHafHal" min="1" max="20" inputmode="numeric" placeholder="1 - 20">
           </div>
           <div class="form-group">
@@ -1063,10 +1063,11 @@
 
   <script>
     // =========================================================================
-    // KONFIGURASI SERVER API & PORTAL WALI
+    // KONFIGURASI SERVER API, LINK PERMANEN & STANDAR 604 HALAMAN
     // =========================================================================
     var API_URL = "https://script.google.com/macros/s/AKfycbwkimilgQq9LSHB_76eTzzjItmk-Jc_jOC8BMi6HlL7_LP-oFcop5CIBk8WilwSZygk/exec";
-    var PORTAL_WALI_URL = "https://tinyurl.com/MA09Database";
+    var PORTAL_WALI_URL = "https://budiadjie.github.io/ma09-database/";
+    var TOTAL_HALAMAN_QURAN = 604;
 
     var pinAktif = "";
     var semuaSantri = [];
@@ -1107,6 +1108,42 @@
     }
 
     // =========================================================================
+    // HELPER STANDAR MUSHAF POJOK 15 BARIS (604 HALAMAN)
+    // =========================================================================
+    function getMaxHalamanJuz(juz) {
+      var j = Number(juz);
+      if (j === 1) return 21;
+      if (j === 30) return 23;
+      return 20;
+    }
+
+    function hitungHalamanJuzDepan(juz, hal) {
+      var total = 0;
+      for (var j = 1; j < juz; j++) total += getMaxHalamanJuz(j);
+      return total + Math.min(Math.max(hal, 0), getMaxHalamanJuz(juz));
+    }
+
+    function hitungSelisihPreview(prevJuz, prevHal, currJuz, currHal) {
+      if (isNaN(prevJuz) || isNaN(prevHal) || isNaN(currJuz) || isNaN(currHal)) return null;
+      var maxCurr = getMaxHalamanJuz(currJuz);
+      if (currJuz < 1 || currJuz > 30 || currHal < 1 || currHal > maxCurr) return null;
+      if (currJuz === prevJuz) return Math.max(0, currHal - prevHal);
+      if (prevJuz <= 25 && currJuz <= 25) {
+        return Math.max(0, hitungHalamanJuzDepan(currJuz, currHal) - hitungHalamanJuzDepan(prevJuz, prevHal));
+      }
+      if (prevJuz >= 26 && currJuz <= 25) {
+        return Math.max(0, (getMaxHalamanJuz(prevJuz) - prevHal) + hitungHalamanJuzDepan(currJuz, currHal));
+      }
+      if (prevJuz >= 26 && currJuz >= 26) {
+        if (currJuz > prevJuz) return 0;
+        var delta = Math.max(0, getMaxHalamanJuz(prevJuz) - prevHal);
+        for (var j = prevJuz - 1; j > currJuz; j--) delta += getMaxHalamanJuz(j);
+        return Math.max(0, delta + currHal);
+      }
+      return 0;
+    }
+
+    // =========================================================================
     // MESIN AVATAR CEPAT (OPSI 2: KOMPRESI WSRV.NL + ANTREAN + TIMEOUT + CACHE)
     // =========================================================================
     var AVATAR_PALETTE = [
@@ -1120,8 +1157,8 @@
     var AVATAR_MAX_CONCURRENT = 6;
     var AVATAR_TIMEOUT_MS = 5500;
 
-    var avatarResolvedCache = Object.create(null); // rawUrl -> winningUrl | null
-    var avatarInFlight = Object.create(null);      // rawUrl -> Promise
+    var avatarResolvedCache = Object.create(null);
+    var avatarInFlight = Object.create(null);
     var avatarTaskQueue = [];
     var avatarActiveCount = 0;
 
@@ -1406,7 +1443,7 @@
     }
 
     // =========================================================================
-    // HELPER API, TEKS & RUMUS SELISIH
+    // HELPER API & TEKS
     // =========================================================================
     function apiPost(payload) {
       return fetch(API_URL, {
@@ -1466,23 +1503,6 @@
       }
       if (opsi) doc.text(str, x, y, opsi);
       else doc.text(str, x, y);
-    }
-
-    function hitungSelisihPreview(prevJuz, prevHal, currJuz, currHal) {
-      if (isNaN(prevJuz) || isNaN(prevHal) || isNaN(currJuz) || isNaN(currHal)) return null;
-      if (currJuz < 1 || currJuz > 30 || currHal < 1 || currHal > 20) return null;
-      if (currJuz === prevJuz) return Math.max(0, currHal - prevHal);
-      if (prevJuz <= 25 && currJuz <= 25) {
-        return Math.max(0, ((currJuz - 1) * 20 + currHal) - ((prevJuz - 1) * 20 + prevHal));
-      }
-      if (prevJuz >= 26 && currJuz <= 25) {
-        return Math.max(0, (20 - prevHal) + ((currJuz - 1) * 20 + currHal));
-      }
-      if (prevJuz >= 26 && currJuz >= 26) {
-        if (currJuz > prevJuz) return 0;
-        return Math.max(0, ((prevJuz - currJuz - 1) * 20) + (20 - prevHal) + currHal);
-      }
-      return 0;
     }
 
     function togglePin() {
@@ -1582,7 +1602,7 @@
         })
         .catch(function() {
           if (btn) btn.disabled = false;
-          Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Pastikan Kode.gs v2 sudah di-deploy dan internet stabil.', confirmButtonColor: '#065f46' });
+          Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Pastikan Kode.gs versi terbaru sudah di-deploy dan internet stabil.', confirmButtonColor: '#065f46' });
         });
     }
 
@@ -1766,7 +1786,7 @@
     }
 
     // =========================================================================
-    // TAB 2: MODE INPUT MASSAL (1 LAYAR, ANTI-HILANG SAAT FILTER)
+    // TAB 2: MODE INPUT MASSAL (BATAS HALAMAN DINAMIS PER JUZ)
     // =========================================================================
     function bangunDaftarInputMassal() {
       var container = document.getElementById("massListContainer");
@@ -1781,6 +1801,7 @@
         var pAyat = (last.ayat && last.ayat !== "-") ? last.ayat : "";
         var pSurat = (last.surat && last.surat !== "-") ? last.surat : "";
         var pKual = (last.kualitas && last.kualitas !== "-") ? last.kualitas : "Baik";
+        var maxHalAwal = getMaxHalamanJuz(parseInt(pJuz, 10));
 
         var chipAwal = st.isKhatam
           ? '<span class="delta-chip d-khatam">Khatam 30 Juz</span>'
@@ -1808,8 +1829,8 @@
               '<input type="number" min="1" max="30" inputmode="numeric" id="mJuz-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pJuz) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
             '</div>' +
             '<div class="mr-inp-group">' +
-              '<label>Hal (1-20)</label>' +
-              '<input type="number" min="1" max="20" inputmode="numeric" id="mHal-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pHal) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '<label id="mLblHal-' + escapeHTML(s.nis) + '">Hal (1-' + maxHalAwal + ')</label>' +
+              '<input type="number" min="1" max="' + maxHalAwal + '" inputmode="numeric" id="mHal-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pHal) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
             '</div>' +
             '<div class="mr-inp-group">' +
               '<label>Ayat</label>' +
@@ -1855,6 +1876,13 @@
     function onEditMassRow(nis) {
       var chk = document.getElementById("mChk-" + nis);
       var row = document.getElementById("mRow-" + nis);
+      var juzVal = parseInt(document.getElementById("mJuz-" + nis).value, 10);
+      var maxHal = getMaxHalamanJuz(juzVal);
+      var halInp = document.getElementById("mHal-" + nis);
+      var halLbl = document.getElementById("mLblHal-" + nis);
+      if (halInp) halInp.max = String(maxHal);
+      if (halLbl) halLbl.innerText = "Hal (1-" + maxHal + ")";
+
       if (chk && !chk.checked) chk.checked = true;
       if (row) {
         row.classList.add("is-checked");
@@ -1963,15 +1991,16 @@
 
         var juzNum = parseInt(juzRaw, 10);
         var halNum = parseInt(halRaw, 10);
+        var maxHal = getMaxHalamanJuz(juzNum);
 
-        if (!juzRaw || isNaN(juzNum) || juzNum < 1 || juzNum > 30 || !halRaw || isNaN(halNum) || halNum < 1 || halNum > 20 || !surat) {
+        if (!juzRaw || isNaN(juzNum) || juzNum < 1 || juzNum > 30 || !halRaw || isNaN(halNum) || halNum < 1 || halNum > maxHal || !surat) {
           row.classList.add("is-error");
           row.style.display = "";
           row.scrollIntoView({ behavior: "smooth", block: "center" });
           Swal.fire({
             icon: 'warning',
             title: 'Data Belum Valid',
-            text: nama + ': Pastikan Juz (1-30), Halaman (1-20), dan Nama Surat terisi benar.',
+            text: nama + ': Pastikan Juz (1-30), Halaman (1-' + maxHal + ' untuk Juz ' + (isNaN(juzNum) ? '-' : juzNum) + '), dan Nama Surat terisi benar.',
             confirmButtonColor: '#065f46'
           });
           return;
@@ -2098,7 +2127,7 @@
         var sentTag = sudah ? '<span class="sent-badge"><i class="fa-solid fa-check"></i> Terkirim</span>' : '';
         var plgTag = (item.jumlahPelanggaran > 0) ? '<span class="plg-badge"><i class="fa-solid fa-flag"></i> ' + item.jumlahPelanggaran + ' Plg</span>' : '';
         var totalClass = st.isKhatam ? "sc-total khatam" : "sc-total";
-        var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
+        var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / TOTAL_HALAMAN_QURAN) * 1000) / 10;
         var fillClass = st.isKhatam ? "mini-bar-fill khatam" : "mini-bar-fill";
 
         html += '<div class="' + cardClass + '">' +
@@ -2156,12 +2185,24 @@
       }
     }
 
+    function perbaruiBatasHalSatuan() {
+      var juzVal = parseInt(document.getElementById("inHafJuz").value, 10);
+      var maxHal = getMaxHalamanJuz(juzVal);
+      var halInp = document.getElementById("inHafHal");
+      var halLbl = document.getElementById("lblInHafHal");
+      if (halInp) {
+        halInp.max = String(maxHal);
+        halInp.placeholder = "1 - " + maxHal;
+      }
+      if (halLbl) halLbl.innerText = "Halaman (1-" + maxHal + ")";
+    }
+
     function isiKontenModalAktif() {
       if (!santriAktif) return;
       var st = santriAktif.hafalanStats || {};
       var ortu = santriAktif.ortu || {};
       var last = santriAktif.lastEntry || {};
-      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
+      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / TOTAL_HALAMAN_QURAN) * 1000) / 10;
 
       var slotAva = document.getElementById("mAvatarSlot");
       slotAva.innerHTML = buildAvatarBox(santriAktif.foto, santriAktif.nama, "ava-modal");
@@ -2187,6 +2228,7 @@
       document.getElementById("inHafSurat").value = (last.surat && last.surat !== "-") ? last.surat : "";
       document.getElementById("inHafKualitas").value = (last.kualitas && last.kualitas !== "-") ? last.kualitas : "Baik";
       document.getElementById("inHafCatatan").value = "";
+      perbaruiBatasHalSatuan();
 
       document.getElementById("hintPosisiHafalan").innerHTML = st.adaData
         ? '<i class="fa-solid fa-circle-info"></i> Terakhir tercatat: <b>' + escapeHTML(st.posisiTerakhirLabel) + '</b> (' + escapeHTML(last.surat || "-") + '). Ubah halaman/ayat terbaru lalu Simpan.'
@@ -2250,6 +2292,7 @@
 
       var juzNum = parseInt(juzRaw, 10);
       var halNum = parseInt(halRaw, 10);
+      var maxHal = getMaxHalamanJuz(juzNum);
 
       if (!tgl) {
         Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih tanggal setoran.', confirmButtonColor: '#065f46' });
@@ -2259,8 +2302,8 @@
         Swal.fire({ icon: 'warning', title: 'Juz Tidak Valid', text: 'Kolom Juz harus angka bulat 1 sampai 30.', confirmButtonColor: '#065f46' });
         return;
       }
-      if (!halRaw || isNaN(halNum) || halNum < 1 || halNum > 20) {
-        Swal.fire({ icon: 'warning', title: 'Halaman Tidak Valid', text: 'Kolom Halaman harus angka bulat 1 sampai 20.', confirmButtonColor: '#065f46' });
+      if (!halRaw || isNaN(halNum) || halNum < 1 || halNum > maxHal) {
+        Swal.fire({ icon: 'warning', title: 'Halaman Tidak Valid', text: 'Halaman untuk Juz ' + juzNum + ' harus angka bulat 1 sampai ' + maxHal + '.', confirmButtonColor: '#065f46' });
         return;
       }
       if (!surat) {
@@ -2522,7 +2565,7 @@
       return { bg: [226, 232, 240], text: [51, 65, 85] };
     }
 
-    // --- GENERATOR PDF RAPOR 1 LEMBAR A4 ---
+    // --- GENERATOR PDF RAPOR 1 LEMBAR A4 (604 HALAMAN + LINK GITHUB PERMANEN) ---
     function unduhPdfSantriAktif() {
       if (!santriAktif) return;
       if (!window.jspdf || !window.jspdf.jsPDF) {
@@ -2541,7 +2584,8 @@
       var ibuPdf = bersihkanTeksPdf(ortu.ibu);
       var kelasPdf = bersihkanTeksPdf(santriAktif.kelas);
       var tglCetakPdf = bersihkanTeksPdf(tanggalCetakServer);
-      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
+      var totalHal = st.totalHalaman || 0;
+      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round((totalHal / TOTAL_HALAMAN_QURAN) * 1000) / 10;
 
       // 1. KOP KAMAR
       doc.setFillColor(6, 95, 70);
@@ -2626,7 +2670,7 @@
       doc.setFont("helvetica", "bold");
       doc.setFontSize(6.9);
       doc.setTextColor(71, 85, 105);
-      doc.text(persen + "% menuju 30 Juz (" + (st.totalHalaman || 0) + "/600 hal)", 157, 58.2, { align: "center" });
+      doc.text(persen + "% menuju 30 Juz (" + totalHal + "/" + TOTAL_HALAMAN_QURAN + " hal)", 157, 58.2, { align: "center" });
 
       var badgeCol = getWarnaBadgePdf(st.statusTren);
       doc.setFillColor(badgeCol.bg[0], badgeCol.bg[1], badgeCol.bg[2]);
@@ -2809,7 +2853,8 @@
         return;
       }
 
-      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
+      var totalHal = st.totalHalaman || 0;
+      var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round((totalHal / TOTAL_HALAMAN_QURAN) * 1000) / 10;
       var sapaanLengkap = (namaOrtu && namaOrtu !== "-")
         ? ("Yth. " + panggilan + " *" + namaOrtu + "*, Wali Santri dari *" + santriAktif.nama + "*,")
         : ("Yth. " + panggilan + " Wali Santri dari *" + santriAktif.nama + "*,");
