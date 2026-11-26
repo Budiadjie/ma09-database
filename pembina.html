@@ -68,7 +68,33 @@
     }
 
     /* ============================================================
-       1. LAYAR LOGIN PIN (ELEGANT GLASSY EMERALD)
+       SISTEM AVATAR CEPAT (LAPIS INISIAL INSTAN + FADE-IN FOTO MINI)
+       ============================================================ */
+    .ava-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      user-select: none;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      border: 2px solid #e2e8f0;
+    }
+    .ava-md { width: 42px; height: 42px; border-radius: 13px; font-size: 0.85rem; }
+    .ava-sm { width: 34px; height: 34px; border-radius: 10px; font-size: 0.74rem; border-width: 1.5px; }
+    .ava-modal { width: 44px; height: 44px; border-radius: 14px; font-size: 0.9rem; border-color: rgba(255,255,255,0.68); }
+    .ava-init { position: relative; z-index: 1; line-height: 1; }
+    .ava-img {
+      position: absolute; inset: 0; width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      z-index: 2; opacity: 0; transition: opacity 0.22s ease;
+    }
+    .ava-img.is-loaded { opacity: 1; }
+
+    /* ============================================================
+       1. LAYAR LOGIN PIN
        ============================================================ */
     #login-screen {
       min-height: 100vh;
@@ -245,7 +271,7 @@
     .main-view.active { display: block; }
 
     /* ============================================================
-       TAB 1: BERANDA ANALITIK KAMAR (BENTO ELEGAN)
+       TAB 1: BERANDA ANALITIK KAMAR
        ============================================================ */
     .kpi-grid {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-bottom: 14px;
@@ -286,16 +312,6 @@
       display: flex; align-items: center; justify-content: space-between; gap: 8px;
     }
     .box-title span { display: inline-flex; align-items: center; gap: 8px; }
-
-    /* AVATAR MINI SANTRI */
-    .santri-ava {
-      width: 40px; height: 40px; border-radius: 13px; object-fit: cover; flex-shrink: 0;
-      border: 2px solid #e2e8f0; background: #ecfdf5;
-    }
-    .santri-ava-sm {
-      width: 34px; height: 34px; border-radius: 10px; object-fit: cover; flex-shrink: 0;
-      border: 1.5px solid #e2e8f0; background: #ecfdf5;
-    }
 
     .top-list { display: flex; flex-direction: column; gap: 9px; }
     .top-item {
@@ -655,7 +671,7 @@
   <div id="login-screen">
     <div class="login-box">
       <div class="login-logo-ring">
-        <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="Logo MA09" class="login-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
+        <img src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=180&h=180&fit=cover&output=webp" alt="Logo MA09" class="login-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
       </div>
       <div class="login-badge"><i class="fa-solid fa-shield-halved"></i> Akses Khusus Pembina</div>
       <h1>Kamar Maqomin Amin 09</h1>
@@ -676,12 +692,12 @@
     </div>
   </div>
 
-  <!-- 2. DASBOR PEMBINA v2.1 -->
+  <!-- 2. DASBOR PEMBINA v2.2 -->
   <div id="dashboard-screen">
     <div class="topbar">
       <div class="topbar-inner">
         <div class="brand-cluster">
-          <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="MA09" class="brand-mini-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
+          <img src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=120&h=120&fit=cover&output=webp" alt="MA09" class="brand-mini-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
           <div>
             <h1>Dasbor Pembina MA 09</h1>
             <div class="topbar-sub" id="topbarSubtitle">Kamar Maqomin Amin 09 &bull; Sinkron Spreadsheet</div>
@@ -874,7 +890,7 @@
     <div class="modal-box">
       <div class="modal-header">
         <div class="modal-head-left">
-          <img id="mAvatar" class="santri-ava" src="" alt="Foto" referrerpolicy="no-referrer" style="border-color:rgba(255,255,255,0.65);">
+          <div id="mAvatarSlot"></div>
           <div style="min-width:0;">
             <h2 id="mNama">-</h2>
             <small id="mMeta">-</small>
@@ -1050,7 +1066,6 @@
     // KONFIGURASI SERVER API & PORTAL WALI
     // =========================================================================
     var API_URL = "https://script.google.com/macros/s/AKfycbwkimilgQq9LSHB_76eTzzjItmk-Jc_jOC8BMi6HlL7_LP-oFcop5CIBk8WilwSZygk/exec";
-    // Ubah ke "https://budiadjie.github.io/ma09-database/" bila ingin footer PDF mengarah ke link GitHub Pages
     var PORTAL_WALI_URL = "https://tinyurl.com/MA09Database";
 
     var pinAktif = "";
@@ -1075,10 +1090,10 @@
       try { localStorage.setItem(STORAGE_KEY_SENT, JSON.stringify(petaTerkirim)); } catch (e) {}
     }
 
-    // Fallback Logo Berlapis
+    // Fallback Logo Kamar
     var LOGO_FALLBACKS = [
       "https://i.ibb.co/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png",
-      "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=256&output=png",
+      "https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png",
       "https://cdn-icons-png.flaticon.com/512/8251/8251508.png"
     ];
     function fallbackLogo(el) {
@@ -1091,52 +1106,230 @@
       }
     }
 
-    // Avatar Inisial SVG + Fallback Berlapis untuk Foto Santri
-    function buatSvgInisial(nama) {
-      var kata = String(nama || "S").trim().split(/\s+/);
-      var inisial = ((kata[0] ? kata[0][0] : "S") + (kata[1] ? kata[1][0] : "")).toUpperCase();
-      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80">' +
-        '<rect width="80" height="80" rx="22" fill="#d1fae5"/>' +
-        '<text x="40" y="49" font-family="sans-serif" font-size="28" font-weight="800" fill="#065f46" text-anchor="middle">' + inisial.replace(/[^A-Z0-9]/g, "") + '</text>' +
-        '</svg>';
-      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    // =========================================================================
+    // MESIN AVATAR CEPAT (OPSI 2: KOMPRESI WSRV.NL + ANTREAN + TIMEOUT + CACHE)
+    // =========================================================================
+    var AVATAR_PALETTE = [
+      { bg: "#d1fae5", fg: "#065f46" },
+      { bg: "#ccfbf1", fg: "#0f766e" },
+      { bg: "#e0f2fe", fg: "#0369a1" },
+      { bg: "#fef3c7", fg: "#92400e" },
+      { bg: "#e0e7ff", fg: "#3730a3" },
+      { bg: "#fce7f3", fg: "#9d174d" }
+    ];
+    var AVATAR_MAX_CONCURRENT = 6;
+    var AVATAR_TIMEOUT_MS = 5500;
+
+    var avatarResolvedCache = Object.create(null); // rawUrl -> winningUrl | null
+    var avatarInFlight = Object.create(null);      // rawUrl -> Promise
+    var avatarTaskQueue = [];
+    var avatarActiveCount = 0;
+
+    function getAvatarPalette(nama) {
+      var s = String(nama || "S");
+      var hash = 0;
+      for (var i = 0; i < s.length; i++) hash = ((hash << 5) - hash) + s.charCodeAt(i);
+      return AVATAR_PALETTE[Math.abs(hash) % AVATAR_PALETTE.length];
     }
 
-    function getUrlFotoAwal(urlRaw, nama) {
-      var u = String(urlRaw || "").trim();
-      if (!u || u === "-" || u.indexOf("http") !== 0) return buatSvgInisial(nama);
-      return u;
+    function getInisialNama(nama) {
+      var kata = String(nama || "S").trim().split(/\s+/).filter(Boolean);
+      if (kata.length === 0) return "S";
+      var first = kata[0].charAt(0);
+      var second = kata.length > 1 ? kata[1].charAt(0) : (kata[0].length > 1 ? kata[0].charAt(1) : "");
+      return (first + second).toUpperCase().replace(/[^A-Z0-9]/g, "") || "S";
     }
 
-    function fallbackAvatarImg(el) {
-      var raw = el.getAttribute("data-raw") || "";
-      var nama = el.getAttribute("data-nama") || "S";
-      var step = parseInt(el.getAttribute("data-step") || "0", 10);
-      var nextUrl = "";
+    function pumpAvatarQueue() {
+      while (avatarActiveCount < AVATAR_MAX_CONCURRENT && avatarTaskQueue.length > 0) {
+        var task = avatarTaskQueue.shift();
+        avatarActiveCount++;
+        (function(item) {
+          Promise.resolve().then(item.fn).then(
+            function(val) { avatarActiveCount--; pumpAvatarQueue(); item.resolve(val); },
+            function() { avatarActiveCount--; pumpAvatarQueue(); item.resolve(null); }
+          );
+        })(task);
+      }
+    }
 
-      if (step === 0 && raw.indexOf("i.ibb.co.com/") !== -1) {
-        nextUrl = raw.replace("i.ibb.co.com/", "i.ibb.co/");
-      } else if (step <= 1 && (raw.indexOf("i.ibb.co") !== -1)) {
-        var std = raw.replace("i.ibb.co.com/", "i.ibb.co/");
-        nextUrl = "https://wsrv.nl/?url=" + encodeURIComponent(std) + "&w=120&h=120&fit=cover&output=jpg";
-        step = 1;
-      } else if (step === 0 && raw.indexOf("drive.google.com/thumbnail?id=") !== -1) {
-        var m = raw.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-        if (m && m[1]) nextUrl = "https://lh3.googleusercontent.com/d/" + m[1] + "=w160";
+    function enqueueAvatarTask(fn) {
+      return new Promise(function(resolve) {
+        avatarTaskQueue.push({ fn: fn, resolve: resolve });
+        pumpAvatarQueue();
+      });
+    }
+
+    function ekstrakDriveId(url) {
+      if (url.indexOf("drive.google.com") === -1 && url.indexOf("docs.google.com") === -1 && url.indexOf("lh3.googleusercontent.com") === -1) {
+        return "";
+      }
+      var m1 = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
+      if (m1 && m1[1]) return m1[1];
+      var m2 = url.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+      if (m2 && m2[1]) return m2[1];
+      return "";
+    }
+
+    function getAvatarCandidates(rawUrl) {
+      var u = String(rawUrl || "").trim();
+      if (!u || u === "-" || u.indexOf("http") !== 0) return [];
+
+      var list = [];
+      function addUnique(val) {
+        if (val && list.indexOf(val) === -1) list.push(val);
       }
 
-      if (nextUrl) {
-        el.setAttribute("data-step", String(step + 1));
-        el.src = nextUrl;
-      } else {
-        el.onerror = null;
-        el.src = buatSvgInisial(nama);
+      var driveId = ekstrakDriveId(u);
+      if (driveId) {
+        var lh3Source = "https://lh3.googleusercontent.com/d/" + driveId + "=w240";
+        addUnique("https://wsrv.nl/?url=" + encodeURIComponent(lh3Source) + "&w=120&h=120&fit=cover&a=top&q=75&output=webp");
+        addUnique("https://lh3.googleusercontent.com/d/" + driveId + "=s120-c");
+        addUnique("https://drive.google.com/thumbnail?id=" + driveId + "&sz=w160");
+        return list;
+      }
+
+      if (u.indexOf("i.ibb.co.com/") !== -1 || u.indexOf("i.ibb.co/") !== -1) {
+        var ibbStd = u.replace("i.ibb.co.com/", "i.ibb.co/");
+        addUnique("https://wsrv.nl/?url=" + encodeURIComponent(ibbStd) + "&w=120&h=120&fit=cover&a=top&q=75&output=webp");
+        addUnique("https://wsrv.nl/?url=" + encodeURIComponent(ibbStd) + "&w=120&h=120&fit=cover&a=top&q=75&output=jpg");
+        if (u !== ibbStd) {
+          addUnique("https://wsrv.nl/?url=" + encodeURIComponent(u) + "&w=120&h=120&fit=cover&a=top&q=75&output=jpg");
+        }
+        addUnique(ibbStd);
+        return list;
+      }
+
+      addUnique("https://wsrv.nl/?url=" + encodeURIComponent(u) + "&w=120&h=120&fit=cover&a=top&q=75&output=webp");
+      addUnique("https://wsrv.nl/?url=" + encodeURIComponent(u) + "&w=120&h=120&fit=cover&a=top&q=75&output=jpg");
+      addUnique(u);
+      return list;
+    }
+
+    function probeImageUrl(url, timeoutMs) {
+      return new Promise(function(resolve) {
+        var settled = false;
+        var img = new Image();
+        img.referrerPolicy = "no-referrer";
+        img.decoding = "async";
+
+        var timer = setTimeout(function() {
+          if (settled) return;
+          settled = true;
+          img.onload = null;
+          img.onerror = null;
+          img.src = "";
+          resolve(false);
+        }, timeoutMs || AVATAR_TIMEOUT_MS);
+
+        img.onload = function() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          resolve(img.naturalWidth > 1 && img.naturalHeight > 1);
+        };
+        img.onerror = function() {
+          if (settled) return;
+          settled = true;
+          clearTimeout(timer);
+          resolve(false);
+        };
+        img.src = url;
+      });
+    }
+
+    function resolveAvatarUrl(rawUrl) {
+      var key = String(rawUrl || "").trim();
+      if (!key || key === "-" || key.indexOf("http") !== 0) return Promise.resolve(null);
+      if (Object.prototype.hasOwnProperty.call(avatarResolvedCache, key)) {
+        return Promise.resolve(avatarResolvedCache[key]);
+      }
+      if (avatarInFlight[key]) return avatarInFlight[key];
+
+      var candidates = getAvatarCandidates(key);
+      if (candidates.length === 0) {
+        avatarResolvedCache[key] = null;
+        return Promise.resolve(null);
+      }
+
+      var promise = enqueueAvatarTask(function() {
+        var idx = 0;
+        function tryNext() {
+          if (idx >= candidates.length) {
+            avatarResolvedCache[key] = null;
+            return Promise.resolve(null);
+          }
+          var targetUrl = candidates[idx++];
+          return probeImageUrl(targetUrl, AVATAR_TIMEOUT_MS).then(function(ok) {
+            if (ok) {
+              avatarResolvedCache[key] = targetUrl;
+              return targetUrl;
+            }
+            return tryNext();
+          });
+        }
+        return tryNext();
+      }).then(function(winningUrl) {
+        delete avatarInFlight[key];
+        return winningUrl;
+      }, function() {
+        delete avatarInFlight[key];
+        avatarResolvedCache[key] = null;
+        return null;
+      });
+
+      avatarInFlight[key] = promise;
+      return promise;
+    }
+
+    function buildAvatarBox(urlRaw, nama, sizeClass) {
+      var pal = getAvatarPalette(nama);
+      var init = getInisialNama(nama);
+      var key = String(urlRaw || "").trim();
+      var imgHtml = "";
+
+      if (key && key !== "-" && key.indexOf("http") === 0) {
+        if (Object.prototype.hasOwnProperty.call(avatarResolvedCache, key)) {
+          var cachedUrl = avatarResolvedCache[key];
+          if (cachedUrl) {
+            imgHtml = '<img class="ava-img is-loaded" src="' + escapeHTML(cachedUrl) + '" alt="" referrerpolicy="no-referrer" decoding="async" onerror="this.classList.remove(\'is-loaded\')">';
+          }
+        } else {
+          imgHtml = '<img class="ava-img" data-raw="' + escapeHTML(key) + '" alt="" referrerpolicy="no-referrer" decoding="async">';
+        }
+      }
+
+      return '<div class="ava-wrap ' + sizeClass + '" style="background:' + pal.bg + '; color:' + pal.fg + ';">' +
+        '<span class="ava-init">' + escapeHTML(init) + '</span>' +
+        imgHtml +
+      '</div>';
+    }
+
+    function hydrateAvatars(rootEl) {
+      if (!rootEl) return;
+      var imgs = rootEl.querySelectorAll("img.ava-img[data-raw]");
+      for (var i = 0; i < imgs.length; i++) {
+        (function(imgEl) {
+          var raw = imgEl.getAttribute("data-raw");
+          if (!raw) return;
+          resolveAvatarUrl(raw).then(function(finalUrl) {
+            if (!finalUrl || !imgEl.isConnected || imgEl.getAttribute("data-raw") !== raw) return;
+            imgEl.onload = function() { imgEl.classList.add("is-loaded"); };
+            imgEl.onerror = function() { imgEl.classList.remove("is-loaded"); };
+            imgEl.src = finalUrl;
+            if (imgEl.complete && imgEl.naturalWidth > 1) {
+              imgEl.classList.add("is-loaded");
+            }
+          });
+        })(imgs[i]);
       }
     }
 
-    function buildAvatarTag(urlRaw, nama, cls) {
-      var src = getUrlFotoAwal(urlRaw, nama);
-      return '<img class="' + cls + '" src="' + escapeHTML(src) + '" data-raw="' + escapeHTML(urlRaw || "") + '" data-nama="' + escapeHTML(nama || "") + '" alt="Foto" referrerpolicy="no-referrer" loading="lazy" onerror="fallbackAvatarImg(this)">';
+    function bersihkanCacheAvatarGagal() {
+      var keys = Object.keys(avatarResolvedCache);
+      for (var i = 0; i < keys.length; i++) {
+        if (avatarResolvedCache[keys[i]] === null) delete avatarResolvedCache[keys[i]];
+      }
     }
 
     // =========================================================================
@@ -1320,8 +1513,14 @@
           confirmButtonColor: '#065f46',
           confirmButtonText: 'Ya, Segarkan',
           cancelButtonText: 'Batal'
-        }).then(function(r) { if (r.isConfirmed) muatDataDariServer(pinAktif); });
+        }).then(function(r) {
+          if (r.isConfirmed) {
+            bersihkanCacheAvatarGagal();
+            muatDataDariServer(pinAktif);
+          }
+        });
       } else {
+        bersihkanCacheAvatarGagal();
         muatDataDariServer(pinAktif);
       }
     }
@@ -1392,6 +1591,9 @@
       semuaSantri = [];
       ringkasanKamar = {};
       draftEvalMap = {};
+      avatarResolvedCache = Object.create(null);
+      avatarInFlight = Object.create(null);
+      avatarTaskQueue = [];
       document.getElementById("inputPin").value = "";
       document.body.classList.remove("dash-active");
       document.getElementById("dashboard-screen").style.display = "none";
@@ -1428,7 +1630,12 @@
         btns[j].classList.toggle("active", btns[j].getAttribute("data-view") === nama);
       }
 
-      if (nama === "beranda") setTimeout(renderGrafikSebaran, 50);
+      if (nama === "beranda") {
+        setTimeout(renderGrafikSebaran, 50);
+        hydrateAvatars(document.getElementById("view-beranda"));
+      } else if (nama === "santri") {
+        hydrateAvatars(document.getElementById("gridSantri"));
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1466,7 +1673,7 @@
       document.getElementById("kpiKhatam").innerText = khatam;
       document.getElementById("kpiNaikCount").innerText = naik + " santri meningkat/stabil";
 
-      // Top 3 Santri Pekan Ini (dengan foto mini)
+      // Top 3 Santri Pekan Ini
       var topBox = document.getElementById("listTopSantri");
       var topArr = Array.isArray(rk.topSantri) ? rk.topSantri : [];
       if (topArr.length === 0) {
@@ -1475,7 +1682,7 @@
         topBox.innerHTML = topArr.map(function(t, idx) {
           var rkCls = idx === 0 ? "rank-1" : (idx === 1 ? "rank-2" : "rank-3");
           var sObj = semuaSantri.find(function(x) { return x.nis === t.nis; });
-          var ava = buildAvatarTag(sObj ? sObj.foto : "", t.nama, "santri-ava-sm");
+          var ava = buildAvatarBox(sObj ? sObj.foto : "", t.nama, "ava-sm");
           return '<div class="top-item" onclick="bukaModalRapor(\'' + escapeHTML(t.nis) + '\', \'rapor\')">' +
             '<div class="top-rank ' + rkCls + '">#' + (idx + 1) + '</div>' +
             ava +
@@ -1486,6 +1693,7 @@
             '<span class="top-delta">+' + escapeHTML(t.tambahan) + ' hal</span>' +
           '</div>';
         }).join("");
+        hydrateAvatars(topBox);
       }
 
       // Daftar Prioritas Perhatian
@@ -1497,7 +1705,7 @@
           var st = s.hafalanStats || {};
           return '<div class="perhatian-item" onclick="bukaModalRapor(\'' + escapeHTML(s.nis) + '\', \'rapor\')">' +
             '<div style="display:flex; align-items:center; gap:9px; min-width:0;">' +
-              buildAvatarTag(s.foto, s.nama, "santri-ava-sm") +
+              buildAvatarBox(s.foto, s.nama, "ava-sm") +
               '<div style="min-width:0;">' +
                 '<div style="font-size:0.86rem; font-weight:800; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + escapeHTML(s.nama) + '</div>' +
                 '<div style="font-size:0.74rem; color:#64748b; font-weight:600;">' + escapeHTML(st.totalLabel) + ' &bull; ' + escapeHTML(st.posisiTerakhirLabel) + '</div>' +
@@ -1506,6 +1714,7 @@
             '<span class="perhatian-badge">' + escapeHTML(st.teksTren) + '</span>' +
           '</div>';
         }).join("");
+        hydrateAvatars(perBox);
       }
 
       if (viewAktif === "beranda") setTimeout(renderGrafikSebaran, 50);
@@ -1895,7 +2104,7 @@
         html += '<div class="' + cardClass + '">' +
           '<div class="sc-head">' +
             '<div class="sc-identity">' +
-              buildAvatarTag(item.foto, item.nama, "santri-ava") +
+              buildAvatarBox(item.foto, item.nama, "ava-md") +
               '<div style="min-width:0;">' +
                 '<h3 class="sc-name">' + escapeHTML(item.nama) + '</h3>' +
                 '<div class="sc-meta">NIS ' + escapeHTML(item.nis) + ' &bull; ' + escapeHTML(item.kelas) + '</div>' +
@@ -1927,6 +2136,7 @@
         html = '<div style="grid-column:1/-1; text-align:center; padding:2.5rem; background:white; border-radius:18px; color:#64748b; font-weight:700;">Tidak ada santri yang sesuai dengan filter.</div>';
       }
       grid.innerHTML = html;
+      hydrateAvatars(grid);
     }
 
     // =========================================================================
@@ -1953,12 +2163,9 @@
       var last = santriAktif.lastEntry || {};
       var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / 600) * 1000) / 10;
 
-      var mAva = document.getElementById("mAvatar");
-      mAva.setAttribute("data-raw", santriAktif.foto || "");
-      mAva.setAttribute("data-nama", santriAktif.nama || "S");
-      mAva.setAttribute("data-step", "0");
-      mAva.onerror = function() { fallbackAvatarImg(this); };
-      mAva.src = getUrlFotoAwal(santriAktif.foto, santriAktif.nama);
+      var slotAva = document.getElementById("mAvatarSlot");
+      slotAva.innerHTML = buildAvatarBox(santriAktif.foto, santriAktif.nama, "ava-modal");
+      hydrateAvatars(slotAva);
 
       document.getElementById("mNama").innerText = santriAktif.nama;
       document.getElementById("mMeta").innerText = "NIS " + santriAktif.nis + " • Kelas " + santriAktif.kelas;
