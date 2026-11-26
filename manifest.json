@@ -1,0 +1,25 @@
+{
+  "name": "Portal Santri Kamar MA 09",
+  "short_name": "Portal MA 09",
+  "description": "Pusat Informasi Santri Kamar Maqomin Amin 09 - PP Madrasatul Qur'an Tebuireng",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#065f46",
+  "theme_color": "#065f46",
+  "icons": [
+    {
+      "src": "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=192&h=192&fit=cover&output=png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=512&h=512&fit=cover&output=png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
