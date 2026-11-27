@@ -325,6 +325,24 @@
     .bnav-btn i { font-size: 1.25rem; }
     .bnav-btn.active { color: var(--primary); background: #ecfdf5; font-weight: 800; }
 
+    /* PEMISAH TEGAS BLOK A (HAFALAN RIIL) & BLOK B (REKAP SETORAN MINGGUAN) */
+    .block-banner {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      margin: 4px 0 11px; padding: 0.55rem 0.9rem;
+      border-radius: 13px; background: #ecfdf5; border: 1px solid #a7f3d0;
+    }
+    .block-banner.rekap-banner {
+      margin-top: 20px; background: #fffbeb; border-color: #fde68a;
+    }
+    .block-banner-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+    .block-num {
+      font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4px;
+      padding: 3px 9px; border-radius: 99px; background: #065f46; color: white; white-space: nowrap;
+    }
+    .rekap-banner .block-num { background: #b45309; }
+    .block-name { font-size: 0.92rem; font-weight: 800; color: #064e3b; }
+    .rekap-banner .block-name { color: #78350f; }
+
     /* TAB PANES & KARTU ANTI-OVERFLOW */
     .app-pane { display: none; width: 100%; min-width: 0; animation: fadeUp 0.25s ease; }
     .app-pane.active { display: block; }
@@ -342,7 +360,7 @@
       width: 100%; min-width: 0; max-width: 100%;
     }
 
-    /* KARTU HERO HAFALAN + PROGRESS BAR 30 JUZ */
+    /* KARTU HERO HAFALAN RIIL */
     .hero-hafalan-card {
       background: linear-gradient(145deg, #0f766e 0%, #0d9488 60%, #059669 100%);
       color: white; border: none; box-shadow: 0 10px 24px rgba(13, 148, 136, 0.26);
@@ -397,37 +415,58 @@
     .hf-mini-val { font-size: 0.96rem; font-weight: 800; margin-top: 2px; line-height: 1.25; }
     .hf-mini-sub { font-size: 0.73rem; opacity: 0.9; font-weight: 600; margin-top: 3px; }
 
-    /* KARTU MUROJAAH & KEAKTIFAN MINGGUAN */
-    .murojaah-card {
+    /* BLOK B: KARTU REKAPAN SETORAN MINGGUAN */
+    .rekap-card {
       margin-bottom: 14px;
-      background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
-      border: 1.5px solid #99f6e4;
+      background: linear-gradient(135deg, #ffffff 0%, #fffdf5 100%);
+      border: 1.5px solid #fde68a;
     }
-    .mk-head {
+    .rk-head {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-      gap: 6px; margin-bottom: 11px;
+      gap: 8px; margin-bottom: 12px;
     }
-    .mk-head h3 {
-      margin: 0; font-size: 0.98rem; font-weight: 800; color: #0f766e;
+    .rk-head h3 {
+      margin: 0; font-size: 1rem; font-weight: 800; color: #92400e;
       display: flex; align-items: center; gap: 7px;
     }
-    .mk-periode {
-      font-size: 0.73rem; font-weight: 800; color: #065f46;
-      background: #d1fae5; padding: 3px 10px; border-radius: 99px;
+    .rk-badges { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+    .rk-periode-pill {
+      font-size: 0.74rem; font-weight: 800; color: #92400e;
+      background: #fef3c7; border: 1px solid #fcd34d; padding: 3px 10px; border-radius: 99px;
     }
-    .mk-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
-    .mk-box {
-      background: white; border: 1px solid #ccfbf1; border-radius: 14px;
+    .rk-status-pill {
+      font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;
+      background: #dcfce7; color: #166534;
+    }
+    .rk-status-pill.belum { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+
+    .rk-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .rk-box {
+      background: white; border: 1px solid #fde68a; border-radius: 14px;
       padding: 0.85rem 0.9rem; display: flex; align-items: center; gap: 10px;
     }
-    .mk-ico {
-      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    .rk-ico {
+      width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
     }
-    .mk-ico-mur { background: #ccfbf1; color: #0f766e; }
-    .mk-ico-akt { background: #fef3c7; color: #b45309; }
-    .mk-lbl { font-size: 0.72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
-    .mk-val { font-size: 1.06rem; font-weight: 800; color: var(--text); margin-top: 1px; line-height: 1.2; }
+    .rk-ico-tmb { background: #d1fae5; color: #065f46; }
+    .rk-ico-mur { background: #ccfbf1; color: #0f766e; }
+    .rk-ico-akt { background: #fef3c7; color: #b45309; }
+    .rk-ico-hal { background: #e0f2fe; color: #0369a1; }
+    .rk-lbl { font-size: 0.71rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    .rk-val { font-size: 0.98rem; font-weight: 800; color: var(--text); margin-top: 2px; line-height: 1.2; word-break: break-word; }
+
+    .rk-belum-box {
+      display: none;
+      text-align: center;
+      padding: 1.35rem 1rem;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1.5px dashed #cbd5e1;
+      color: #475569;
+    }
+    .rk-belum-title { font-size: 1rem; font-weight: 800; color: #334155; margin: 6px 0 4px; }
+    .rk-belum-sub { font-size: 0.82rem; color: #64748b; font-weight: 600; margin: 0; }
 
     /* GRAFIK & BENCHMARK RATA-RATA KAMAR */
     .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 10px; }
@@ -510,8 +549,8 @@
 
     /* KEUANGAN & TABEL */
     .sec-title {
-      font-size: 1.05rem; font-weight: 800; color: var(--text);
-      margin: 0 0 0.9rem; display: flex; align-items: center; gap: 8px;
+      font-size: 1.02rem; font-weight: 800; color: var(--text);
+      margin: 0 0 0.85rem; display: flex; align-items: center; gap: 8px;
     }
     .sub-pill-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
     .sub-pill-btn {
@@ -549,6 +588,9 @@
     .tbl-hafalan th { background: linear-gradient(135deg, #0f766e, #0d9488); color: white; }
     .tbl-hafalan tbody tr:nth-child(even) { background: #f0fdfa; }
 
+    .tbl-rekap th { background: linear-gradient(135deg, #b45309, #d97706); color: white; }
+    .tbl-rekap tbody tr:nth-child(even) { background: #fffbeb; }
+
     .tbl-disiplin th { background: linear-gradient(135deg, #be123c, #e11d48); color: white; }
     .tbl-disiplin tbody tr:nth-child(even) { background: #fff1f2; }
 
@@ -563,6 +605,7 @@
       .desktop-nav { display: flex; }
       .btn-ico-top .lbl { display: inline; }
       .bento-grid-haf { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); align-items: stretch; }
+      .rk-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .bm-pill { flex-direction: row; align-items: center; justify-content: space-between; }
       .profile-layout { flex-direction: row; align-items: flex-start; }
       .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -745,8 +788,17 @@
         <button type="button" class="dnav-btn" data-tab="pelanggaran" onclick="pindahTab('pelanggaran')"><i class="fa-solid fa-clipboard-check"></i> Pelanggaran</button>
       </div>
 
-      <!-- TAB 1: HAFALAN (STANDAR 604 HAL + MUROJAAH & KEAKTIFAN + HALAMAN MUSHAF) -->
+      <!-- TAB 1: HAFALAN (TERPISAH TEGAS: BLOK A HAFALAN RIIL & BLOK B REKAPAN SETORAN MINGGUAN) -->
       <div id="pane-hafalan" class="app-pane active">
+
+        <!-- BLOK A: HAFALAN RIIL -->
+        <div class="block-banner">
+          <div class="block-banner-left">
+            <span class="block-num">Bagian 1</span>
+            <span class="block-name">Hafalan Riil Al-Qur'an (604 Halaman)</span>
+          </div>
+        </div>
+
         <div class="bento-grid-haf">
           <div class="bento-card hero-hafalan-card" id="kartuHeroHafalan">
             <div>
@@ -782,7 +834,7 @@
 
           <div class="bento-card">
             <div class="chart-head">
-              <h3 id="chartTitle"><i class="fa-solid fa-chart-line"></i> Grafik Mingguan (Hal / Pekan)</h3>
+              <h3 id="chartTitle"><i class="fa-solid fa-chart-line"></i> Grafik Hafalan Riil (Hal / Pekan)</h3>
               <div class="chart-legend-row" id="chartLegend">
                 <span><i class="fa-solid fa-circle" style="color:#0d9488;"></i> Bertambah</span>
                 <span><i class="fa-solid fa-circle" style="color:#e11d48;"></i> Stagnan</span>
@@ -813,39 +865,83 @@
           </div>
         </div>
 
-        <!-- KARTU MUROJAAH & KEAKTIFAN PEKAN TERAKHIR -->
-        <div class="bento-card murojaah-card" id="murojaahCard">
-          <div class="mk-head">
-            <h3><i class="fa-solid fa-repeat"></i> Murojaah &amp; Keaktifan Pekan Terakhir</h3>
-            <span class="mk-periode" id="mkPeriodeBadge" style="display:none;"></span>
+        <div class="bento-card">
+          <h3 class="sec-title"><i class="fa-solid fa-list-ol" style="color:#0f766e;"></i> Riwayat Pendataan Hafalan Riil</h3>
+          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat catatan lengkap</div>
+          <div class="table-wrap">
+            <table class="tbl-hafalan">
+              <thead>
+                <tr><th>Tanggal</th><th>Juz</th><th>Surat</th><th>Hal</th><th>Ayat</th><th>Kualitas</th><th>Catatan Ustaz/Pembina</th></tr>
+              </thead>
+              <tbody id="resHafalan"></tbody>
+            </table>
           </div>
-          <div class="mk-grid">
-            <div class="mk-box">
-              <div class="mk-ico mk-ico-mur"><i class="fa-solid fa-book-open"></i></div>
+        </div>
+
+        <!-- BLOK B: REKAPAN SETORAN MINGGUAN (TERPISAH DARI HAFALAN RIIL) -->
+        <div class="block-banner rekap-banner">
+          <div class="block-banner-left">
+            <span class="block-num">Bagian 2</span>
+            <span class="block-name">Rekapan Setoran Mingguan</span>
+          </div>
+        </div>
+
+        <div class="bento-card rekap-card">
+          <div class="rk-head">
+            <h3><i class="fa-solid fa-calendar-week"></i> Aktivitas Setoran Pekan Ini</h3>
+            <div class="rk-badges">
+              <span class="rk-periode-pill" id="rekapPeriodeBadge" style="display:none;"></span>
+              <span class="rk-status-pill" id="rekapStatusBadge">Sudah Direkap</span>
+            </div>
+          </div>
+
+          <div class="rk-grid" id="rekapGridBox">
+            <div class="rk-box">
+              <div class="rk-ico rk-ico-tmb"><i class="fa-solid fa-plus"></i></div>
               <div style="min-width:0;">
-                <div class="mk-lbl">Murojaah</div>
-                <div class="mk-val" id="mkMurojaahVal">-</div>
+                <div class="rk-lbl">Tambahan Setoran</div>
+                <div class="rk-val" id="rkTambahan">-</div>
               </div>
             </div>
-            <div class="mk-box">
-              <div class="mk-ico mk-ico-akt"><i class="fa-solid fa-calendar-check"></i></div>
+            <div class="rk-box">
+              <div class="rk-ico rk-ico-mur"><i class="fa-solid fa-repeat"></i></div>
               <div style="min-width:0;">
-                <div class="mk-lbl">Keaktifan</div>
-                <div class="mk-val" id="mkKeaktifanVal">-</div>
+                <div class="rk-lbl">Murojaah</div>
+                <div class="rk-val" id="rkMurojaah">-</div>
               </div>
             </div>
+            <div class="rk-box">
+              <div class="rk-ico rk-ico-akt"><i class="fa-solid fa-check-double"></i></div>
+              <div style="min-width:0;">
+                <div class="rk-lbl">Keaktifan</div>
+                <div class="rk-val" id="rkKeaktifan">-</div>
+              </div>
+            </div>
+            <div class="rk-box">
+              <div class="rk-ico rk-ico-hal"><i class="fa-solid fa-bookmark"></i></div>
+              <div style="min-width:0;">
+                <div class="rk-lbl">Halaman Terakhir</div>
+                <div class="rk-val" id="rkHalaman">-</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="rk-belum-box" id="rekapBelumBox">
+            <i class="fa-regular fa-hourglass-half" style="font-size:1.55rem; color:#d97706;"></i>
+            <div class="rk-belum-title">Minggu Ini Belum Direkap</div>
+            <p class="rk-belum-sub" id="rekapBelumDesc">Rekapan setoran pekan ini belum dimasukkan oleh pengurus kamar.</p>
           </div>
         </div>
 
         <div class="bento-card">
-          <h3 class="sec-title"><i class="fa-solid fa-list-ol" style="color:#0f766e;"></i> Riwayat Pendataan Hafalan</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat murojaah, keaktifan &amp; catatan</div>
+          <h3 class="sec-title"><i class="fa-solid fa-clock-rotate-left" style="color:#b45309;"></i> Riwayat Rekapan Setoran Mingguan</h3>
+          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat seluruh kolom</div>
           <div class="table-wrap">
-            <table class="tbl-hafalan">
+            <table class="tbl-rekap">
               <thead>
-                <tr><th>Tanggal</th><th>Juz</th><th>Surat</th><th>Hal</th><th>Ayat</th><th>Kualitas</th><th>Murojaah</th><th>Keaktifan</th><th>Catatan Ustaz/Pembina</th></tr>
+                <tr><th>Periode</th><th>Tambahan</th><th>Murojaah</th><th>Keaktifan</th><th>Hal. Terakhir</th></tr>
               </thead>
-              <tbody id="resHafalan"></tbody>
+              <tbody id="resRekapSetoran"></tbody>
             </table>
           </div>
         </div>
@@ -1110,7 +1206,7 @@
     }
 
     // ============================================================
-    // HELPER UMUM & FOTO
+    // HELPER UMUM, FORMAT REKAP & FOTO
     // ============================================================
     function apiGet(params) {
       var q = new URLSearchParams(params).toString();
@@ -1127,6 +1223,32 @@
 
     function formatCellWithBr(str) {
       return escapeHTML(str).replace(/&lt;br\s*\/?&gt;/gi, '<br>');
+    }
+
+    function formatRekapTambahan(v) {
+      var s = String(v || "").trim();
+      if (!s || s === "-") return "Tidak menambah (-)";
+      if (s === "0") return "0 Halaman";
+      if (/^\d+$/.test(s)) return "+" + s + " Halaman";
+      return s.toLowerCase().indexOf("hal") === -1 ? (s + " Halaman") : s;
+    }
+
+    function formatRekapMurojaah(v) {
+      var s = String(v || "").trim();
+      if (!s || s === "-") return "-";
+      return s.toLowerCase().indexOf("juz") !== -1 ? s : (s + " Juz");
+    }
+
+    function formatRekapKeaktifan(v) {
+      var s = String(v || "").trim();
+      if (!s || s === "-") return "-";
+      return /^\d+$/.test(s) ? (s + "x Setoran") : s;
+    }
+
+    function formatRekapHalaman(v) {
+      var s = String(v || "").trim();
+      if (!s || s === "-") return "-";
+      return /^\d+$/.test(s) ? ("Hal. " + s + " / " + TOTAL_HALAMAN_QURAN) : s;
     }
 
     function showLoader(judul) {
@@ -1239,6 +1361,7 @@
       }
 
       document.getElementById("resHafalan").innerHTML = "";
+      document.getElementById("resRekapSetoran").innerHTML = "";
       document.getElementById("resPelanggaran").innerHTML = "";
       document.getElementById("topNama").innerText = "-";
       document.getElementById("topMeta").innerText = "NIS - • Kamar MA 09";
@@ -1302,6 +1425,7 @@
       var bio = res.bio || {};
       var ortu = res.ortu || {};
       var st = res.hafalanStats || {};
+      var rk = res.rekapSetoran || { sudahDirekap: false, statusLabel: "Minggu Ini Belum Direkap", riwayatHTML: "" };
 
       // Topbar
       document.getElementById("topNama").innerText = bio.nama || "-";
@@ -1330,7 +1454,9 @@
       document.getElementById("resPekerjaanIbu").innerText = ortu.pekerjaanIbu || "-";
       document.getElementById("resHpIbu").innerText = ortu.hpIbu || "-";
 
-      // Tab Hafalan (Standar 604 halaman Mushaf Pojok 15 Baris)
+      // ============================================================
+      // BLOK A: HAFALAN RIIL (STANDAR 604 HALAMAN)
+      // ============================================================
       currentHafalanStats = st;
       var heroCard = document.getElementById("kartuHeroHafalan");
       heroCard.classList.remove("mode-khatam");
@@ -1348,7 +1474,6 @@
       document.getElementById("hfValKiri").innerText = st.hafalanBelakangLabel || "-";
       document.getElementById("hfValKanan").innerText = st.posisiTerakhirLabel || "-";
 
-      // Nomor Halaman Mushaf (1-604)
       var mushafEl = document.getElementById("hfMushafSub");
       if (!st.isKhatam && st.halamanMushaf) {
         mushafEl.innerText = "Mushaf Hal. " + st.halamanMushaf + " / " + TOTAL_HALAMAN_QURAN;
@@ -1379,22 +1504,6 @@
       badge.classList.add(cls);
       badge.innerHTML = '<i class="fa-solid ' + ico + '"></i> ' + escapeHTML(st.teksTren || "-");
 
-      // Kartu Murojaah & Keaktifan Pekan Terakhir
-      var murRaw = (st.murojaahTerakhir && st.murojaahTerakhir !== "-") ? String(st.murojaahTerakhir).trim() : "";
-      var aktRaw = (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") ? String(st.keaktifanTerakhir).trim() : "";
-      var perRaw = (st.periodeTerakhir && st.periodeTerakhir !== "-") ? String(st.periodeTerakhir).trim() : "";
-
-      document.getElementById("mkMurojaahVal").innerText = murRaw ? (murRaw + " Juz") : "Belum tercatat";
-      document.getElementById("mkKeaktifanVal").innerText = aktRaw ? (aktRaw + "x Setoran") : "Belum tercatat";
-
-      var perBadge = document.getElementById("mkPeriodeBadge");
-      if (perRaw) {
-        perBadge.innerText = perRaw;
-        perBadge.style.display = "inline-block";
-      } else {
-        perBadge.style.display = "none";
-      }
-
       var bmStrip = document.getElementById("benchmarkStrip");
       if (st.chartData && st.chartData.length > 0) {
         bmStrip.style.display = "grid";
@@ -1405,9 +1514,48 @@
       }
 
       var emptyHaf = st.isKhatam
-        ? "<tr><td colspan='9' style='padding:1.4rem; font-weight:700; color:#047857;'>Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.</td></tr>"
-        : "<tr><td colspan='9' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat setoran hafalan yang tercatat.</td></tr>";
+        ? "<tr><td colspan='7' style='padding:1.4rem; font-weight:700; color:#047857;'>Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.</td></tr>"
+        : "<tr><td colspan='7' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat hafalan riil yang tercatat.</td></tr>";
       document.getElementById("resHafalan").innerHTML = res.hafalanHTML || emptyHaf;
+
+      // ============================================================
+      // BLOK B: REKAPAN SETORAN MINGGUAN (TERPISAH)
+      // ============================================================
+      var periodeRekap = rk.periode || rk.periodeAktifKamar || "";
+      var periodeBadge = document.getElementById("rekapPeriodeBadge");
+      if (periodeRekap) {
+        periodeBadge.innerText = periodeRekap;
+        periodeBadge.style.display = "inline-block";
+      } else {
+        periodeBadge.style.display = "none";
+      }
+
+      var statusBadge = document.getElementById("rekapStatusBadge");
+      var gridBox = document.getElementById("rekapGridBox");
+      var belumBox = document.getElementById("rekapBelumBox");
+
+      if (rk.sudahDirekap) {
+        statusBadge.innerText = "Sudah Direkap";
+        statusBadge.classList.remove("belum");
+        gridBox.style.display = "grid";
+        belumBox.style.display = "none";
+
+        document.getElementById("rkTambahan").innerText = formatRekapTambahan(rk.tambahan);
+        document.getElementById("rkMurojaah").innerText = formatRekapMurojaah(rk.murojaah);
+        document.getElementById("rkKeaktifan").innerText = formatRekapKeaktifan(rk.keaktifan);
+        document.getElementById("rkHalaman").innerText = formatRekapHalaman(rk.halamanTerakhir);
+      } else {
+        statusBadge.innerText = "Minggu Ini Belum Direkap";
+        statusBadge.classList.add("belum");
+        gridBox.style.display = "none";
+        belumBox.style.display = "block";
+        document.getElementById("rekapBelumDesc").innerText = periodeRekap
+          ? ("Data rekapan setoran untuk periode " + periodeRekap + " belum direkap oleh pengurus kamar.")
+          : "Data rekapan setoran pekan ini belum direkap oleh pengurus kamar.";
+      }
+
+      var emptyRekap = "<tr><td colspan='5' style='padding:1.35rem; font-weight:600; color:#64748b;'>Belum ada riwayat rekapan setoran mingguan yang tercatat.</td></tr>";
+      document.getElementById("resRekapSetoran").innerHTML = rk.riwayatHTML || emptyRekap;
 
       // Tab Pelanggaran
       var tbodyPlg = document.getElementById("resPelanggaran");
@@ -1436,7 +1584,7 @@
       else card.classList.remove("nihil");
     }
 
-    // GRAFIK MINGGUAN + PANDUAN BACAAN
+    // GRAFIK HAFALAN RIIL + PANDUAN BACAAN
     function renderGrafik(stats) {
       if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
       var scroll = document.getElementById("chartScroll");
@@ -1456,9 +1604,9 @@
         if (stats && stats.isKhatam) {
           title.innerHTML = '<i class="fa-solid fa-star" style="color:#d97706;"></i> Status Khatam 30 Juz';
           empty.classList.add("khatam");
-          empty.innerHTML = '<i class="fa-solid fa-award" style="font-size:1.8rem; color:#d97706; display:block; margin-bottom:6px;"></i><b>MasyaAllah, Barakallahu Fiikum.</b><br>Ananda telah menyelesaikan hafalan 30 Juz Al-Qur\'an dan kini fokus pada program murojaah rutin.';
+          empty.innerHTML = '<i class="fa-solid fa-award" style="font-size:1.8rem; color:#d97706; display:block; margin-bottom:6px;"></i><b>MasyaAllah, Barakallahu Fiikum.</b><br>Ananda telah menyelesaikan hafalan 30 Juz Al-Qur\'an. Silakan pantau aktivitas murojaah &amp; keaktifan ananda pada <b>Bagian 2 (Rekapan Setoran Mingguan)</b> di bawah.';
         } else {
-          title.innerHTML = '<i class="fa-solid fa-chart-line"></i> Grafik Mingguan (Hal / Pekan)';
+          title.innerHTML = '<i class="fa-solid fa-chart-line"></i> Grafik Hafalan Riil (Hal / Pekan)';
           empty.innerHTML = '<i class="fa-regular fa-clock" style="font-size:1.4rem; color:#0d9488; display:block; margin-bottom:6px;"></i>Grafik perkembangan mingguan akan tampil otomatis mulai pendataan pekan ke-2.';
         }
         return;
@@ -1470,7 +1618,7 @@
       empty.style.display = "none";
       title.innerHTML = stats.isKhatam
         ? '<i class="fa-solid fa-chart-line"></i> Arsip Grafik Menuju Khatam'
-        : '<i class="fa-solid fa-chart-line"></i> Grafik Mingguan (Hal / Pekan)';
+        : '<i class="fa-solid fa-chart-line"></i> Grafik Hafalan Riil (Hal / Pekan)';
 
       var lebarScroll = scroll.clientWidth || 300;
       var lebarButuh = stats.chartLabels.length > 6 ? (stats.chartLabels.length * 48) : lebarScroll;
