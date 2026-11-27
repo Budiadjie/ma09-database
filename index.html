@@ -96,7 +96,7 @@
     #wa-browser-notice i { color: #d97706; margin-right: 4px; }
 
     /* ============================================================
-       LAYAR 1: HALAMAN DEPAN (PENGUMUMAN + INPUT NIS + PUBLIK)
+       LAYAR 1: HALAMAN DEPAN (STATUS KEGIATAN + PENGUMUMAN + INPUT NIS)
        ============================================================ */
     #home-screen { display: block; width: 100%; padding-bottom: 2.5rem; }
     .hero-home {
@@ -126,6 +126,35 @@
     }
 
     .home-wrap { width: 100%; max-width: 560px; margin: -2.1rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
+
+    /* BANNER STATUS KEGIATAN (JEDA / LIBUR) DI HALAMAN DEPAN */
+    .kegiatan-home-card {
+      display: none;
+      background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+      border: 1.5px solid #93c5fd;
+      border-left: 5px solid #0284c7;
+      border-radius: 18px;
+      padding: 0.95rem 1.05rem;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp 0.28s ease;
+    }
+    .kegiatan-home-card.is-libur {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: #6ee7b7;
+      border-left-color: #059669;
+    }
+    .kh-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
+    .kh-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.45px;
+      color: #0369a1; background: rgba(255,255,255,0.8); padding: 3px 9px; border-radius: 99px;
+    }
+    .kegiatan-home-card.is-libur .kh-tag { color: #065f46; }
+    .kh-title { margin: 0 0 3px; font-size: 0.95rem; font-weight: 800; color: #0c4a6e; line-height: 1.3; }
+    .kegiatan-home-card.is-libur .kh-title { color: #064e3b; }
+    .kh-body { margin: 0; font-size: 0.84rem; color: #1e3a8a; font-weight: 600; line-height: 1.48; }
+    .kegiatan-home-card.is-libur .kh-body { color: #065f46; }
 
     /* PAPAN PENGUMUMAN KAMAR */
     .announcement-card {
@@ -415,7 +444,7 @@
     .hf-mini-val { font-size: 0.96rem; font-weight: 800; margin-top: 2px; line-height: 1.25; }
     .hf-mini-sub { font-size: 0.73rem; opacity: 0.9; font-weight: 600; margin-top: 3px; }
 
-    /* BLOK B: KARTU REKAPAN SETORAN MINGGUAN */
+    /* BLOK B: KARTU REKAPAN SETORAN MINGGUAN (TARGET KEAKTIFAN + UDZUR + JEDA/LIBUR) */
     .rekap-card {
       margin-bottom: 14px;
       background: linear-gradient(135deg, #ffffff 0%, #fffdf5 100%);
@@ -439,11 +468,13 @@
       background: #dcfce7; color: #166534;
     }
     .rk-status-pill.belum { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .rk-status-pill.jeda { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+    .rk-status-pill.libur { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
 
     .rk-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
     .rk-box {
       background: white; border: 1px solid #fde68a; border-radius: 14px;
-      padding: 0.85rem 0.9rem; display: flex; align-items: center; gap: 10px;
+      padding: 0.85rem 0.9rem; display: flex; align-items: flex-start; gap: 10px;
     }
     .rk-ico {
       width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
@@ -456,6 +487,28 @@
     .rk-lbl { font-size: 0.71rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
     .rk-val { font-size: 0.98rem; font-weight: 800; color: var(--text); margin-top: 2px; line-height: 1.2; word-break: break-word; }
 
+    .rk-target-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 6px; padding: 3px 8px; border-radius: 99px;
+      font-size: 0.69rem; font-weight: 800; line-height: 1.25;
+    }
+    .rt-memenuhi { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .rt-kurang { background: #ffe4e6; color: #be123c; border: 1px solid #fda4af; }
+    .rt-pendek { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
+
+    .rk-ket-strip {
+      display: none;
+      margin-top: 10px;
+      padding: 0.68rem 0.9rem;
+      border-radius: 12px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #9a3412;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
     .rk-belum-box {
       display: none;
       text-align: center;
@@ -467,6 +520,24 @@
     }
     .rk-belum-title { font-size: 1rem; font-weight: 800; color: #334155; margin: 6px 0 4px; }
     .rk-belum-sub { font-size: 0.82rem; color: #64748b; font-weight: 600; margin: 0; }
+
+    .rk-jeda-box {
+      display: none;
+      text-align: center;
+      padding: 1.4rem 1.1rem;
+      border-radius: 15px;
+      background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+      border: 1.5px solid #93c5fd;
+      color: #0c4a6e;
+    }
+    .rk-jeda-box.is-libur {
+      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+      border-color: #6ee7b7;
+      color: #064e3b;
+    }
+    .rk-jeda-title { font-size: 1.02rem; font-weight: 800; margin: 7px 0 5px; }
+    .rk-jeda-sub { font-size: 0.85rem; font-weight: 600; margin: 0; opacity: 0.92; line-height: 1.5; }
+    .rk-jeda-note { font-size: 0.76rem; font-weight: 600; margin-top: 8px; opacity: 0.82; }
 
     /* GRAFIK & BENCHMARK RATA-RATA KAMAR */
     .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 10px; }
@@ -631,7 +702,7 @@
   </div>
 
   <!-- ============================================================
-       1. HALAMAN DEPAN (PENGUMUMAN + WAJIB NIS + KEUANGAN & INVENTARIS)
+       1. HALAMAN DEPAN (STATUS KEGIATAN + PENGUMUMAN + WAJIB NIS)
        ============================================================ -->
   <div id="home-screen">
     <div class="hero-home">
@@ -644,6 +715,15 @@
     </div>
 
     <div class="home-wrap">
+      <!-- BANNER STATUS KEGIATAN SETORAN (MUNCUL BILA MODE JEDA ATAU LIBUR) -->
+      <div id="kegiatanHomeCard" class="kegiatan-home-card">
+        <div class="kh-head">
+          <span class="kh-tag" id="khTag"><i class="fa-solid fa-calendar-day"></i> Status Setoran</span>
+        </div>
+        <h3 class="kh-title" id="khTitle"></h3>
+        <p class="kh-body" id="khBody"></p>
+      </div>
+
       <!-- PAPAN PENGUMUMAN KAMAR (MUNCUL OTOMATIS BILA DIAKTIFKAN PEMBINA) -->
       <div id="announcementCard" class="announcement-card">
         <div class="ann-head">
@@ -878,7 +958,7 @@
           </div>
         </div>
 
-        <!-- BLOK B: REKAPAN SETORAN MINGGUAN (TERPISAH DARI HAFALAN RIIL) -->
+        <!-- BLOK B: REKAPAN SETORAN MINGGUAN (TERPISAH + TARGET KEAKTIFAN + MODE JEDA/LIBUR) -->
         <div class="block-banner rekap-banner">
           <div class="block-banner-left">
             <span class="block-num">Bagian 2</span>
@@ -915,6 +995,7 @@
               <div style="min-width:0;">
                 <div class="rk-lbl">Keaktifan</div>
                 <div class="rk-val" id="rkKeaktifan">-</div>
+                <div id="rkTargetPill" class="rk-target-pill" style="display:none;"></div>
               </div>
             </div>
             <div class="rk-box">
@@ -926,20 +1007,29 @@
             </div>
           </div>
 
+          <div class="rk-ket-strip" id="rkKetStrip"></div>
+
           <div class="rk-belum-box" id="rekapBelumBox">
             <i class="fa-regular fa-hourglass-half" style="font-size:1.55rem; color:#d97706;"></i>
             <div class="rk-belum-title">Minggu Ini Belum Direkap</div>
             <p class="rk-belum-sub" id="rekapBelumDesc">Rekapan setoran pekan ini belum dimasukkan oleh pengurus kamar.</p>
           </div>
+
+          <div class="rk-jeda-box" id="rekapJedaBox">
+            <i id="rkJedaIcon" class="fa-solid fa-pause-circle" style="font-size:1.75rem;"></i>
+            <div class="rk-jeda-title" id="rkJedaTitle">Kegiatan Setoran Sedang Jeda</div>
+            <p class="rk-jeda-sub" id="rkJedaSub"></p>
+            <div class="rk-jeda-note">Riwayat rekapan setoran pekan-pekan sebelumnya tetap dapat dilihat pada tabel di bawah ini.</div>
+          </div>
         </div>
 
         <div class="bento-card">
           <h3 class="sec-title"><i class="fa-solid fa-clock-rotate-left" style="color:#b45309;"></i> Riwayat Rekapan Setoran Mingguan</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat seluruh kolom</div>
+          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat status target &amp; keterangan</div>
           <div class="table-wrap">
             <table class="tbl-rekap">
               <thead>
-                <tr><th>Periode</th><th>Tambahan</th><th>Murojaah</th><th>Keaktifan</th><th>Hal. Terakhir</th></tr>
+                <tr><th>Periode</th><th>Tambahan</th><th>Murojaah</th><th>Keaktifan</th><th>Status Target</th><th>Hal. Terakhir</th><th>Keterangan</th></tr>
               </thead>
               <tbody id="resRekapSetoran"></tbody>
             </table>
@@ -1122,6 +1212,26 @@
             document.getElementById("lastUpdatePill").style.display = "inline-flex";
           }
 
+          // Banner Status Kegiatan (Jeda / Libur)
+          var sk = res.statusKegiatan || { mode: "AKTIF", keterangan: "" };
+          var khCard = document.getElementById("kegiatanHomeCard");
+          khCard.classList.remove("is-libur");
+          if (sk.mode === "LIBUR") {
+            khCard.classList.add("is-libur");
+            document.getElementById("khTag").innerHTML = '<i class="fa-solid fa-house"></i> Masa Liburan Pondok';
+            document.getElementById("khTitle").innerText = "Kegiatan Setoran Sedang Diliburkan";
+            document.getElementById("khBody").innerText = sk.keterangan || "Selamat berlibur bersama keluarga. Mohon tetap menjaga murojaah Al-Qur'an ananda selama di rumah.";
+            khCard.style.display = "block";
+          } else if (sk.mode === "JEDA") {
+            document.getElementById("khTag").innerHTML = '<i class="fa-solid fa-pause-circle"></i> Jeda Setoran Sementara';
+            document.getElementById("khTitle").innerText = "Kegiatan Setoran Mingguan Sedang Jeda";
+            document.getElementById("khBody").innerText = sk.keterangan || "Saat ini kegiatan setoran sedang jeda sementara (menjelang libur/agenda pondok).";
+            khCard.style.display = "block";
+          } else {
+            khCard.style.display = "none";
+          }
+
+          // Papan Pengumuman Kamar
           var p = res.pengumuman;
           var card = document.getElementById("announcementCard");
           if (p && p.aktif && (p.judul || p.isi)) {
@@ -1426,6 +1536,7 @@
       var ortu = res.ortu || {};
       var st = res.hafalanStats || {};
       var rk = res.rekapSetoran || { sudahDirekap: false, statusLabel: "Minggu Ini Belum Direkap", riwayatHTML: "" };
+      var sk = res.statusKegiatan || { mode: "AKTIF", keterangan: "" };
 
       // Topbar
       document.getElementById("topNama").innerText = bio.nama || "-";
@@ -1519,42 +1630,93 @@
       document.getElementById("resHafalan").innerHTML = res.hafalanHTML || emptyHaf;
 
       // ============================================================
-      // BLOK B: REKAPAN SETORAN MINGGUAN (TERPISAH)
+      // BLOK B: REKAPAN SETORAN MINGGUAN (+ TARGET KEAKTIFAN + JEDA/LIBUR)
       // ============================================================
       var periodeRekap = rk.periode || rk.periodeAktifKamar || "";
       var periodeBadge = document.getElementById("rekapPeriodeBadge");
-      if (periodeRekap) {
-        periodeBadge.innerText = periodeRekap;
-        periodeBadge.style.display = "inline-block";
-      } else {
-        periodeBadge.style.display = "none";
-      }
-
       var statusBadge = document.getElementById("rekapStatusBadge");
       var gridBox = document.getElementById("rekapGridBox");
+      var ketStrip = document.getElementById("rkKetStrip");
       var belumBox = document.getElementById("rekapBelumBox");
+      var jedaBox = document.getElementById("rekapJedaBox");
 
-      if (rk.sudahDirekap) {
-        statusBadge.innerText = "Sudah Direkap";
-        statusBadge.classList.remove("belum");
-        gridBox.style.display = "grid";
-        belumBox.style.display = "none";
+      statusBadge.className = "rk-status-pill";
+      jedaBox.classList.remove("is-libur");
+      ketStrip.style.display = "none";
 
-        document.getElementById("rkTambahan").innerText = formatRekapTambahan(rk.tambahan);
-        document.getElementById("rkMurojaah").innerText = formatRekapMurojaah(rk.murojaah);
-        document.getElementById("rkKeaktifan").innerText = formatRekapKeaktifan(rk.keaktifan);
-        document.getElementById("rkHalaman").innerText = formatRekapHalaman(rk.halamanTerakhir);
-      } else {
-        statusBadge.innerText = "Minggu Ini Belum Direkap";
-        statusBadge.classList.add("belum");
+      if (sk.mode === "LIBUR" || sk.mode === "JEDA") {
+        periodeBadge.style.display = "none";
         gridBox.style.display = "none";
-        belumBox.style.display = "block";
-        document.getElementById("rekapBelumDesc").innerText = periodeRekap
-          ? ("Data rekapan setoran untuk periode " + periodeRekap + " belum direkap oleh pengurus kamar.")
-          : "Data rekapan setoran pekan ini belum direkap oleh pengurus kamar.";
+        belumBox.style.display = "none";
+        jedaBox.style.display = "block";
+
+        if (sk.mode === "LIBUR") {
+          statusBadge.innerText = "Masa Liburan Pondok";
+          statusBadge.classList.add("libur");
+          jedaBox.classList.add("is-libur");
+          document.getElementById("rkJedaIcon").className = "fa-solid fa-house";
+          document.getElementById("rkJedaTitle").innerText = "Masa Liburan Pondok — Setoran Diliburkan";
+          document.getElementById("rkJedaSub").innerText = sk.keterangan || "Saat ini pondok sedang dalam masa liburan. Mohon Bapak/Ibu berkenan mendampingi murojaah ananda selama di rumah.";
+        } else {
+          statusBadge.innerText = "Jeda Setoran";
+          statusBadge.classList.add("jeda");
+          document.getElementById("rkJedaIcon").className = "fa-solid fa-pause-circle";
+          document.getElementById("rkJedaTitle").innerText = "Kegiatan Setoran Mingguan Sedang Jeda";
+          document.getElementById("rkJedaSub").innerText = sk.keterangan || "Saat ini kegiatan setoran sedang jeda sementara (menjelang libur / ujian / agenda pondok).";
+        }
+      } else {
+        jedaBox.style.display = "none";
+        if (periodeRekap) {
+          periodeBadge.innerText = periodeRekap;
+          periodeBadge.style.display = "inline-block";
+        } else {
+          periodeBadge.style.display = "none";
+        }
+
+        if (rk.sudahDirekap) {
+          statusBadge.innerText = "Sudah Direkap";
+          gridBox.style.display = "grid";
+          belumBox.style.display = "none";
+
+          document.getElementById("rkTambahan").innerText = formatRekapTambahan(rk.tambahan);
+          document.getElementById("rkMurojaah").innerText = formatRekapMurojaah(rk.murojaah);
+          document.getElementById("rkKeaktifan").innerText = formatRekapKeaktifan(rk.keaktifan);
+          document.getElementById("rkHalaman").innerText = formatRekapHalaman(rk.halamanTerakhir);
+
+          var tPill = document.getElementById("rkTargetPill");
+          tPill.className = "rk-target-pill";
+          if (rk.statusTarget === "memenuhi") {
+            tPill.classList.add("rt-memenuhi");
+            tPill.innerHTML = '<i class="fa-solid fa-circle-check"></i> ' + escapeHTML(rk.labelTarget || ("Memenuhi Target (Min. " + rk.targetMinimal + "x)"));
+            tPill.style.display = "inline-flex";
+          } else if (rk.statusTarget === "kurang") {
+            tPill.classList.add("rt-kurang");
+            tPill.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> ' + escapeHTML(rk.labelTarget || ("Belum Memenuhi Target (Min. " + rk.targetMinimal + "x)"));
+            tPill.style.display = "inline-flex";
+          } else if (rk.statusTarget === "pendek") {
+            tPill.classList.add("rt-pendek");
+            tPill.innerHTML = '<i class="fa-solid fa-circle-info"></i> ' + escapeHTML(rk.labelTarget || ("Pekan Pendek (" + rk.hariEfektif + " Hari)"));
+            tPill.style.display = "inline-flex";
+          } else {
+            tPill.style.display = "none";
+          }
+
+          if (rk.keterangan && rk.keterangan !== "-") {
+            ketStrip.innerHTML = '<i class="fa-solid fa-note-sticky"></i> <b>Keterangan Pekan Ini:</b> ' + escapeHTML(rk.keterangan);
+            ketStrip.style.display = "block";
+          }
+        } else {
+          statusBadge.innerText = "Minggu Ini Belum Direkap";
+          statusBadge.classList.add("belum");
+          gridBox.style.display = "none";
+          belumBox.style.display = "block";
+          document.getElementById("rekapBelumDesc").innerText = periodeRekap
+            ? ("Data rekapan setoran untuk periode " + periodeRekap + " belum direkap oleh pengurus kamar.")
+            : "Data rekapan setoran pekan ini belum direkap oleh pengurus kamar.";
+        }
       }
 
-      var emptyRekap = "<tr><td colspan='5' style='padding:1.35rem; font-weight:600; color:#64748b;'>Belum ada riwayat rekapan setoran mingguan yang tercatat.</td></tr>";
+      var emptyRekap = "<tr><td colspan='7' style='padding:1.35rem; font-weight:600; color:#64748b;'>Belum ada riwayat rekapan setoran mingguan yang tercatat.</td></tr>";
       document.getElementById("resRekapSetoran").innerHTML = rk.riwayatHTML || emptyRekap;
 
       // Tab Pelanggaran
