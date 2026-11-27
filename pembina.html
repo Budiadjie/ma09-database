@@ -28,6 +28,7 @@
       --gold: #d97706;
       --gold-deep: #b45309;
       --rose: #e11d48;
+      --sky: #0284c7;
       --bg: #f1f5f9;
       --card: #ffffff;
       --text: #0f172a;
@@ -277,7 +278,7 @@
     .main-view.active { display: block; }
 
     /* ============================================================
-       TAB 1: BERANDA ANALITIK KAMAR + EDITOR PENGUMUMAN
+       TAB 1: BERANDA ANALITIK KAMAR + STATUS KEGIATAN + PENGUMUMAN
        ============================================================ */
     .kpi-grid {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-bottom: 14px;
@@ -319,9 +320,49 @@
     }
     .box-title span { display: inline-flex; align-items: center; gap: 8px; }
 
+    /* PENGATUR STATUS KEGIATAN SETORAN KAMAR (AKTIF / JEDA / LIBUR) */
+    .sk-editor-box {
+      border: 1.5px solid #bae6fd;
+      background: linear-gradient(180deg, #f8fcff 0%, #ffffff 100%);
+    }
+    .sk-status-pill {
+      font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;
+      background: #dcfce7; color: #166534; border: 1px solid #86efac;
+    }
+    .sk-status-pill.is-jeda { background: #e0f2fe; color: #0369a1; border-color: #7dd3fc; }
+    .sk-status-pill.is-libur { background: #fef3c7; color: #92400e; border-color: #fcd34d; }
+
+    .sk-mode-grid {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin-bottom: 10px;
+    }
+    .sk-mode-btn {
+      padding: 0.72rem 0.5rem; border-radius: 13px; border: 1.5px solid #cbd5e1;
+      background: #f8fafc; color: var(--muted-dark); font-family: inherit;
+      font-size: 0.8rem; font-weight: 800; cursor: pointer;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      transition: all 0.16s; text-align: center;
+    }
+    .sk-mode-btn i { font-size: 1.05rem; }
+    .sk-mode-btn.active[data-mode="AKTIF"] {
+      background: #ecfdf5; border-color: #059669; color: #065f46; box-shadow: 0 3px 10px rgba(5, 150, 105, 0.16);
+    }
+    .sk-mode-btn.active[data-mode="JEDA"] {
+      background: #eff6ff; border-color: #0284c7; color: #0369a1; box-shadow: 0 3px 10px rgba(2, 132, 199, 0.16);
+    }
+    .sk-mode-btn.active[data-mode="LIBUR"] {
+      background: #fffbeb; border-color: #d97706; color: #92400e; box-shadow: 0 3px 10px rgba(217, 119, 6, 0.16);
+    }
+    .btn-save-sk {
+      padding: 0.72rem 1.15rem; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, #0369a1, #0284c7); color: white;
+      font-size: 0.85rem; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+    .btn-save-sk:disabled { opacity: 0.6; cursor: not-allowed; }
+
     /* EDITOR PENGUMUMAN KAMAR */
     .ann-editor-box {
-      margin-bottom: 14px;
       border: 1.5px solid #fde68a;
       background: linear-gradient(180deg, #fffdf5 0%, #ffffff 100%);
     }
@@ -340,7 +381,7 @@
       font-family: inherit; font-size: 0.9rem; font-weight: 600; color: var(--text);
       outline: none; background: #f8fafc;
     }
-    .ann-textarea { min-height: 76px; resize: vertical; font-weight: 500; }
+    .ann-textarea { min-height: 74px; resize: vertical; font-weight: 500; }
     .ann-input:focus, .ann-textarea:focus { border-color: #d97706; background: white; }
     .ann-footer-row {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
@@ -348,7 +389,7 @@
     .btn-save-ann {
       padding: 0.72rem 1.2rem; border: none; border-radius: 12px;
       background: linear-gradient(135deg, #b45309, #d97706); color: white;
-      font-size: 0.86rem; font-weight: 800; cursor: pointer;
+      font-size: 0.85rem; font-weight: 800; cursor: pointer;
       display: inline-flex; align-items: center; gap: 7px;
       box-shadow: 0 4px 12px rgba(217, 119, 6, 0.28);
     }
@@ -391,7 +432,7 @@
     .sebaran-chart-wrap { position: relative; height: 220px; width: 100%; }
 
     /* ============================================================
-       TAB 2 (HAFALAN RIIL) & TAB 3 (REKAP SETORAN MINGGUAN) — TERPISAH
+       TAB 2 (HAFALAN RIIL) & TAB 3 (REKAP SETORAN MINGGUAN)
        ============================================================ */
     .mode-banner {
       display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
@@ -401,8 +442,11 @@
     .mode-banner.rekap-mode {
       background: #fffbeb; border-color: #fcd34d; color: #78350f;
     }
+    .mode-banner.jeda-alert {
+      background: #eff6ff; border-color: #93c5fd; color: #0c4a6e;
+    }
     .mode-banner strong { font-size: 0.94rem; display: block; }
-    .mode-banner span { font-size: 0.78rem; font-weight: 600; opacity: 0.9; }
+    .mode-banner span { font-size: 0.78rem; font-weight: 600; opacity: 0.92; }
 
     .mass-header-card {
       background: white; border: 1px solid var(--border); border-radius: var(--radius);
@@ -412,12 +456,23 @@
     .mass-top-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
     .mass-field label { display: block; font-size: 0.76rem; font-weight: 800; color: #065f46; margin-bottom: 4px; }
     .rekap-header .mass-field label { color: #92400e; }
-    .mass-field input {
+    .mass-field input, .mass-field select {
       width: 100%; padding: 0.72rem 0.85rem; border: 2px solid #cbd5e1; border-radius: 12px;
-      font-family: inherit; font-size: 0.9rem; font-weight: 700; outline: none; background: #f8fafc;
+      font-family: inherit; font-size: 0.88rem; font-weight: 700; outline: none; background: #f8fafc;
+      color: var(--text);
     }
-    .mass-field input:focus { border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); }
-    .rekap-header .mass-field input:focus { border-color: #d97706; box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.14); }
+    .mass-field input:focus, .mass-field select:focus {
+      border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
+    }
+    .rekap-header .mass-field input:focus, .rekap-header .mass-field select:focus {
+      border-color: #d97706; box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.14);
+    }
+
+    .target-rule-strip {
+      background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412;
+      border-radius: 11px; padding: 0.56rem 0.82rem; font-size: 0.78rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;
+    }
 
     .mass-tools-row {
       display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px;
@@ -453,13 +508,14 @@
 
     .mr-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
     .delta-chip {
-      font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px; white-space: nowrap;
+      font-size: 0.71rem; font-weight: 800; padding: 3px 9px; border-radius: 99px; white-space: nowrap;
       background: #e2e8f0; color: #475569;
     }
     .delta-chip.d-naik { background: #d1fae5; color: #065f46; }
     .delta-chip.d-nol { background: #ffe4e6; color: #9f1239; }
     .delta-chip.d-khatam { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
     .delta-chip.d-belum { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .delta-chip.d-pendek { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
     .mushaf-chip {
       font-size: 0.69rem; font-weight: 800; padding: 2px 8px; border-radius: 99px; white-space: nowrap;
       background: #e0f2fe; color: #0369a1;
@@ -476,6 +532,7 @@
     .rekap-row .mr-inp-group input:focus { border-color: #d97706; box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.12); }
     .mr-span-2 { grid-column: span 2; }
     .mr-span-3 { grid-column: span 3; }
+    .mr-rek-full { grid-column: 1 / -1; }
 
     /* INPUT MUROJAAH + TOMBOL PECAHAN CEPAT (¼ ½ ¾) */
     .murojaah-inp-wrap { display: flex; gap: 4px; align-items: stretch; }
@@ -537,10 +594,11 @@
     .filter-chips { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; }
     .chip {
       padding: 0.44rem 0.82rem; border-radius: 99px; border: 1.5px solid #cbd5e1;
-      background: #f8fafc; color: var(--muted-dark); font-size: 0.78rem; font-weight: 700; cursor: pointer;
+      background: #f8fafc; color: var(--muted-dark); font-size: 0.77rem; font-weight: 700; cursor: pointer;
       transition: all 0.15s;
     }
     .chip.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 3px 8px rgba(6,95,70,0.22); }
+    .chip.chip-warn.active { background: #be123c; border-color: #be123c; }
 
     .santri-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
     .santri-card {
@@ -572,18 +630,29 @@
 
     .sc-rekap-strip {
       background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px;
-      padding: 0.62rem 0.8rem; font-size: 0.76rem; color: #78350f;
+      padding: 0.65rem 0.8rem; font-size: 0.76rem; color: #78350f;
     }
     .sc-rekap-strip.belum {
       background: #f8fafc; border: 1px dashed #cbd5e1; color: #64748b; text-align: center; font-weight: 700;
     }
-    .sc-rekap-title { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: #b45309; margin-bottom: 4px; }
+    .sc-rekap-strip.kurang {
+      background: #fff1f2; border-color: #fecdd3; color: #9f1239;
+    }
+    .sc-rekap-title {
+      font-size: 0.68rem; font-weight: 800; text-transform: uppercase; color: #b45309;
+      margin-bottom: 5px; display: flex; align-items: center; justify-content: space-between; gap: 6px;
+    }
+    .sc-rekap-strip.kurang .sc-rekap-title { color: #be123c; }
     .sc-mk-row { display: flex; flex-wrap: wrap; gap: 5px; }
     .sc-mk-pill {
       display: inline-flex; align-items: center; gap: 4px;
       font-size: 0.71rem; font-weight: 800; padding: 2px 8px; border-radius: 99px;
       background: white; border: 1px solid #fde68a; color: #92400e;
     }
+    .sc-mk-pill.ok { background: #dcfce7; border-color: #86efac; color: #166534; }
+    .sc-mk-pill.bad { background: #ffe4e6; border-color: #fda4af; color: #be123c; }
+    .sc-mk-pill.pendek { background: #e0f2fe; border-color: #7dd3fc; color: #0369a1; }
+    .sc-ket-line { margin-top: 5px; font-size: 0.72rem; font-weight: 700; color: #9a3412; }
 
     .tren-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 0.73rem; font-weight: 800; margin-top: 7px; }
     .tp-khatam { background: #fef3c7; color: #92400e; }
@@ -674,9 +743,25 @@
     .mrk-cell { background: white; border: 1px solid #fde68a; border-radius: 10px; padding: 0.55rem 0.7rem; }
     .mrk-cell span { display: block; font-size: 0.67rem; font-weight: 800; color: #92400e; text-transform: uppercase; }
     .mrk-cell b { display: block; font-size: 0.88rem; color: var(--text); margin-top: 1px; }
+    .mrk-target-tag {
+      display: inline-block; margin-top: 3px; font-size: 0.66rem; font-weight: 800;
+      padding: 2px 6px; border-radius: 99px;
+    }
+    .mrk-target-tag.ok { background: #dcfce7; color: #166534; }
+    .mrk-target-tag.bad { background: #ffe4e6; color: #be123c; }
+    .mrk-target-tag.pendek { background: #e0f2fe; color: #0369a1; }
+
+    .mrk-ket-strip {
+      display: none; margin-top: 8px; padding: 0.52rem 0.72rem; border-radius: 9px;
+      background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; font-size: 0.77rem; font-weight: 700;
+    }
     .mrk-belum {
       display: none; text-align: center; padding: 0.85rem; border-radius: 10px;
       background: white; border: 1px dashed #fcd34d; color: #92400e; font-size: 0.85rem; font-weight: 800;
+    }
+    .mrk-jeda-strip {
+      display: none; margin-bottom: 8px; padding: 0.58rem 0.78rem; border-radius: 10px;
+      background: #eff6ff; border: 1px solid #93c5fd; color: #0c4a6e; font-size: 0.78rem; font-weight: 700;
     }
 
     .preview-chart-wrap { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 15px; padding: 0.9rem; width: 100%; min-width: 0; }
@@ -775,14 +860,15 @@
       .mass-save-bar { bottom: 16px; }
       .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .bento-2col { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+      .bento-2col.equal-col { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
       .mass-top-controls.two-col { grid-template-columns: 220px minmax(0, 1fr); }
-      .mass-top-controls.three-col { grid-template-columns: 185px 1.25fr 1fr; }
+      .mass-top-controls.four-col { grid-template-columns: 165px 1.25fr 190px 1fr; }
       .mr-inputs { grid-template-columns: 76px 88px 92px 1.25fr 1fr 1.5fr; }
-      .mr-inputs-rekap { grid-template-columns: 1fr 1.5fr 1fr 1.1fr; }
+      .mr-inputs-rekap { grid-template-columns: 0.95fr 1.45fr 0.95fr 1.05fr; }
       .mr-span-2, .mr-span-3 { grid-column: auto; }
       .mrk-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .toolbar { flex-direction: row; align-items: center; justify-content: space-between; }
-      .search-input { max-width: 300px; }
+      .search-input { max-width: 280px; }
       .santri-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
       .mtab-btn { font-size: 0.8rem; }
     }
@@ -818,7 +904,7 @@
     </div>
   </div>
 
-  <!-- 2. DASBOR PEMBINA v3.1 (HAFALAN RIIL & REKAP SETORAN TERPISAH) -->
+  <!-- 2. DASBOR PEMBINA v3.2 (TARGET KEAKTIFAN + STATUS KEGIATAN + UDZUR) -->
   <div id="dashboard-screen">
     <div class="topbar">
       <div class="topbar-inner">
@@ -861,7 +947,7 @@
       </div>
 
       <!-- ============================================================
-           VIEW 1: BERANDA ANALITIK KAMAR + EDITOR PENGUMUMAN
+           VIEW 1: BERANDA ANALITIK KAMAR + STATUS KEGIATAN + PENGUMUMAN
            ============================================================ -->
       <section id="view-beranda" class="main-view active">
         <div class="kpi-grid">
@@ -883,11 +969,11 @@
           </div>
           <div class="kpi-card k-merah">
             <div class="kpi-top">
-              <div class="kpi-lbl">Perlu Perhatian</div>
-              <div class="kpi-ico"><i class="fa-solid fa-bell"></i></div>
+              <div class="kpi-lbl">Keaktifan Kurang</div>
+              <div class="kpi-ico"><i class="fa-solid fa-triangle-exclamation"></i></div>
             </div>
-            <div class="kpi-val" id="kpiPerhatian">0</div>
-            <div class="kpi-sub">Stagnan / menurun (Riil)</div>
+            <div class="kpi-val" id="kpiKurangTarget">0</div>
+            <div class="kpi-sub" id="kpiPerhatianSub">Riil stagnan/turun: 0 santri</div>
           </div>
           <div class="kpi-card k-emas">
             <div class="kpi-top">
@@ -899,27 +985,63 @@
           </div>
         </div>
 
-        <!-- EDITOR PAPAN PENGUMUMAN PORTAL WALI -->
-        <div class="bento-box ann-editor-box">
-          <h3 class="box-title">
-            <span><i class="fa-solid fa-bullhorn" style="color:#d97706;"></i> Papan Pengumuman Portal Wali</span>
-            <span class="ann-status-pill" id="annStatusPill">Disembunyikan</span>
-          </h3>
-          <div class="ann-form-grid">
-            <div class="ann-toggle-row">
-              <label class="chk-inline" style="color:#92400e;">
-                <input type="checkbox" id="inAnnAktif" onchange="perbaruiPreviewStatusAnn()">
-                <span>Tampilkan pengumuman ini di Halaman Depan Portal Wali</span>
-              </label>
-              <small id="annLastUpdated" style="font-size:0.74rem; color:#92400e; font-weight:700;"></small>
-            </div>
-            <input type="text" id="inAnnJudul" class="ann-input" placeholder="Judul pengumuman (misal: Jadwal Telepon Hari Jum'at / Info Sambangan)">
-            <textarea id="inAnnIsi" class="ann-textarea" placeholder="Tulis isi pengumuman singkat untuk wali santri di sini..."></textarea>
-            <div class="ann-footer-row">
-              <small style="font-size:0.75rem; color:#64748b; font-weight:600;">Tersimpan otomatis di tab <b>Pengumuman</b> Spreadsheet Kamar.</small>
-              <button type="button" id="btnSimpanAnn" class="btn-save-ann" onclick="simpanPengumumanKamar()">
-                <i class="fa-solid fa-paper-plane"></i> Simpan Pengumuman
+        <!-- KONTROL STATUS KEGIATAN & PAPAN PENGUMUMAN -->
+        <div class="bento-2col equal-col">
+          <!-- PENGATUR STATUS KEGIATAN SETORAN KAMAR -->
+          <div class="bento-box sk-editor-box">
+            <h3 class="box-title">
+              <span><i class="fa-solid fa-sliders" style="color:#0284c7;"></i> Status Kegiatan Setoran</span>
+              <span class="sk-status-pill" id="skStatusPill">Aktif</span>
+            </h3>
+            <input type="hidden" id="inSkMode" value="AKTIF">
+            <div class="sk-mode-grid">
+              <button type="button" class="sk-mode-btn active" data-mode="AKTIF" onclick="pilihModeKegiatan('AKTIF')">
+                <i class="fa-solid fa-circle-play"></i><span>Aktif</span>
               </button>
+              <button type="button" class="sk-mode-btn" data-mode="JEDA" onclick="pilihModeKegiatan('JEDA')">
+                <i class="fa-solid fa-pause-circle"></i><span>Jeda Setoran</span>
+              </button>
+              <button type="button" class="sk-mode-btn" data-mode="LIBUR" onclick="pilihModeKegiatan('LIBUR')">
+                <i class="fa-solid fa-house"></i><span>Liburan Pondok</span>
+              </button>
+            </div>
+            <textarea id="inSkKeterangan" class="ann-textarea" style="min-height:66px;" placeholder="Keterangan singkat saat Jeda/Libur (opsional, tampil di Portal Wali)..."></textarea>
+            <div class="quick-templates" style="margin-bottom:10px;">
+              <button type="button" class="btn-tpl" onclick="isiPresetKegiatan('JEDA', 'Kegiatan setoran sedang jeda sementara karena persiapan menjelang libur pondok.')">Persiapan Libur</button>
+              <button type="button" class="btn-tpl" onclick="isiPresetKegiatan('JEDA', 'Kegiatan setoran sedang jeda sementara karena ananda mengikuti masa ujian madrasah.')">Masa Ujian</button>
+              <button type="button" class="btn-tpl" onclick="isiPresetKegiatan('LIBUR', 'Saat ini pondok sedang dalam masa liburan. Mohon Bapak/Ibu berkenan mendampingi murojaah ananda selama di rumah.')">Masa Liburan Pondok</button>
+              <button type="button" class="btn-tpl" onclick="isiPresetKegiatan('JEDA', 'Kegiatan setoran sedang jeda sementara karena agenda kegiatan pondok.')">Kegiatan Pondok</button>
+            </div>
+            <div class="ann-footer-row">
+              <small id="skLastUpdated" style="font-size:0.73rem; color:#64748b; font-weight:600;"></small>
+              <button type="button" id="btnSimpanSk" class="btn-save-sk" onclick="simpanStatusKegiatan()">
+                <i class="fa-solid fa-floppy-disk"></i> Simpan Status
+              </button>
+            </div>
+          </div>
+
+          <!-- EDITOR PAPAN PENGUMUMAN PORTAL WALI -->
+          <div class="bento-box ann-editor-box">
+            <h3 class="box-title">
+              <span><i class="fa-solid fa-bullhorn" style="color:#d97706;"></i> Papan Pengumuman Portal Wali</span>
+              <span class="ann-status-pill" id="annStatusPill">Disembunyikan</span>
+            </h3>
+            <div class="ann-form-grid">
+              <div class="ann-toggle-row">
+                <label class="chk-inline" style="color:#92400e;">
+                  <input type="checkbox" id="inAnnAktif" onchange="perbaruiPreviewStatusAnn()">
+                  <span>Tampilkan di Halaman Depan Portal Wali</span>
+                </label>
+                <small id="annLastUpdated" style="font-size:0.73rem; color:#92400e; font-weight:700;"></small>
+              </div>
+              <input type="text" id="inAnnJudul" class="ann-input" placeholder="Judul pengumuman (misal: Jadwal Telepon Jum'at / Info Sambangan)">
+              <textarea id="inAnnIsi" class="ann-textarea" placeholder="Tulis isi pengumuman singkat untuk wali santri di sini..."></textarea>
+              <div class="ann-footer-row">
+                <small style="font-size:0.74rem; color:#64748b; font-weight:600;">Tersimpan di tab <b>Pengumuman</b>.</small>
+                <button type="button" id="btnSimpanAnn" class="btn-save-ann" onclick="simpanPengumumanKamar()">
+                  <i class="fa-solid fa-paper-plane"></i> Simpan Pengumuman
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -944,8 +1066,8 @@
 
         <div class="bento-box">
           <h3 class="box-title">
-            <span><i class="fa-solid fa-heart-pulse" style="color:#be123c;"></i> Prioritas Motivasi (Hafalan Riil Stagnan / Menurun)</span>
-            <button type="button" class="btn-mini-tool" onclick="bukaFilterPerhatian()">Lihat Semua</button>
+            <span><i class="fa-solid fa-heart-pulse" style="color:#be123c;"></i> Prioritas Motivasi (Belum Memenuhi Target / Riil Stagnan)</span>
+            <button type="button" class="btn-mini-tool" onclick="bukaFilterKurangTarget()">Lihat Keaktifan Kurang</button>
           </h3>
           <div id="listPerhatianBeranda"></div>
         </div>
@@ -1012,12 +1134,19 @@
         <div class="mode-banner rekap-mode">
           <div>
             <strong><i class="fa-solid fa-calendar-week"></i> Input Massal Rekapan Setoran Mingguan (24 Santri)</strong>
-            <span>Masuk ke tab <b>Rekap Setoran</b> (Tambahan, Murojaah, Keaktifan, Halaman Terakhir) &bull; Santri yang tidak dicentang otomatis tampil <b>"Minggu Ini Belum Direkap"</b>.</span>
+            <span>Masuk ke tab <b>Rekap Setoran</b> &bull; Target keaktifan otomatis <b>Hari Efektif - 1</b> (berlaku untuk semua santri termasuk Khatam). Keterangan hanya untuk udzur <b>sakit/izin</b> (badal berhalangan tidak bisa jadi alasan).</span>
+          </div>
+        </div>
+
+        <div id="rekStatusJedaAlert" class="mode-banner jeda-alert" style="display:none;">
+          <div>
+            <strong id="rekJedaAlertTitle"><i class="fa-solid fa-circle-info"></i> Mode Jeda / Libur Sedang Aktif</strong>
+            <span id="rekJedaAlertDesc">Portal Wali saat ini menampilkan status jeda/libur. Jika ingin menayangkan rekap aktif lagi, ubah Status Kegiatan di Beranda menjadi Aktif.</span>
           </div>
         </div>
 
         <div class="mass-header-card rekap-header">
-          <div class="mass-top-controls three-col">
+          <div class="mass-top-controls four-col">
             <div class="mass-field">
               <label for="rekTanggalGlobal"><i class="fa-regular fa-calendar"></i> Tanggal Rekap</label>
               <input type="date" id="rekTanggalGlobal">
@@ -1027,9 +1156,25 @@
               <input type="text" id="rekPeriodeGlobal" placeholder="Misal: 21 November - 26 November 2026">
             </div>
             <div class="mass-field">
+              <label for="rekHariEfektifGlobal"><i class="fa-solid fa-bullseye"></i> Hari Efektif Pekan Ini</label>
+              <select id="rekHariEfektifGlobal" onchange="onUbahHariEfektifGlobal()">
+                <option value="6" selected>6 Hari Efektif (Min. 5x)</option>
+                <option value="5">5 Hari Efektif (Min. 4x)</option>
+                <option value="4">4 Hari Efektif (Min. 3x)</option>
+                <option value="3">3 Hari Efektif (Min. 2x)</option>
+                <option value="2">2 Hari (Pekan Pendek)</option>
+                <option value="1">1 Hari (Pekan Pendek)</option>
+              </select>
+            </div>
+            <div class="mass-field">
               <label for="rekCariInput"><i class="fa-solid fa-magnifying-glass"></i> Cari Nama / NIS</label>
               <input type="text" id="rekCariInput" placeholder="Cari santri..." oninput="terapkanFilterRekap()">
             </div>
+          </div>
+
+          <div class="target-rule-strip" id="rekTargetInfoBanner">
+            <span><i class="fa-solid fa-bullseye"></i> Patokan Pekan Ini: <b>6 Hari Efektif &rarr; Target Minimal 5x Setoran</b></span>
+            <span style="opacity:0.85;">Berlaku untuk seluruh 24 santri</span>
           </div>
 
           <div class="mass-tools-row">
@@ -1072,8 +1217,9 @@
           <input type="text" id="cariSantriInput" class="search-input" placeholder="Cari nama atau NIS santri..." oninput="renderDaftarSantri()">
           <div class="filter-chips">
             <button type="button" class="chip active" data-flt="semua" onclick="setFilter('semua', this)">Semua</button>
-            <button type="button" class="chip" data-flt="perhatian" onclick="setFilter('perhatian', this)">Stagnan / Menurun</button>
-            <button type="button" class="chip" data-flt="naik" onclick="setFilter('naik', this)">Meningkat / Stabil</button>
+            <button type="button" class="chip chip-warn" data-flt="kurangTarget" onclick="setFilter('kurangTarget', this)">Belum Memenuhi Target</button>
+            <button type="button" class="chip" data-flt="perhatian" onclick="setFilter('perhatian', this)">Riil Stagnan/Turun</button>
+            <button type="button" class="chip" data-flt="naik" onclick="setFilter('naik', this)">Riil Naik/Stabil</button>
             <button type="button" class="chip" data-flt="khatam" onclick="setFilter('khatam', this)">Khatam</button>
             <button type="button" class="chip" data-flt="belumRekap" onclick="setFilter('belumRekap', this)">Belum Direkap</button>
             <button type="button" class="chip" data-flt="belum" onclick="setFilter('belum', this)">Belum Dikirim WA</button>
@@ -1103,7 +1249,7 @@
     </nav>
   </div>
 
-  <!-- 3. MODAL SANTRI (4 TAB TERPISAH: RAPOR & WA | + HAFALAN RIIL | + REKAP SETORAN | + PELANGGARAN) -->
+  <!-- 3. MODAL SANTRI (4 TAB TERPISAH: RAPOR & WA | + HAFALAN RIIL | + REKAP | + PELANGGARAN) -->
   <div id="modalRapor" class="modal-backdrop" onclick="if(event.target === this) tutupModal()">
     <div class="modal-box">
       <div class="modal-header">
@@ -1149,6 +1295,7 @@
 
         <!-- RINGKASAN REKAPAN SETORAN MINGGUAN DI MODAL -->
         <div class="modal-rekap-card">
+          <div class="mrk-jeda-strip" id="mRekapJedaStrip"></div>
           <div class="mrk-top">
             <strong><i class="fa-solid fa-calendar-week"></i> Rekapan Setoran Mingguan</strong>
             <span class="delta-chip d-khatam" id="mRekapPeriode">-</span>
@@ -1156,9 +1303,14 @@
           <div class="mrk-grid" id="mRekapGrid">
             <div class="mrk-cell"><span>Tambahan</span><b id="mRekTambahan">-</b></div>
             <div class="mrk-cell"><span>Murojaah</span><b id="mRekMurojaah">-</b></div>
-            <div class="mrk-cell"><span>Keaktifan</span><b id="mRekKeaktifan">-</b></div>
+            <div class="mrk-cell">
+              <span>Keaktifan</span>
+              <b id="mRekKeaktifan">-</b>
+              <div id="mRekTargetTag" class="mrk-target-tag" style="display:none;"></div>
+            </div>
             <div class="mrk-cell"><span>Hal. Terakhir</span><b id="mRekHalaman">-</b></div>
           </div>
+          <div class="mrk-ket-strip" id="mRekKetStrip"></div>
           <div class="mrk-belum" id="mRekapBelum">
             <i class="fa-regular fa-hourglass-half"></i> Minggu Ini Belum Direkap
           </div>
@@ -1176,15 +1328,15 @@
           <label for="inputEvaluasi"><i class="fa-solid fa-pen-to-square"></i> Catatan Evaluasi Mingguan (Masuk PDF &amp; WA)</label>
           <textarea id="inputEvaluasi" oninput="simpanDraftEvaluasi()" placeholder="Ketik catatan evaluasi pembina untuk ananda di sini (opsional)..."></textarea>
           <div class="quick-templates">
-            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah perkembangan hafalan dan murojaah ananda pekan ini sangat baik. Mohon doa Bapak/Ibu agar ananda senantiasa istiqamah.')">+ Apresiasi Naik</button>
-            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Pekan ini hafalan baru ananda masih stagnan/belum bertambah. Mohon dukungan doa dan semangat dari Bapak/Ibu agar pekan depan kembali lancar.')">+ Motivasi Stagnan</button>
+            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah perkembangan hafalan dan keaktifan setoran ananda pekan ini sangat baik. Mohon doa Bapak/Ibu agar ananda senantiasa istiqamah.')">+ Apresiasi Naik</button>
+            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Pekan ini keaktifan setoran ananda belum memenuhi target minimal kamar. Mohon dukungan semangat dan doa Bapak/Ibu agar pekan depan lebih disiplin.')">+ Keaktifan Kurang</button>
             <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah ananda telah khatam 30 Juz dan aktif menjaga kelancaran melalui murojaah rutin. Mohon doa agar senantiasa istiqamah.')">+ Apresiasi Khatam</button>
             <button type="button" class="btn-tpl" onclick="isiTemplateEval('')">Bersihkan</button>
           </div>
         </div>
 
         <div class="action-panel">
-          <div class="step-hint">1. Unduh Rapor PDF dulu, lalu 2. Klik WA Ayah/Ibu (1 pesan gabungan memuat Hafalan Riil + Rekapan Setoran + imbauan telepon Jum'at):</div>
+          <div class="step-hint" id="mActionHint">1. Unduh Rapor PDF dulu, lalu 2. Klik WA Ayah/Ibu (1 pesan gabungan memuat Hafalan Riil + Rekapan Setoran + status target keaktifan):</div>
           <button type="button" class="btn-pdf" onclick="unduhPdfSantriAktif()">
             <i class="fa-solid fa-file-pdf"></i> Unduh Rapor PDF (1 Lembar A4)
           </button>
@@ -1206,7 +1358,7 @@
         </div>
       </div>
 
-      <!-- TAB 2: INPUT SATUAN HAFALAN RIIL (MURNI TAB "SETORAN HAFALAN") -->
+      <!-- TAB 2: INPUT SATUAN HAFALAN RIIL -->
       <div id="pane-hafalan" class="modal-pane">
         <div class="form-hint" id="hintPosisiHafalan"></div>
 
@@ -1260,20 +1412,31 @@
         </div>
       </div>
 
-      <!-- TAB 3: INPUT SATUAN REKAPAN SETORAN MINGGUAN (TAB "REKAP SETORAN") -->
+      <!-- TAB 3: INPUT SATUAN REKAPAN SETORAN MINGGUAN -->
       <div id="pane-rekap" class="modal-pane">
         <div class="form-hint amber">
-          <i class="fa-solid fa-calendar-week"></i> Tersimpan di tab <b>Rekap Setoran</b> (terpisah dari Hafalan Riil). Jika periode sama, data otomatis diperbarui tanpa duplikat.
+          <i class="fa-solid fa-calendar-week"></i> Tersimpan di tab <b>Rekap Setoran</b>. Target keaktifan otomatis <b>Hari Efektif - 1</b> (di bawah 3 hari cukup catat jumlah setoran). Keterangan hanya untuk <b>sakit/izin</b>.
         </div>
 
-        <div class="form-grid-2">
+        <div class="form-grid-3">
           <div class="form-group">
             <label for="inRekTanggal" style="color:#92400e;">Tanggal Rekap</label>
             <input type="date" id="inRekTanggal">
           </div>
           <div class="form-group">
             <label for="inRekPeriode" style="color:#92400e;">Periode Pekanan</label>
-            <input type="text" id="inRekPeriode" placeholder="Misal: 21 November - 26 November 2026">
+            <input type="text" id="inRekPeriode" placeholder="21 Nov - 26 Nov 2026">
+          </div>
+          <div class="form-group">
+            <label for="inRekHariEfektif" style="color:#92400e;">Hari Efektif</label>
+            <select id="inRekHariEfektif">
+              <option value="6">6 Hari (Min. 5x)</option>
+              <option value="5">5 Hari (Min. 4x)</option>
+              <option value="4">4 Hari (Min. 3x)</option>
+              <option value="3">3 Hari (Min. 2x)</option>
+              <option value="2">2 Hari (Pendek)</option>
+              <option value="1">1 Hari (Pendek)</option>
+            </select>
           </div>
         </div>
 
@@ -1302,6 +1465,11 @@
             <label for="inRekHalaman" style="color:#92400e;">Halaman Terakhir Setoran (1-604)</label>
             <input type="number" id="inRekHalaman" min="1" max="604" inputmode="numeric" placeholder="Misal: 87 / 521">
           </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inRekKeterangan" style="color:#92400e;">Keterangan Udzur — Khusus Sakit / Izin (Opsional)</label>
+          <input type="text" id="inRekKeterangan" placeholder="Kosongkan jika tidak ada udzur (misal: Sakit 2 hari / Izin pulang)">
         </div>
 
         <button type="button" id="btnSimpanRekapSatuan" class="btn-save-sheet amber" onclick="simpanRekapSatuan()">
@@ -1361,10 +1529,9 @@
   <div id="pdf-chart-stage">
     <canvas id="pdfChartCanvas" width="900" height="240"></canvas>
   </div>
-
   <script>
     // =========================================================================
-    // KONFIGURASI SERVER API, LINK PERMANEN & STANDAR 604 HALAMAN
+    // KONFIGURASI SERVER API, LINK PERMANEN & STANDAR 604 HALAMAN (v3.2)
     // =========================================================================
     var API_URL = "https://script.google.com/macros/s/AKfycbwkimilgQq9LSHB_76eTzzjItmk-Jc_jOC8BMi6HlL7_LP-oFcop5CIBk8WilwSZygk/exec";
     var PORTAL_WALI_URL = "https://budiadjie.github.io/ma09-database/";
@@ -1375,7 +1542,9 @@
     var semuaSantri = [];
     var ringkasanKamar = {};
     var pengumumanKamar = { aktif: false, judul: "", isi: "", diperbarui: "" };
+    var statusKegiatanKamar = { mode: "AKTIF", keterangan: "", diperbarui: "" };
     var periodeTerbaruKamar = "";
+    var hariEfektifTerbaruKamar = 6;
     var tanggalCetakServer = "";
     var viewAktif = "beranda";
     var filterAktif = "semua";
@@ -1411,7 +1580,7 @@
     }
 
     // =========================================================================
-    // HELPER STANDAR MUSHAF POJOK 15 BARIS (604 HALAMAN) & FORMAT REKAP
+    // HELPER MUSHAF 604 HALAMAN, TARGET KEAKTIFAN (HARI EFEKTIF - 1) & FORMAT
     // =========================================================================
     function getMaxHalamanJuz(juz) {
       var j = Number(juz);
@@ -1455,6 +1624,18 @@
       return 0;
     }
 
+    function hitungEvaluasiTargetClient(keaktifanRaw, hariEfektifRaw) {
+      var he = parseInt(hariEfektifRaw, 10);
+      if (isNaN(he) || he < 1 || he > 7) he = 6;
+      var target = he >= 3 ? (he - 1) : null;
+      var s = String(keaktifanRaw === null || keaktifanRaw === undefined ? "" : keaktifanRaw).trim();
+      var kNum = /^\d+$/.test(s) ? parseInt(s, 10) : NaN;
+      if (isNaN(kNum)) return { hariEfektif: he, targetMinimal: target, status: "kosong", label: "" };
+      if (target === null) return { hariEfektif: he, targetMinimal: null, status: "pendek", label: "Pekan Pendek (" + he + " Hari)" };
+      if (kNum >= target) return { hariEfektif: he, targetMinimal: target, status: "memenuhi", label: "Memenuhi Target (Min. " + target + "x)" };
+      return { hariEfektif: he, targetMinimal: target, status: "kurang", label: "Belum Memenuhi Target (Min. " + target + "x)" };
+    }
+
     function formatRekapTambahan(v) {
       var s = String(v || "").trim();
       if (!s || s === "-") return "Tidak menambah (-)";
@@ -1493,7 +1674,7 @@
     }
 
     // =========================================================================
-    // MESIN AVATAR CEPAT (OPSI 2: WSRV.NL + ANTREAN 6 + TIMEOUT + CACHE)
+    // MESIN AVATAR CEPAT (WSRV.NL + ANTREAN 6 + TIMEOUT + CACHE)
     // =========================================================================
     var AVATAR_PALETTE = [
       { bg: "#d1fae5", fg: "#065f46" },
@@ -1913,7 +2094,7 @@
 
       Swal.fire({
         title: 'Menyinkronkan Data Kamar...',
-        html: 'Mengambil Hafalan Riil, Rekapan Setoran Mingguan &amp; Pengumuman...',
+        html: 'Mengambil Hafalan Riil, Rekap Setoran, Status Kegiatan &amp; Pengumuman...',
         allowOutsideClick: false, showConfirmButton: false,
         didOpen: function() { Swal.showLoading(); }
       });
@@ -1930,7 +2111,9 @@
           semuaSantri = res.daftarSantri || [];
           ringkasanKamar = res.ringkasanKamar || {};
           pengumumanKamar = res.pengumuman || { aktif: false, judul: "", isi: "", diperbarui: "" };
+          statusKegiatanKamar = res.statusKegiatan || { mode: "AKTIF", keterangan: "", diperbarui: "" };
           periodeTerbaruKamar = res.periodeTerbaruKamar || "";
+          hariEfektifTerbaruKamar = res.hariEfektifTerbaruKamar || 6;
           tanggalCetakServer = res.tanggalCetak || "";
 
           document.getElementById("topbarSubtitle").innerText = "Kamar Maqomin Amin 09 • Sinkron " + (tanggalCetakServer || "Hari Ini");
@@ -1943,18 +2126,21 @@
           if (periodeTerbaruKamar) {
             document.getElementById("rekPeriodeGlobal").value = periodeTerbaruKamar;
           }
+          document.getElementById("rekHariEfektifGlobal").value = String(hariEfektifTerbaruKamar);
 
+          isiFormStatusKegiatan();
           isiFormPengumuman();
           renderBeranda();
           bangunDaftarHafalanMassal();
           bangunDaftarRekapMassal();
+          perbaruiBannerTargetRekap();
           renderDaftarSantri();
 
           if (typeof callbackSelesai === "function") callbackSelesai();
         })
         .catch(function() {
           if (btn) btn.disabled = false;
-          Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Pastikan Kode.gs v3.1 sudah di-deploy dan internet stabil.', confirmButtonColor: '#065f46' });
+          Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Pastikan Kode.gs v3.2 sudah di-deploy dan internet stabil.', confirmButtonColor: '#065f46' });
         });
     }
 
@@ -1963,6 +2149,7 @@
       semuaSantri = [];
       ringkasanKamar = {};
       pengumumanKamar = { aktif: false, judul: "", isi: "", diperbarui: "" };
+      statusKegiatanKamar = { mode: "AKTIF", keterangan: "", diperbarui: "" };
       draftEvalMap = {};
       avatarResolvedCache = Object.create(null);
       avatarInFlight = Object.create(null);
@@ -1992,6 +2179,84 @@
     }
 
     // =========================================================================
+    // PENGATUR STATUS KEGIATAN SETORAN KAMAR (AKTIF | JEDA | LIBUR)
+    // =========================================================================
+    function isiFormStatusKegiatan() {
+      var sk = statusKegiatanKamar || { mode: "AKTIF", keterangan: "", diperbarui: "" };
+      pilihModeKegiatan(sk.mode || "AKTIF");
+      document.getElementById("inSkKeterangan").value = sk.keterangan || "";
+      document.getElementById("skLastUpdated").innerText = sk.diperbarui ? ("Diubah: " + sk.diperbarui) : "Tersimpan di tab Status Kegiatan";
+      perbaruiAlertModeRekap();
+    }
+
+    function pilihModeKegiatan(mode) {
+      var m = (mode === "JEDA" || mode === "LIBUR") ? mode : "AKTIF";
+      document.getElementById("inSkMode").value = m;
+      var btns = document.querySelectorAll(".sk-mode-btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle("active", btns[i].getAttribute("data-mode") === m);
+      }
+      var pill = document.getElementById("skStatusPill");
+      pill.className = "sk-status-pill";
+      if (m === "LIBUR") {
+        pill.innerText = "Liburan Pondok";
+        pill.classList.add("is-libur");
+      } else if (m === "JEDA") {
+        pill.innerText = "Jeda Setoran";
+        pill.classList.add("is-jeda");
+      } else {
+        pill.innerText = "Aktif";
+      }
+    }
+
+    function isiPresetKegiatan(mode, teks) {
+      pilihModeKegiatan(mode);
+      document.getElementById("inSkKeterangan").value = teks;
+    }
+
+    function perbaruiAlertModeRekap() {
+      var sk = statusKegiatanKamar || { mode: "AKTIF", keterangan: "" };
+      var alertEl = document.getElementById("rekStatusJedaAlert");
+      if (sk.mode === "LIBUR" || sk.mode === "JEDA") {
+        alertEl.style.display = "flex";
+        document.getElementById("rekJedaAlertTitle").innerHTML = sk.mode === "LIBUR"
+          ? '<i class="fa-solid fa-house"></i> Mode Masa Liburan Pondok Sedang Aktif'
+          : '<i class="fa-solid fa-pause-circle"></i> Mode Jeda Setoran Sedang Aktif';
+        document.getElementById("rekJedaAlertDesc").innerText = (sk.keterangan ? (sk.keterangan + " — ") : "") + "Ubah Status Kegiatan di Beranda menjadi Aktif bila setoran sudah mulai kembali.";
+      } else {
+        alertEl.style.display = "none";
+      }
+    }
+
+    function simpanStatusKegiatan() {
+      var mode = document.getElementById("inSkMode").value || "AKTIF";
+      var ket = document.getElementById("inSkKeterangan").value.trim();
+
+      var btn = document.getElementById("btnSimpanSk");
+      btn.disabled = true;
+      Swal.fire({ title: 'Menyimpan Status Kegiatan...', allowOutsideClick: false, showConfirmButton: false, didOpen: function() { Swal.showLoading(); } });
+
+      apiPost({
+        action: "simpanStatusKegiatan",
+        pin: pinAktif,
+        mode: mode,
+        keterangan: ket
+      }).then(function(res) {
+        btn.disabled = false;
+        if (!res || !res.ok) {
+          Swal.fire({ icon: 'error', title: 'Gagal Menyimpan', text: (res && res.error) ? res.error : 'Terjadi kesalahan server.', confirmButtonColor: '#0284c7' });
+          return;
+        }
+        statusKegiatanKamar = res.statusKegiatan || { mode: mode, keterangan: ket, diperbarui: "" };
+        isiFormStatusKegiatan();
+        Swal.fire({ icon: 'success', title: 'Status Diperbarui!', text: res.message || 'Status kegiatan setoran diperbarui.', timer: 1800, showConfirmButton: false });
+      }).catch(function() {
+        btn.disabled = false;
+        Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Gagal menyimpan status kegiatan ke server.', confirmButtonColor: '#0284c7' });
+      });
+    }
+
+    // =========================================================================
     // EDITOR PAPAN PENGUMUMAN KAMAR
     // =========================================================================
     function isiFormPengumuman() {
@@ -1999,7 +2264,7 @@
       document.getElementById("inAnnAktif").checked = !!p.aktif;
       document.getElementById("inAnnJudul").value = p.judul || "";
       document.getElementById("inAnnIsi").value = p.isi || "";
-      document.getElementById("annLastUpdated").innerText = p.diperbarui ? ("Terakhir diubah: " + p.diperbarui) : "";
+      document.getElementById("annLastUpdated").innerText = p.diperbarui ? ("Diubah: " + p.diperbarui) : "";
       perbaruiPreviewStatusAnn();
     }
 
@@ -2071,10 +2336,10 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    function bukaFilterPerhatian() {
+    function bukaFilterKurangTarget() {
       pindahView("santri");
-      var btnChip = document.querySelector('.chip[data-flt="perhatian"]');
-      setFilter("perhatian", btnChip);
+      var btnChip = document.querySelector('.chip[data-flt="kurangTarget"]');
+      setFilter("kurangTarget", btnChip);
     }
 
     // =========================================================================
@@ -2083,25 +2348,34 @@
     function renderBeranda() {
       var rk = ringkasanKamar || {};
       var total = semuaSantri.length;
-      var perhatian = 0, sudahRekap = 0;
-      var listPerhatian = [];
+      var riilPerhatian = 0, kurangTarget = 0, sudahRekap = 0;
+      var listPrioritas = [];
 
       for (var i = 0; i < semuaSantri.length; i++) {
         var s = semuaSantri[i];
         var st = s.hafalanStats || {};
         var rec = s.rekapSetoran || {};
+        var isKurang = !!(rec.sudahDirekap && rec.statusTarget === "kurang");
+        var isRiilDrop = !st.isKhatam && (st.statusTren === "kosong" || st.statusTren === "turun");
+
         if (rec.sudahDirekap) sudahRekap++;
-        if (!st.isKhatam && (st.statusTren === "kosong" || st.statusTren === "turun")) {
-          perhatian++;
-          listPerhatian.push(s);
+        if (isKurang) kurangTarget++;
+        if (isRiilDrop) riilPerhatian++;
+
+        if (isKurang || isRiilDrop) {
+          listPrioritas.push({ santri: s, isKurang: isKurang, isRiilDrop: isRiilDrop });
         }
       }
+
+      // Utamakan yang Belum Memenuhi Target di urutan paling atas
+      listPrioritas.sort(function(a, b) { return (b.isKurang ? 1 : 0) - (a.isKurang ? 1 : 0); });
 
       document.getElementById("kpiAvgPersen").innerText = (rk.rataRataPersen !== undefined ? rk.rataRataPersen : 0) + "%";
       document.getElementById("kpiAvgJuz").innerText = "Rata-rata " + (rk.rataRataJuz !== undefined ? rk.rataRataJuz : 0) + " Juz (" + total + " Santri)";
       document.getElementById("kpiAvgPekan").innerText = "+" + (rk.rataRataPekanIni !== undefined ? rk.rataRataPekanIni : 0) + " hal";
       document.getElementById("kpiAvgKamar").innerText = "Histori kamar: " + (rk.rataRataKamar !== undefined ? rk.rataRataKamar : 0) + " hal/pkn";
-      document.getElementById("kpiPerhatian").innerText = perhatian;
+      document.getElementById("kpiKurangTarget").innerText = kurangTarget;
+      document.getElementById("kpiPerhatianSub").innerText = "Riil stagnan/turun: " + riilPerhatian + " santri";
       document.getElementById("kpiRekapProgress").innerText = sudahRekap + " / " + total;
       document.getElementById("kpiRekapPeriodeSub").innerText = periodeTerbaruKamar || "Belum ada periode rekap";
 
@@ -2128,20 +2402,29 @@
       }
 
       var perBox = document.getElementById("listPerhatianBeranda");
-      if (listPerhatian.length === 0) {
-        perBox.innerHTML = '<div style="padding:1rem; text-align:center; color:#059669; font-size:0.86rem; font-weight:700; background:#f0fdf4; border-radius:12px;">Alhamdulillah, tidak ada santri yang stagnan atau menurun pekan ini.</div>';
+      if (listPrioritas.length === 0) {
+        perBox.innerHTML = '<div style="padding:1rem; text-align:center; color:#059669; font-size:0.86rem; font-weight:700; background:#f0fdf4; border-radius:12px;">Alhamdulillah, seluruh santri memenuhi target keaktifan dan tidak ada yang stagnan pekan ini.</div>';
       } else {
-        perBox.innerHTML = listPerhatian.slice(0, 6).map(function(s) {
+        perBox.innerHTML = listPrioritas.slice(0, 6).map(function(item) {
+          var s = item.santri;
           var st = s.hafalanStats || {};
+          var rec = s.rekapSetoran || {};
+          var badgeTeks = item.isKurang
+            ? ('Keaktifan ' + escapeHTML(rec.keaktifan) + 'x (Min. ' + escapeHTML(rec.targetMinimal) + 'x)')
+            : escapeHTML(st.teksTren);
+          var subTeks = item.isKurang && rec.keterangan
+            ? ('Ket: ' + escapeHTML(rec.keterangan) + ' &bull; ' + escapeHTML(st.totalLabel))
+            : (escapeHTML(st.totalLabel) + ' &bull; ' + escapeHTML(st.posisiTerakhirLabel));
+
           return '<div class="perhatian-item" onclick="bukaModalRapor(\'' + escapeHTML(s.nis) + '\', \'rapor\')">' +
             '<div style="display:flex; align-items:center; gap:9px; min-width:0;">' +
               buildAvatarBox(s.foto, s.nama, "ava-sm") +
               '<div style="min-width:0;">' +
                 '<div style="font-size:0.86rem; font-weight:800; color:#0f172a; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">' + escapeHTML(s.nama) + '</div>' +
-                '<div style="font-size:0.74rem; color:#64748b; font-weight:600;">' + escapeHTML(st.totalLabel) + ' &bull; ' + escapeHTML(st.posisiTerakhirLabel) + '</div>' +
+                '<div style="font-size:0.74rem; color:#64748b; font-weight:600;">' + subTeks + '</div>' +
               '</div>' +
             '</div>' +
-            '<span class="perhatian-badge">' + escapeHTML(st.teksTren) + '</span>' +
+            '<span class="perhatian-badge">' + badgeTeks + '</span>' +
           '</div>';
         }).join("");
         hydrateAvatars(perBox);
@@ -2451,8 +2734,54 @@
     }
 
     // =========================================================================
-    // VIEW 3: INPUT MASSAL REKAPAN SETORAN MINGGUAN (TAB "REKAP SETORAN")
+    // VIEW 3: INPUT MASSAL REKAPAN SETORAN MINGGUAN (TARGET + UDZUR SAKIT/IZIN)
     // =========================================================================
+    function perbaruiBannerTargetRekap() {
+      var he = parseInt(document.getElementById("rekHariEfektifGlobal").value, 10) || 6;
+      var banner = document.getElementById("rekTargetInfoBanner");
+      if (he >= 3) {
+        var minT = he - 1;
+        banner.innerHTML = '<span><i class="fa-solid fa-bullseye"></i> Patokan Pekan Ini: <b>' + he + ' Hari Efektif &rarr; Target Minimal ' + minT + 'x Setoran</b></span>' +
+          '<span style="opacity:0.85;">Berlaku untuk seluruh 24 santri</span>';
+      } else {
+        banner.innerHTML = '<span><i class="fa-solid fa-circle-info"></i> Pekan Pendek (<b>' + he + ' Hari Efektif</b>): <b>Cukup catat jumlah setoran saja</b> (tanpa label Belum Memenuhi Target)</span>' +
+          '<span style="opacity:0.85;">Khusus pekan di bawah 3 hari efektif</span>';
+      }
+    }
+
+    function onUbahHariEfektifGlobal() {
+      perbaruiBannerTargetRekap();
+      var rows = document.querySelectorAll(".rekap-row");
+      for (var i = 0; i < rows.length; i++) {
+        perbaruiTargetBadgeRekap(rows[i].getAttribute("data-nis"));
+      }
+    }
+
+    function perbaruiTargetBadgeRekap(nis) {
+      var badge = document.getElementById("rTarget-" + nis);
+      var aktInp = document.getElementById("rAkt-" + nis);
+      if (!badge || !aktInp) return;
+
+      var he = parseInt(document.getElementById("rekHariEfektifGlobal").value, 10) || 6;
+      var ev = hitungEvaluasiTargetClient(aktInp.value, he);
+
+      if (ev.status === "memenuhi") {
+        badge.className = "delta-chip d-naik";
+        badge.innerHTML = '<i class="fa-solid fa-check"></i> Memenuhi (Min. ' + ev.targetMinimal + 'x)';
+        badge.style.display = "inline-block";
+      } else if (ev.status === "kurang") {
+        badge.className = "delta-chip d-nol";
+        badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Belum Memenuhi (Min. ' + ev.targetMinimal + 'x)';
+        badge.style.display = "inline-block";
+      } else if (ev.status === "pendek") {
+        badge.className = "delta-chip d-pendek";
+        badge.innerHTML = 'Pekan Pendek (' + ev.hariEfektif + ' Hari)';
+        badge.style.display = "inline-block";
+      } else {
+        badge.style.display = "none";
+      }
+    }
+
     function bangunDaftarRekapMassal() {
       var container = document.getElementById("rekListContainer");
       var html = "";
@@ -2467,9 +2796,10 @@
         var valMurojaah = sudah ? (rk.murojaah || "") : "";
         var valKeaktifan = sudah ? (rk.keaktifan === "-" ? "" : (rk.keaktifan || "")) : "";
         var valHal = sudah ? (rk.halamanTerakhir === "-" ? "" : (rk.halamanTerakhir || "")) : (rk.lastKnownHalaman || (st.halamanMushaf ? String(st.halamanMushaf) : ""));
+        var valKet = sudah ? (rk.keterangan || "") : "";
 
         var statusChip = sudah
-          ? '<span class="delta-chip d-naik" id="rStatus-' + escapeHTML(s.nis) + '"><i class="fa-solid fa-check"></i> Sudah Direkap</span>'
+          ? '<span class="delta-chip d-khatam" id="rStatus-' + escapeHTML(s.nis) + '">Sudah Direkap</span>'
           : '<span class="delta-chip d-belum" id="rStatus-' + escapeHTML(s.nis) + '">' + LABEL_BELUM_DIREKAP + '</span>';
 
         var subInfo = sudah
@@ -2488,7 +2818,10 @@
                 '<div class="mr-prev">' + subInfo + '</div>' +
               '</div>' +
             '</label>' +
-            '<div class="mr-badges">' + statusChip + '</div>' +
+            '<div class="mr-badges">' +
+              statusChip +
+              '<span class="delta-chip" id="rTarget-' + escapeHTML(s.nis) + '" style="display:none;"></span>' +
+            '</div>' +
           '</div>' +
           '<div class="mr-inputs-rekap">' +
             '<div class="mr-inp-group">' +
@@ -2512,11 +2845,18 @@
               '<label>Hal. Terakhir (1-604)</label>' +
               '<input type="number" min="1" max="604" inputmode="numeric" id="rHal-' + escapeHTML(s.nis) + '" value="' + escapeHTML(valHal) + '" placeholder="1 - 604" oninput="onEditRekRow(\'' + escapeHTML(s.nis) + '\')">' +
             '</div>' +
+            '<div class="mr-inp-group mr-rek-full">' +
+              '<label>Keterangan Udzur — Khusus Sakit / Izin (Opsional)</label>' +
+              '<input type="text" id="rKet-' + escapeHTML(s.nis) + '" value="' + escapeHTML(valKet) + '" placeholder="Kosongkan jika tidak ada udzur (misal: Sakit 2 hari / Izin pulang)..." oninput="onEditRekRow(\'' + escapeHTML(s.nis) + '\')">' +
+            '</div>' +
           '</div>' +
         '</div>';
       }
 
       container.innerHTML = html;
+      for (var k = 0; k < semuaSantri.length; k++) {
+        perbaruiTargetBadgeRekap(semuaSantri[k].nis);
+      }
       terapkanFilterRekap();
       perbaruiCounterRekap();
     }
@@ -2541,6 +2881,7 @@
       if (chk && !chk.checked) chk.checked = true;
       row.classList.add("is-checked");
       row.classList.remove("is-error");
+      perbaruiTargetBadgeRekap(nis);
       perbaruiCounterRekap();
     }
 
@@ -2580,6 +2921,7 @@
     function simpanRekapMassal() {
       var tglGlobal = document.getElementById("rekTanggalGlobal").value;
       var periodeGlobal = document.getElementById("rekPeriodeGlobal").value.trim();
+      var hariEfektifGlobal = parseInt(document.getElementById("rekHariEfektifGlobal").value, 10) || 6;
 
       if (!tglGlobal) {
         Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih Tanggal Rekap terlebih dahulu.', confirmButtonColor: '#b45309' });
@@ -2604,6 +2946,7 @@
         var mur = String(document.getElementById("rMur-" + nis).value || "").trim();
         var akt = String(document.getElementById("rAkt-" + nis).value || "").trim();
         var hal = String(document.getElementById("rHal-" + nis).value || "").trim();
+        var ket = String(document.getElementById("rKet-" + nis).value || "").trim();
 
         if (!tmb && !mur && !akt) {
           row.classList.add("is-error"); row.style.display = "";
@@ -2630,15 +2973,23 @@
           }
         }
 
-        items.push({ nis: nis, nama: nama, tanggal: tglGlobal, periode: periodeGlobal, tambahan: tmb, murojaah: mur, keaktifan: akt, halamanTerakhir: hal });
+        items.push({
+          nis: nis, nama: nama, tanggal: tglGlobal, periode: periodeGlobal,
+          hariEfektif: hariEfektifGlobal, tambahan: tmb, murojaah: mur,
+          keaktifan: akt, halamanTerakhir: hal, keterangan: ket
+        });
       }
 
       if (items.length === 0) return;
 
+      var targetTeks = hariEfektifGlobal >= 3
+        ? (hariEfektifGlobal + ' hari efektif (Min. ' + (hariEfektifGlobal - 1) + 'x)')
+        : (hariEfektifGlobal + ' hari efektif (Pekan Pendek)');
+
       Swal.fire({
         icon: 'question',
         title: 'Simpan ' + items.length + ' Rekap Setoran?',
-        text: 'Data akan disimpan ke tab Rekap Setoran untuk periode "' + periodeGlobal + '". (Santri yang sudah punya data di periode sama akan diperbarui).',
+        text: 'Periode "' + periodeGlobal + '" • ' + targetTeks + '. Santri yang sudah punya data di periode sama akan diperbarui.',
         showCancelButton: true,
         confirmButtonColor: '#b45309',
         confirmButtonText: 'Ya, Simpan Rekap',
@@ -2655,6 +3006,7 @@
           pin: pinAktif,
           tanggal: tglGlobal,
           periode: periodeGlobal,
+          hariEfektif: hariEfektifGlobal,
           items: items
         }).then(function(res) {
           if (!res || !res.ok) {
@@ -2729,6 +3081,7 @@
         var sudahWA = !!petaTerkirim[item.nis];
 
         if (q && item.nama.toLowerCase().indexOf(q) === -1 && item.nis.toLowerCase().indexOf(q) === -1) continue;
+        if (filterAktif === "kurangTarget" && !(rk.sudahDirekap && rk.statusTarget === "kurang")) continue;
         if (filterAktif === "khatam" && !st.isKhatam) continue;
         if (filterAktif === "naik" && !(st.statusTren === "naik" || st.statusTren === "stabil")) continue;
         if (filterAktif === "perhatian" && !(st.statusTren === "kosong" || st.statusTren === "turun")) continue;
@@ -2746,14 +3099,24 @@
 
         var rekapHtml = "";
         if (rk.sudahDirekap) {
-          rekapHtml = '<div class="sc-rekap-strip">' +
-            '<div class="sc-rekap-title"><i class="fa-solid fa-calendar-week"></i> Rekap Setoran: ' + escapeHTML(rk.periode || periodeTerbaruKamar || "-") + '</div>' +
+          var stripCls = rk.statusTarget === "kurang" ? "sc-rekap-strip kurang" : "sc-rekap-strip";
+          var aktCls = rk.statusTarget === "memenuhi" ? "sc-mk-pill ok" : (rk.statusTarget === "kurang" ? "sc-mk-pill bad" : (rk.statusTarget === "pendek" ? "sc-mk-pill pendek" : "sc-mk-pill"));
+          var targetShort = rk.statusTarget === "kurang"
+            ? ('Belum Memenuhi (Min. ' + rk.targetMinimal + 'x)')
+            : (rk.statusTarget === "memenuhi" ? ('Memenuhi (Min. ' + rk.targetMinimal + 'x)') : (rk.statusTarget === "pendek" ? ('Pekan Pendek') : ''));
+
+          rekapHtml = '<div class="' + stripCls + '">' +
+            '<div class="sc-rekap-title">' +
+              '<span><i class="fa-solid fa-calendar-week"></i> ' + escapeHTML(rk.periode || periodeTerbaruKamar || "Rekap Setoran") + '</span>' +
+              (targetShort ? ('<span>' + escapeHTML(targetShort) + '</span>') : '') +
+            '</div>' +
             '<div class="sc-mk-row">' +
-              '<span class="sc-mk-pill">+ ' + escapeHTML(formatRekapTambahan(rk.tambahan)) + '</span>' +
+              '<span class="sc-mk-pill">' + escapeHTML(formatRekapTambahan(rk.tambahan)) + '</span>' +
               '<span class="sc-mk-pill">Mur: ' + escapeHTML(formatRekapMurojaah(rk.murojaah)) + '</span>' +
-              '<span class="sc-mk-pill">Aktif: ' + escapeHTML(formatRekapKeaktifan(rk.keaktifan)) + '</span>' +
+              '<span class="' + aktCls + '">Aktif: ' + escapeHTML(formatRekapKeaktifan(rk.keaktifan)) + '</span>' +
               '<span class="sc-mk-pill">Hal: ' + escapeHTML(rk.halamanTerakhir || "-") + '</span>' +
             '</div>' +
+            (rk.keterangan ? ('<div class="sc-ket-line"><i class="fa-solid fa-note-sticky"></i> Ket: ' + escapeHTML(rk.keterangan) + '</div>') : '') +
           '</div>';
         } else {
           rekapHtml = '<div class="sc-rekap-strip belum"><i class="fa-regular fa-hourglass-half"></i> ' + LABEL_BELUM_DIREKAP + '</div>';
@@ -2839,6 +3202,7 @@
       if (!santriAktif) return;
       var st = santriAktif.hafalanStats || {};
       var rk = santriAktif.rekapSetoran || {};
+      var sk = statusKegiatanKamar || { mode: "AKTIF", keterangan: "" };
       var ortu = santriAktif.ortu || {};
       var last = santriAktif.lastEntry || {};
       var isKhatam = !!st.isKhatam;
@@ -2857,8 +3221,22 @@
         ? ("Mushaf Hal. " + st.halamanMushaf + "/604 • " + (st.tanggalTerakhir || "-"))
         : (st.tanggalTerakhir || "-");
 
+      // Status Mode Jeda / Libur di Modal
+      var jedaStrip = document.getElementById("mRekapJedaStrip");
+      if (sk.mode === "LIBUR" || sk.mode === "JEDA") {
+        jedaStrip.innerHTML = '<i class="fa-solid ' + (sk.mode === "LIBUR" ? 'fa-house' : 'fa-pause-circle') + '"></i> <b>' +
+          (sk.mode === "LIBUR" ? 'Mode Masa Liburan Pondok Aktif' : 'Mode Jeda Setoran Aktif') +
+          '</b>' + (sk.keterangan ? (': ' + escapeHTML(sk.keterangan)) : '');
+        jedaStrip.style.display = "block";
+      } else {
+        jedaStrip.style.display = "none";
+      }
+
       // Ringkasan Rekap Setoran Mingguan di Tab Rapor & WA
       document.getElementById("mRekapPeriode").innerText = rk.periode || rk.periodeAktifKamar || periodeTerbaruKamar || "Belum ada periode";
+      var mKetStrip = document.getElementById("mRekKetStrip");
+      mKetStrip.style.display = "none";
+
       if (rk.sudahDirekap) {
         document.getElementById("mRekapGrid").style.display = "grid";
         document.getElementById("mRekapBelum").style.display = "none";
@@ -2866,10 +3244,37 @@
         document.getElementById("mRekMurojaah").innerText = formatRekapMurojaah(rk.murojaah);
         document.getElementById("mRekKeaktifan").innerText = formatRekapKeaktifan(rk.keaktifan);
         document.getElementById("mRekHalaman").innerText = formatRekapHalaman(rk.halamanTerakhir);
+
+        var tTag = document.getElementById("mRekTargetTag");
+        tTag.className = "mrk-target-tag";
+        if (rk.statusTarget === "memenuhi") {
+          tTag.classList.add("ok");
+          tTag.innerText = "Memenuhi (Min. " + rk.targetMinimal + "x)";
+          tTag.style.display = "inline-block";
+        } else if (rk.statusTarget === "kurang") {
+          tTag.classList.add("bad");
+          tTag.innerText = "Belum Memenuhi (Min. " + rk.targetMinimal + "x)";
+          tTag.style.display = "inline-block";
+        } else if (rk.statusTarget === "pendek") {
+          tTag.classList.add("pendek");
+          tTag.innerText = "Pekan Pendek (" + rk.hariEfektif + " Hari)";
+          tTag.style.display = "inline-block";
+        } else {
+          tTag.style.display = "none";
+        }
+
+        if (rk.keterangan) {
+          mKetStrip.innerHTML = '<i class="fa-solid fa-note-sticky"></i> <b>Keterangan Udzur:</b> ' + escapeHTML(rk.keterangan);
+          mKetStrip.style.display = "block";
+        }
       } else {
         document.getElementById("mRekapGrid").style.display = "none";
         document.getElementById("mRekapBelum").style.display = "block";
       }
+
+      document.getElementById("mActionHint").innerText = sk.mode === "LIBUR"
+        ? "1. Unduh Rapor PDF dulu, lalu 2. Klik WA Ayah/Ibu (teks otomatis menyesuaikan Masa Liburan Pondok tanpa imbauan telepon Jum'at):"
+        : "1. Unduh Rapor PDF dulu, lalu 2. Klik WA Ayah/Ibu (1 pesan gabungan memuat Hafalan Riil + Rekap Setoran + status target keaktifan + imbauan telepon Jum'at):";
 
       var teksAwal = (draftEvalMap[santriAktif.nis] !== undefined)
         ? draftEvalMap[santriAktif.nis]
@@ -2908,23 +3313,30 @@
       document.getElementById("inRekTanggal").value = todayYmd();
       var perDefault = document.getElementById("rekPeriodeGlobal").value.trim() || rk.periode || periodeTerbaruKamar || "";
       document.getElementById("inRekPeriode").value = perDefault;
+      var heDefault = (rk.sudahDirekap && rk.hariEfektif) ? rk.hariEfektif : (parseInt(document.getElementById("rekHariEfektifGlobal").value, 10) || hariEfektifTerbaruKamar || 6);
+      document.getElementById("inRekHariEfektif").value = String(heDefault);
       document.getElementById("inRekTambahan").value = rk.sudahDirekap ? (rk.tambahan || "") : "";
       document.getElementById("inRekMurojaah").value = rk.sudahDirekap ? (rk.murojaah || "") : "";
       document.getElementById("inRekKeaktifan").value = (rk.sudahDirekap && rk.keaktifan !== "-") ? (rk.keaktifan || "") : "";
       document.getElementById("inRekHalaman").value = (rk.sudahDirekap && rk.halamanTerakhir !== "-")
         ? (rk.halamanTerakhir || "")
         : (rk.lastKnownHalaman || (st.halamanMushaf ? String(st.halamanMushaf) : ""));
+      document.getElementById("inRekKeterangan").value = rk.sudahDirekap ? (rk.keterangan || "") : "";
 
       var listRek = rk.riwayat || [];
       var boxRekList = document.getElementById("isiRiwayatRekapModal");
       boxRekList.innerHTML = listRek.length === 0
         ? '<div style="font-size:0.8rem; color:#64748b; font-weight:700;">Belum ada riwayat rekapan setoran mingguan.</div>'
         : listRek.map(function(r) {
-            return '<div class="rekap-item"><b>' + escapeHTML(r.periode) + '</b><br>' +
+            var stColor = r.statusTarget === "kurang" ? "#be123c" : (r.statusTarget === "memenuhi" ? "#065f46" : "#0369a1");
+            return '<div class="rekap-item"><b>' + escapeHTML(r.periode) + '</b> ' +
+              '<span style="color:' + stColor + '; font-weight:800;">(' + escapeHTML(r.labelTarget || "-") + ')</span><br>' +
               'Tambahan: <b>' + escapeHTML(formatRekapTambahan(r.tambahan)) + '</b> &bull; ' +
               'Murojaah: <b>' + escapeHTML(formatRekapMurojaah(r.murojaah)) + '</b> &bull; ' +
               'Keaktifan: <b>' + escapeHTML(formatRekapKeaktifan(r.keaktifan)) + '</b> &bull; ' +
-              'Hal: <b>' + escapeHTML(r.halamanTerakhir || "-") + '</b></div>';
+              'Hal: <b>' + escapeHTML(r.halamanTerakhir || "-") + '</b>' +
+              (r.keterangan ? ('<br><span style="color:#9a3412;">Ket: ' + escapeHTML(r.keterangan) + '</span>') : '') +
+            '</div>';
           }).join("");
 
       // Tab 4: Form Pelanggaran
@@ -3037,10 +3449,12 @@
       if (!santriAktif) return;
       var tgl = document.getElementById("inRekTanggal").value;
       var periode = document.getElementById("inRekPeriode").value.trim();
+      var hariEfektif = parseInt(document.getElementById("inRekHariEfektif").value, 10) || 6;
       var tmb = document.getElementById("inRekTambahan").value.trim();
       var mur = document.getElementById("inRekMurojaah").value.trim();
       var akt = document.getElementById("inRekKeaktifan").value.trim();
       var hal = document.getElementById("inRekHalaman").value.trim();
+      var ket = document.getElementById("inRekKeterangan").value.trim();
 
       if (!tgl) { Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih tanggal rekap.', confirmButtonColor: '#b45309' }); return; }
       if (!periode) { Swal.fire({ icon: 'warning', title: 'Periode Kosong', text: 'Isi periode pekanan (misal: 21 November - 26 November 2026).', confirmButtonColor: '#b45309' }); return; }
@@ -3066,10 +3480,12 @@
         nama: santriAktif.nama,
         tanggal: tgl,
         periode: periode,
+        hariEfektif: hariEfektif,
         tambahan: tmb,
         murojaah: mur,
         keaktifan: akt,
-        halamanTerakhir: hal
+        halamanTerakhir: hal,
+        keterangan: ket
       }).then(function(res) {
         btn.disabled = false;
         if (!res || !res.ok) {
@@ -3300,7 +3716,7 @@
       return { bg: [226, 232, 240], text: [51, 65, 85] };
     }
 
-    // --- GENERATOR PDF RAPOR 1 LEMBAR A4 (HAFALAN RIIL + STRIP REKAP SETORAN) ---
+    // --- GENERATOR PDF RAPOR 1 LEMBAR A4 (TARGET KEAKTIFAN + UDZUR + JEDA/LIBUR) ---
     function unduhPdfSantriAktif() {
       if (!santriAktif) return;
       if (!window.jspdf || !window.jspdf.jsPDF) {
@@ -3312,6 +3728,7 @@
       var doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
       var st = santriAktif.hafalanStats || {};
       var rk = santriAktif.rekapSetoran || {};
+      var sk = statusKegiatanKamar || { mode: "AKTIF", keterangan: "" };
       var ortu = santriAktif.ortu || {};
       var evalTeks = bersihkanTeksPdf(document.getElementById("inputEvaluasi").value, "");
 
@@ -3344,101 +3761,108 @@
       doc.setFontSize(9);
       doc.text("LAPORAN HAFALAN RIIL & REKAPAN SETORAN MINGGUAN", 105, 28.2, { align: "center" });
 
-      // 2. IDENTITAS SANTRI & HAFALAN RIIL (Y: 36..75mm)
+      // 2. IDENTITAS SANTRI & HAFALAN RIIL (Y: 35.5..74mm)
       doc.setFillColor(248, 250, 252);
       doc.setDrawColor(203, 213, 225);
       doc.setLineWidth(0.35);
-      doc.roundedRect(14, 36, 100, 39, 2.5, 2.5, 'FD');
+      doc.roundedRect(14, 35.5, 100, 38.5, 2.5, 2.5, 'FD');
 
       doc.setTextColor(6, 95, 70);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(7.9);
-      doc.text("IDENTITAS SANTRI", 18, 41.2);
-      doc.line(18, 42.8, 110, 42.8);
+      doc.text("IDENTITAS SANTRI", 18, 40.6);
+      doc.line(18, 42.2, 110, 42.2);
 
       doc.setTextColor(15, 23, 42);
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.2);
-      doc.text("Nama", 18, 48.2);
+      doc.setFontSize(8.1);
+      doc.text("Nama", 18, 47.4);
       doc.setFont("helvetica", "bold");
-      tulisTeksPasLebar(doc, ": " + namaPdf, 36, 48.2, 74, 8.2, 6.4);
+      tulisTeksPasLebar(doc, ": " + namaPdf, 36, 47.4, 74, 8.1, 6.4);
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.2);
-      doc.text("NIS / Kelas", 18, 53.8);
+      doc.setFontSize(8.1);
+      doc.text("NIS / Kelas", 18, 52.9);
       doc.setFont("helvetica", "bold");
-      tulisTeksPasLebar(doc, ": " + santriAktif.nis + "  |  " + kelasPdf, 36, 53.8, 74, 8.2, 6.4);
+      tulisTeksPasLebar(doc, ": " + santriAktif.nis + "  |  " + kelasPdf, 36, 52.9, 74, 8.1, 6.4);
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.2);
-      doc.text("Ayah", 18, 59.4);
-      tulisTeksPasLebar(doc, ": " + ayahPdf, 36, 59.4, 74, 8.2, 6.4);
+      doc.setFontSize(8.1);
+      doc.text("Ayah", 18, 58.4);
+      tulisTeksPasLebar(doc, ": " + ayahPdf, 36, 58.4, 74, 8.1, 6.4);
 
-      doc.setFontSize(8.2);
-      doc.text("Ibu", 18, 65);
-      tulisTeksPasLebar(doc, ": " + ibuPdf, 36, 65, 74, 8.2, 6.4);
+      doc.setFontSize(8.1);
+      doc.text("Ibu", 18, 63.9);
+      tulisTeksPasLebar(doc, ": " + ibuPdf, 36, 63.9, 74, 8.1, 6.4);
 
       doc.setTextColor(71, 85, 105);
-      doc.setFontSize(7.7);
-      doc.text("Tgl Cetak", 18, 70.6);
-      tulisTeksPasLebar(doc, ": " + tglCetakPdf, 36, 70.6, 74, 7.7, 6.4);
+      doc.setFontSize(7.6);
+      doc.text("Tgl Cetak", 18, 69.5);
+      tulisTeksPasLebar(doc, ": " + tglCetakPdf, 36, 69.5, 74, 7.6, 6.4);
 
       // Kotak Kanan: Hafalan Riil (604 Hal)
       if (st.isKhatam) { doc.setFillColor(255, 251, 235); doc.setDrawColor(217, 119, 6); }
       else { doc.setFillColor(240, 253, 250); doc.setDrawColor(13, 148, 136); }
       doc.setLineWidth(0.5);
-      doc.roundedRect(118, 36, 78, 39, 2.5, 2.5, 'FD');
+      doc.roundedRect(118, 35.5, 78, 38.5, 2.5, 2.5, 'FD');
 
       doc.setTextColor(st.isKhatam ? 146 : 15, st.isKhatam ? 64 : 118, st.isKhatam ? 14 : 110);
       doc.setFont("helvetica", "bold");
       doc.setFontSize(7.4);
-      doc.text("TOTAL HAFALAN RIIL SAAT INI", 157, 41, { align: "center" });
+      doc.text("TOTAL HAFALAN RIIL SAAT INI", 157, 40.4, { align: "center" });
 
       doc.setTextColor(st.isKhatam ? 180 : 6, st.isKhatam ? 83 : 95, st.isKhatam ? 9 : 70);
-      tulisTeksPasLebar(doc, st.totalLabel, 157, 48, 72, 13.5, 9.6, { align: "center" });
+      tulisTeksPasLebar(doc, st.totalLabel, 157, 47.4, 72, 13.5, 9.6, { align: "center" });
 
       doc.setFillColor(226, 232, 240);
-      doc.roundedRect(124, 50.2, 66, 2.1, 1, 1, 'F');
+      doc.roundedRect(124, 49.5, 66, 2.1, 1, 1, 'F');
       var fillW = Math.max(2, (Math.min(Math.max(persen, 0), 100) / 100) * 66);
       if (st.isKhatam) doc.setFillColor(217, 119, 6);
       else doc.setFillColor(13, 148, 136);
-      doc.roundedRect(124, 50.2, fillW, 2.1, 1, 1, 'F');
+      doc.roundedRect(124, 49.5, fillW, 2.1, 1, 1, 'F');
 
       doc.setFont("helvetica", "bold");
       doc.setFontSize(6.8);
       doc.setTextColor(71, 85, 105);
-      doc.text(persen + "% menuju 30 Juz (" + totalHal + "/" + TOTAL_HALAMAN_QURAN + " hal)", 157, 55.4, { align: "center" });
+      doc.text(persen + "% menuju 30 Juz (" + totalHal + "/" + TOTAL_HALAMAN_QURAN + " hal)", 157, 54.6, { align: "center" });
 
       var badgeCol = getWarnaBadgePdf(st.statusTren);
       doc.setFillColor(badgeCol.bg[0], badgeCol.bg[1], badgeCol.bg[2]);
-      doc.roundedRect(122, 57.3, 70, 5.5, 2.5, 2.5, 'F');
+      doc.roundedRect(122, 56.5, 70, 5.4, 2.5, 2.5, 'F');
       doc.setTextColor(badgeCol.text[0], badgeCol.text[1], badgeCol.text[2]);
       doc.setFont("helvetica", "bold");
-      tulisTeksPasLebar(doc, st.teksTren, 157, 61, 66, 7.1, 5.8, { align: "center" });
+      tulisTeksPasLebar(doc, st.teksTren, 157, 60.2, 66, 7.1, 5.8, { align: "center" });
 
       doc.setFont("helvetica", "normal");
       doc.setTextColor(51, 65, 85);
-      tulisTeksPasLebar(doc, (st.isKhatam ? "Capaian: " : "Juz Belakang: ") + bersihkanTeksPdf(st.hafalanBelakangLabel), 157, 67.4, 72, 7.4, 6.1, { align: "center" });
+      tulisTeksPasLebar(doc, (st.isKhatam ? "Capaian: " : "Juz Belakang: ") + bersihkanTeksPdf(st.hafalanBelakangLabel), 157, 66.5, 72, 7.3, 6.1, { align: "center" });
       var posRiilPdf = (!st.isKhatam && st.halamanMushaf)
         ? (bersihkanTeksPdf(st.posisiTerakhirLabel) + " (Mushaf " + st.halamanMushaf + ")")
         : bersihkanTeksPdf(st.posisiTerakhirLabel);
-      tulisTeksPasLebar(doc, (st.isKhatam ? "Fokus: " : "Posisi: ") + posRiilPdf, 157, 72, 72, 7.4, 6.1, { align: "center" });
+      tulisTeksPasLebar(doc, (st.isKhatam ? "Fokus: " : "Posisi: ") + posRiilPdf, 157, 71, 72, 7.3, 6.1, { align: "center" });
 
-      // 3. STRIP REKAPAN SETORAN MINGGUAN (Y: 77.5..91.5mm)
-      doc.setFillColor(255, 251, 235);
-      doc.setDrawColor(252, 211, 77);
+      // 3. STRIP REKAPAN SETORAN MINGGUAN + STATUS TARGET KEAKTIFAN (Y: 76.5..93.5mm)
+      var stripH = 17;
+      if (rk.sudahDirekap && rk.statusTarget === "kurang") {
+        doc.setFillColor(255, 241, 242);
+        doc.setDrawColor(253, 164, 175);
+      } else {
+        doc.setFillColor(255, 251, 235);
+        doc.setDrawColor(252, 211, 77);
+      }
       doc.setLineWidth(0.35);
-      doc.roundedRect(14, 77.5, 182, 13.5, 2.2, 2.2, 'FD');
+      doc.roundedRect(14, 76.5, 182, stripH, 2.2, 2.2, 'FD');
 
       var perPdf = bersihkanTeksPdf(rk.periode || rk.periodeAktifKamar || periodeTerbaruKamar, "-");
-      doc.setTextColor(146, 64, 14);
+      doc.setTextColor(rk.sudahDirekap && rk.statusTarget === "kurang" ? 159 : 146, rk.sudahDirekap && rk.statusTarget === "kurang" ? 18 : 64, rk.sudahDirekap && rk.statusTarget === "kurang" ? 57 : 14);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(7.1);
-      doc.text("REKAPAN SETORAN MINGGUAN" + (perPdf !== "-" ? ("  |  PERIODE: " + perPdf.toUpperCase()) : ""), 18, 81.8);
+      doc.setFontSize(7);
+      doc.text("REKAPAN SETORAN MINGGUAN" + (perPdf !== "-" ? ("  |  PERIODE: " + perPdf.toUpperCase()) : ""), 18, 80.7);
 
       if (rk.sudahDirekap) {
         doc.setDrawColor(253, 230, 138);
-        doc.line(18, 83.2, 192, 83.2);
+        doc.line(18, 82, 192, 82);
+
         var colsStrip = [
           { lbl: "Tambahan", val: bersihkanTeksPdf(formatRekapTambahan(rk.tambahan)), x: 36.75 },
           { lbl: "Murojaah", val: bersihkanTeksPdf(formatRekapMurojaah(rk.murojaah)), x: 82.25 },
@@ -3448,73 +3872,88 @@
         for (var c = 0; c < colsStrip.length; c++) {
           doc.setTextColor(100, 116, 139);
           doc.setFont("helvetica", "normal");
-          doc.setFontSize(6.5);
-          doc.text(colsStrip[c].lbl, colsStrip[c].x, 86.2, { align: "center" });
+          doc.setFontSize(6.4);
+          doc.text(colsStrip[c].lbl, colsStrip[c].x, 84.8, { align: "center" });
 
           doc.setTextColor(15, 23, 42);
           doc.setFont("helvetica", "bold");
-          tulisTeksPasLebar(doc, colsStrip[c].val, colsStrip[c].x, 89.8, 42, 8, 6.2, { align: "center" });
+          tulisTeksPasLebar(doc, colsStrip[c].val, colsStrip[c].x, 88.3, 42, 7.9, 6.1, { align: "center" });
+        }
+
+        // Baris bawah strip: Status Target + Keterangan Udzur (jika ada)
+        var statusLinePdf = bersihkanTeksPdf(rk.labelTarget, "");
+        if (rk.keterangan) {
+          statusLinePdf += (statusLinePdf ? "  |  " : "") + "Ket: " + bersihkanTeksPdf(rk.keterangan);
+        }
+        if (statusLinePdf) {
+          if (rk.statusTarget === "kurang") doc.setTextColor(190, 18, 60);
+          else if (rk.statusTarget === "memenuhi") doc.setTextColor(6, 95, 70);
+          else doc.setTextColor(3, 105, 161);
+          doc.setFont("helvetica", "bold");
+          tulisTeksPasLebar(doc, statusLinePdf, 105, 92, 174, 6.8, 5.7, { align: "center" });
         }
       } else {
-        doc.setTextColor(100, 116, 139);
+        var statusTeksKosong = "Status: " + LABEL_BELUM_DIREKAP;
+        if (sk.mode === "LIBUR") statusTeksKosong = "Status: Masa Liburan Pondok" + (sk.keterangan ? (" - " + bersihkanTeksPdf(sk.keterangan)) : "");
+        else if (sk.mode === "JEDA") statusTeksKosong = "Status: Jeda Setoran Sementara" + (sk.keterangan ? (" - " + bersihkanTeksPdf(sk.keterangan)) : "");
+        doc.setTextColor(71, 85, 105);
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(8.4);
-        doc.text("Status: " + LABEL_BELUM_DIREKAP, 105, 88.2, { align: "center" });
+        tulisTeksPasLebar(doc, statusTeksKosong, 105, 88.2, 172, 8.2, 6.4, { align: "center" });
       }
 
-      // 4. GRAFIK HAFALAN RIIL (Y: 95..140mm)
+      // 4. GRAFIK HAFALAN RIIL (Y: 97.5..140mm)
       doc.setTextColor(15, 118, 110);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8.1);
-      doc.text(st.isKhatam ? "ARSIP GRAFIK PERKEMBANGAN MENUJU KHATAM" : "GRAFIK PERKEMBANGAN HAFALAN RIIL (HALAMAN / PEKAN)", 14, 95.5);
+      doc.setFontSize(8);
+      doc.text(st.isKhatam ? "ARSIP GRAFIK PERKEMBANGAN MENUJU KHATAM" : "GRAFIK PERKEMBANGAN HAFALAN RIIL (HALAMAN / PEKAN)", 14, 97.6);
 
       if (Array.isArray(st.chartData) && st.chartData.length > 0) {
         var avgK = Number(st.rataRataKamar || (ringkasanKamar && ringkasanKamar.rataRataKamar) || 0);
         doc.setFont("helvetica", "normal");
         doc.setFontSize(6.9);
         doc.setTextColor(13, 148, 136);
-        doc.text("Hijau: Naik", 136, 95.5);
+        doc.text("Hijau: Naik", 136, 97.6);
         doc.setTextColor(190, 18, 60);
-        doc.text("Merah: 0", 156, 95.5);
+        doc.text("Merah: 0", 156, 97.6);
         if (avgK > 0) {
           doc.setTextColor(180, 83, 9);
-          doc.text("-- Rata2 Kamar (" + avgK + ")", 196, 95.5, { align: "right" });
+          doc.text("-- Rata2 Kamar (" + avgK + ")", 196, 97.6, { align: "right" });
         }
       }
 
       doc.setDrawColor(204, 251, 241);
       doc.setFillColor(255, 255, 255);
       doc.setLineWidth(0.45);
-      doc.roundedRect(14, 97, 182, 42, 2.5, 2.5, 'FD');
+      doc.roundedRect(14, 99, 182, 40.5, 2.5, 2.5, 'FD');
 
       var imgGrafik = buatGambarGrafikUntukPdf(st);
       if (imgGrafik) {
-        doc.addImage(imgGrafik, 'PNG', 16, 98.2, 178, 39.5);
+        doc.addImage(imgGrafik, 'PNG', 16, 100.2, 178, 38);
       } else if (st.isKhatam) {
         doc.setFillColor(255, 251, 235);
-        doc.roundedRect(16, 99, 178, 38, 2, 2, 'F');
+        doc.roundedRect(16, 101, 178, 36.5, 2, 2, 'F');
         doc.setTextColor(146, 64, 14);
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(10.8);
-        doc.text("MasyaAllah, Barakallahu Fiikum", 105, 114.5, { align: "center" });
+        doc.setFontSize(10.6);
+        doc.text("MasyaAllah, Barakallahu Fiikum", 105, 116, { align: "center" });
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(8.4);
-        doc.text("Ananda telah menyelesaikan hafalan 30 Juz Al-Qur'an dan kini fokus pada program murojaah rutin.", 105, 122, { align: "center" });
+        doc.setFontSize(8.3);
+        doc.text("Ananda telah menyelesaikan hafalan 30 Juz Al-Qur'an dan kini fokus pada program murojaah rutin.", 105, 123.5, { align: "center" });
       } else {
         doc.setTextColor(100, 116, 139);
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(8.4);
-        doc.text("Grafik perkembangan mingguan akan tampil otomatis mulai pendataan pekan ke-2.", 105, 118.5, { align: "center" });
+        doc.setFontSize(8.3);
+        doc.text("Grafik perkembangan mingguan akan tampil otomatis mulai pendataan pekan ke-2.", 105, 120, { align: "center" });
       }
 
       // 5. TABEL RIWAYAT HAFALAN RIIL (7 KOLOM ASLI, MAKS 8 PEKAN)
       doc.setTextColor(15, 118, 110);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8.1);
+      doc.setFontSize(8);
       var riwayat = santriAktif.riwayatTerbaru || [];
       doc.text(santriAktif.totalBarisRiwayat > 8
         ? "RIWAYAT PENDATAAN HAFALAN RIIL (8 PEKAN TERBARU DARI " + santriAktif.totalBarisRiwayat + " CATATAN)"
-        : "RIWAYAT PENDATAAN HAFALAN RIIL", 14, 144.6);
+        : "RIWAYAT PENDATAAN HAFALAN RIIL", 14, 144.8);
 
       var bodyRows = [];
       if (riwayat.length > 0) {
@@ -3534,14 +3973,14 @@
 
       var lastRowIdx = riwayat.length - 1;
       doc.autoTable({
-        startY: 146.4, margin: { left: 14, right: 14 },
+        startY: 146.5, margin: { left: 14, right: 14 },
         head: [['Tanggal', 'Juz', 'Surat', 'Hal', 'Ayat', 'Kualitas', 'Catatan']],
         body: bodyRows, theme: 'grid',
         styles: {
-          font: 'helvetica', fontSize: 7.6, cellPadding: 1.8, halign: 'center', valign: 'middle',
+          font: 'helvetica', fontSize: 7.5, cellPadding: 1.75, halign: 'center', valign: 'middle',
           overflow: 'ellipsize', lineColor: [226, 232, 240], lineWidth: 0.25, textColor: [15, 23, 42]
         },
-        headStyles: { fillColor: [15, 118, 110], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.6 },
+        headStyles: { fillColor: [15, 118, 110], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.5 },
         alternateRowStyles: { fillColor: [240, 253, 250] },
         columnStyles: {
           0: { cellWidth: 21 }, 1: { cellWidth: 11 }, 2: { cellWidth: 30 },
@@ -3567,7 +4006,7 @@
         : "Mohon doa dan dukungan semangat dari Bapak/Ibu wali santri agar ananda senantiasa istiqamah dalam menambah serta menjaga kelancaran hafalan Al-Qur'an.");
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.5);
+      doc.setFontSize(8.4);
       var linesEval = doc.splitTextToSize(isiEvaluasi, 171);
       var maxBaris = Math.max(2, Math.floor((sisaRuang - 12.5) / 4.2));
       if (linesEval.length > maxBaris) {
@@ -3586,13 +4025,13 @@
 
       doc.setTextColor(6, 95, 70);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8);
-      doc.text("CATATAN EVALUASI PEMBINA KAMAR", 19.5, evalStartY + 6);
+      doc.setFontSize(7.9);
+      doc.text("CATATAN EVALUASI PEMBINA KAMAR", 19.5, evalStartY + 5.9);
 
       doc.setTextColor(15, 23, 42);
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.5);
-      doc.text(linesEval, 19.5, evalStartY + 11.4);
+      doc.setFontSize(8.4);
+      doc.text(linesEval, 19.5, evalStartY + 11.2);
 
       // 7. FOOTER
       doc.setDrawColor(226, 232, 240);
@@ -3617,12 +4056,13 @@
       });
     }
 
-    // --- KIRIM WHATSAPP GABUNGAN (HAFALAN RIIL + REKAPAN SETORAN + JADWAL TELEPON JUM'AT + PDF) ---
+    // --- KIRIM WHATSAPP GABUNGAN (HAFALAN RIIL + REKAPAN SETORAN + TARGET KEAKTIFAN + MODE LIBUR/JEDA) ---
     function kirimWaSantriAktif(target) {
       if (!santriAktif) return;
       var ortu = santriAktif.ortu || {};
       var st = santriAktif.hafalanStats || {};
       var rk = santriAktif.rekapSetoran || {};
+      var sk = statusKegiatanKamar || { mode: "AKTIF", keterangan: "" };
       var nomor = (target === "ayah") ? ortu.waAyah : ortu.waIbu;
       var panggilan = (target === "ayah") ? "Bapak" : "Ibu";
       var namaOrtu = (target === "ayah") ? ortu.ayah : ortu.ibu;
@@ -3661,10 +4101,26 @@
       // BAGIAN 2: REKAPAN SETORAN MINGGUAN
       pesan += "\n🗓️ *2. REKAPAN SETORAN MINGGUAN*" + (periodeTeks ? ("\n_Periode: " + periodeTeks + "_") : "") + "\n";
       if (rk.sudahDirekap) {
+        var keaktifanLine = formatRekapKeaktifan(rk.keaktifan);
+        if (rk.statusTarget === "memenuhi") {
+          keaktifanLine += " _(Memenuhi Target • Min. " + rk.targetMinimal + "x dari " + rk.hariEfektif + " hari efektif)_";
+        } else if (rk.statusTarget === "kurang") {
+          keaktifanLine += " _(Belum Memenuhi Target • Min. " + rk.targetMinimal + "x dari " + rk.hariEfektif + " hari efektif)_";
+        } else if (rk.statusTarget === "pendek") {
+          keaktifanLine += " _(Pekan Pendek • " + rk.hariEfektif + " hari efektif)_";
+        }
+
         pesan += "• *Tambahan Setoran:* " + formatRekapTambahan(rk.tambahan) + "\n" +
           "• *Murojaah:* " + formatRekapMurojaah(rk.murojaah) + "\n" +
-          "• *Keaktifan:* " + formatRekapKeaktifan(rk.keaktifan) + "\n" +
+          "• *Keaktifan:* " + keaktifanLine + "\n" +
           "• *Halaman Terakhir Setoran:* " + formatRekapHalaman(rk.halamanTerakhir) + "\n";
+        if (rk.keterangan) {
+          pesan += "• *Keterangan:* " + rk.keterangan + "\n";
+        }
+      } else if (sk.mode === "LIBUR") {
+        pesan += "• *Status:* Masa Liburan Pondok — Kegiatan setoran diliburkan" + (sk.keterangan ? (" (" + sk.keterangan + ")") : "") + "\n";
+      } else if (sk.mode === "JEDA") {
+        pesan += "• *Status:* Jeda Setoran Sementara" + (sk.keterangan ? (" (" + sk.keterangan + ")") : "") + "\n";
       } else {
         pesan += "• *Status:* " + LABEL_BELUM_DIREKAP + "\n";
       }
@@ -3673,8 +4129,17 @@
         pesan += "\n📝 *Evaluasi Pembina:* " + evalTeks + "\n";
       }
 
-      pesan += "\n📞 *Mohon dukungan semangatnya:* Karena setiap hari Jum'at adalah jadwal telepon, mohon " + panggilan + " berkenan menyapa serta memotivasi ananda melalui telepon/video call agar senantiasa bersemangat dan istiqamah dalam menghafal serta memurojaah Al-Qur'an.\n\n" +
-        "📄 Untuk melihat *grafik perkembangan* beserta *riwayat rincinya*, silakan " + panggilan + " membuka *file rapor PDF* yang kami lampirkan pada pesan ini, atau pantau kapan saja melalui Portal Wali:\n" +
+      // Penyesuaian penutup untuk Mode Libur vs Aktif/Jeda
+      if (sk.mode === "LIBUR") {
+        pesan += "\n🏠 *Info Masa Liburan:* Selama masa liburan di rumah, mohon " + panggilan + " berkenan mendampingi serta mengingatkan ananda untuk tetap menjaga murojaah Al-Qur'an agar hafalannya senantiasa terjaga.\n\n";
+      } else {
+        if (sk.mode === "JEDA") {
+          pesan += "\nℹ️ *Info Kegiatan:* " + (sk.keterangan || "Saat ini kegiatan setoran sedang jeda sementara menjelang agenda/libur pondok.") + "\n";
+        }
+        pesan += "\n📞 *Mohon dukungan semangatnya:* Karena setiap hari Jum'at adalah jadwal telepon, mohon " + panggilan + " berkenan menyapa serta memotivasi ananda melalui telepon/video call agar senantiasa bersemangat dan istiqamah dalam menghafal serta memurojaah Al-Qur'an.\n\n";
+      }
+
+      pesan += "📄 Untuk melihat *grafik perkembangan* beserta *riwayat rincinya*, silakan " + panggilan + " membuka *file rapor PDF* yang kami lampirkan pada pesan ini, atau pantau kapan saja melalui Portal Wali:\n" +
         "🔗 " + PORTAL_WALI_URL + "\n\n" +
         "Atas perhatian dan dukungan doa " + panggilan + " untuk putra tercinta, kami haturkan jazakumullah khairan katsiran.\n" +
         "*Wassalamu’alaikum Warahmatullahi Wabarakatuh.*\n\n" +
