@@ -96,7 +96,7 @@
     #wa-browser-notice i { color: #d97706; margin-right: 4px; }
 
     /* ============================================================
-       LAYAR 1: HALAMAN DEPAN (INPUT NIS + KEUANGAN & INVENTARIS)
+       LAYAR 1: HALAMAN DEPAN (PENGUMUMAN + INPUT NIS + PUBLIK)
        ============================================================ */
     #home-screen { display: block; width: 100%; padding-bottom: 2.5rem; }
     .hero-home {
@@ -104,23 +104,53 @@
         radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.25), transparent 45%),
         radial-gradient(circle at 85% 15%, rgba(253, 230, 138, 0.16), transparent 40%),
         linear-gradient(145deg, #064e3b 0%, #047857 58%, #0d9488 100%);
-      color: white; padding: 2.2rem 1.25rem 3.3rem; text-align: center;
+      color: white; padding: 2.1rem 1.25rem 3.4rem; text-align: center;
       border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
       box-shadow: var(--shadow-md);
     }
     .hero-logo {
-      width: 90px; height: 90px; border-radius: 50%; object-fit: cover;
+      width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
       background: white; padding: 4px; border: 3px solid rgba(255,255,255,0.8);
       box-shadow: 0 8px 22px rgba(0,0,0,0.22); margin-bottom: 10px;
     }
-    .hero-home h1 { margin: 0; font-size: 1.55rem; font-weight: 800; letter-spacing: -0.3px; }
+    .hero-home h1 { margin: 0; font-size: 1.52rem; font-weight: 800; letter-spacing: -0.3px; }
     .hero-pill {
       display: inline-flex; align-items: center; gap: 6px; margin-top: 8px;
       background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
-      padding: 5px 15px; border-radius: 99px; font-size: 0.86rem; font-weight: 700;
+      padding: 5px 15px; border-radius: 99px; font-size: 0.85rem; font-weight: 700;
+    }
+    .last-update-pill {
+      display: none; align-items: center; justify-content: center; gap: 6px;
+      margin-top: 10px; font-size: 0.77rem; font-weight: 700; color: #d1fae5;
+      opacity: 0.95;
     }
 
-    .home-wrap { width: 100%; max-width: 560px; margin: -2.05rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
+    .home-wrap { width: 100%; max-width: 560px; margin: -2.1rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
+
+    /* PAPAN PENGUMUMAN KAMAR */
+    .announcement-card {
+      display: none;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 1.5px solid #fcd34d;
+      border-left: 5px solid #d97706;
+      border-radius: 18px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-sm);
+      animation: fadeUp 0.3s ease;
+    }
+    .ann-head {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      margin-bottom: 5px;
+    }
+    .ann-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+      color: #b45309; background: rgba(255,255,255,0.75); padding: 3px 9px; border-radius: 99px;
+    }
+    .ann-time { font-size: 0.7rem; color: #92400e; font-weight: 700; opacity: 0.85; }
+    .ann-title { font-size: 0.96rem; font-weight: 800; color: #78350f; margin: 0 0 4px; line-height: 1.3; }
+    .ann-body { font-size: 0.86rem; color: #78350f; margin: 0; line-height: 1.5; font-weight: 500; word-break: break-word; }
 
     .bento-login {
       background: white; border-radius: 22px; padding: 1.45rem 1.35rem;
@@ -230,7 +260,7 @@
     }
     .student-chip { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
     .mini-avatar {
-      width: 46px; height: 46px; border-radius: 14px; object-fit: cover;
+      width: 46px; height: 46px; border-radius: 14px; object-fit: cover; object-position: top center;
       border: 2px solid rgba(255,255,255,0.8); background: #e2e8f0; flex-shrink: 0;
     }
     .student-chip-text { min-width: 0; flex: 1; }
@@ -364,7 +394,40 @@
       border-radius: 13px; padding: 0.72rem 0.8rem;
     }
     .hf-mini-lbl { font-size: 0.72rem; text-transform: uppercase; font-weight: 700; opacity: 0.9; }
-    .hf-mini-val { font-size: 0.96rem; font-weight: 800; margin-top: 2px; }
+    .hf-mini-val { font-size: 0.96rem; font-weight: 800; margin-top: 2px; line-height: 1.25; }
+    .hf-mini-sub { font-size: 0.73rem; opacity: 0.9; font-weight: 600; margin-top: 3px; }
+
+    /* KARTU MUROJAAH & KEAKTIFAN MINGGUAN */
+    .murojaah-card {
+      margin-bottom: 14px;
+      background: linear-gradient(135deg, #ffffff 0%, #f0fdfa 100%);
+      border: 1.5px solid #99f6e4;
+    }
+    .mk-head {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+      gap: 6px; margin-bottom: 11px;
+    }
+    .mk-head h3 {
+      margin: 0; font-size: 0.98rem; font-weight: 800; color: #0f766e;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .mk-periode {
+      font-size: 0.73rem; font-weight: 800; color: #065f46;
+      background: #d1fae5; padding: 3px 10px; border-radius: 99px;
+    }
+    .mk-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    .mk-box {
+      background: white; border: 1px solid #ccfbf1; border-radius: 14px;
+      padding: 0.85rem 0.9rem; display: flex; align-items: center; gap: 10px;
+    }
+    .mk-ico {
+      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .mk-ico-mur { background: #ccfbf1; color: #0f766e; }
+    .mk-ico-akt { background: #fef3c7; color: #b45309; }
+    .mk-lbl { font-size: 0.72rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
+    .mk-val { font-size: 1.06rem; font-weight: 800; color: var(--text); margin-top: 1px; line-height: 1.2; }
 
     /* GRAFIK & BENCHMARK RATA-RATA KAMAR */
     .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 10px; }
@@ -386,6 +449,14 @@
       padding-bottom: 4px;
     }
     .chart-box { position: relative; height: 225px; width: 100%; }
+    .chart-guide {
+      display: none;
+      margin-top: 10px; padding: 0.68rem 0.85rem;
+      background: #f8fafc; border: 1px solid var(--border); border-radius: 12px;
+      font-size: 0.78rem; color: var(--muted); line-height: 1.48; font-weight: 600;
+    }
+    .chart-guide i { color: #0d9488; margin-right: 4px; }
+
     .chart-empty {
       display: none; text-align: center; padding: 1.8rem 1rem; border-radius: 14px;
       background: #f8fafc; border: 1px dashed #cbd5e1; font-size: 0.9rem; color: var(--muted); font-weight: 600;
@@ -399,7 +470,7 @@
       border-radius: 18px; overflow: hidden; border: 4px solid white;
       box-shadow: var(--shadow-md); background: #e2e8f0; flex-shrink: 0;
     }
-    .foto-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.25s; }
+    .foto-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0; transition: opacity 0.25s; }
     .foto-loader {
       position: absolute; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;
@@ -517,16 +588,29 @@
   </div>
 
   <!-- ============================================================
-       1. HALAMAN DEPAN (WAJIB KETIK NIS + KEUANGAN & INVENTARIS)
+       1. HALAMAN DEPAN (PENGUMUMAN + WAJIB NIS + KEUANGAN & INVENTARIS)
        ============================================================ -->
   <div id="home-screen">
     <div class="hero-home">
       <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="Logo Kamar" class="hero-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
       <h1>Pusat Informasi Santri</h1>
       <div class="hero-pill"><i class="fa-solid fa-mosque"></i> Kamar Maqomin Amin 09</div>
+      <div id="lastUpdatePill" class="last-update-pill">
+        <i class="fa-regular fa-clock"></i> <span id="lastUpdateText">Pembaruan data terakhir: -</span>
+      </div>
     </div>
 
     <div class="home-wrap">
+      <!-- PAPAN PENGUMUMAN KAMAR (MUNCUL OTOMATIS BILA DIAKTIFKAN PEMBINA) -->
+      <div id="announcementCard" class="announcement-card">
+        <div class="ann-head">
+          <span class="ann-tag"><i class="fa-solid fa-bullhorn"></i> Info Kamar</span>
+          <span class="ann-time" id="annTime"></span>
+        </div>
+        <h3 class="ann-title" id="annTitle"></h3>
+        <p class="ann-body" id="annBody"></p>
+      </div>
+
       <div class="bento-login">
         <h2>Assalamu’alaikum, Wali Santri 👋</h2>
         <p class="sub">Masukkan NIS putra Bapak/Ibu untuk melihat Hafalan, Biodata, Orang Tua &amp; Pelanggaran.</p>
@@ -557,7 +641,7 @@
       </div>
 
       <div class="utility-stack">
-        <!-- TOMBOL PASANG APLIKASI (OTOMATIS SEMBUNYI BILA SUDAH JADI APLIKASI) -->
+        <!-- TOMBOL PASANG APLIKASI -->
         <button type="button" id="btnInstallCard" class="install-card" onclick="pasangAplikasiDiHp()">
           <div class="install-card-left">
             <div class="install-ico"><i class="fa-solid fa-download"></i></div>
@@ -661,7 +745,7 @@
         <button type="button" class="dnav-btn" data-tab="pelanggaran" onclick="pindahTab('pelanggaran')"><i class="fa-solid fa-clipboard-check"></i> Pelanggaran</button>
       </div>
 
-      <!-- TAB 1: HAFALAN (STANDAR 604 HALAMAN MUSHAF POJOK 15 BARIS) -->
+      <!-- TAB 1: HAFALAN (STANDAR 604 HAL + MUROJAAH & KEAKTIFAN + HALAMAN MUSHAF) -->
       <div id="pane-hafalan" class="app-pane active">
         <div class="bento-grid-haf">
           <div class="bento-card hero-hafalan-card" id="kartuHeroHafalan">
@@ -691,6 +775,7 @@
               <div class="hf-mini-box">
                 <div class="hf-mini-lbl" id="hfLblKanan">Posisi Terakhir</div>
                 <div class="hf-mini-val" id="hfValKanan">-</div>
+                <div class="hf-mini-sub" id="hfMushafSub"></div>
               </div>
             </div>
           </div>
@@ -721,17 +806,44 @@
                 <canvas id="grafikHafalan"></canvas>
               </div>
             </div>
+            <div class="chart-guide" id="chartGuide">
+              <i class="fa-solid fa-circle-info"></i> <b>Cara baca grafik:</b> Titik hijau menunjukkan tambahan hafalan baru, titik merah berarti belum ada tambahan baru (bisa jadi ananda fokus murojaah), dan garis putus oranye adalah rata-rata setoran santri sekamar.
+            </div>
             <div class="chart-empty" id="chartEmpty"></div>
+          </div>
+        </div>
+
+        <!-- KARTU MUROJAAH & KEAKTIFAN PEKAN TERAKHIR -->
+        <div class="bento-card murojaah-card" id="murojaahCard">
+          <div class="mk-head">
+            <h3><i class="fa-solid fa-repeat"></i> Murojaah &amp; Keaktifan Pekan Terakhir</h3>
+            <span class="mk-periode" id="mkPeriodeBadge" style="display:none;"></span>
+          </div>
+          <div class="mk-grid">
+            <div class="mk-box">
+              <div class="mk-ico mk-ico-mur"><i class="fa-solid fa-book-open"></i></div>
+              <div style="min-width:0;">
+                <div class="mk-lbl">Murojaah</div>
+                <div class="mk-val" id="mkMurojaahVal">-</div>
+              </div>
+            </div>
+            <div class="mk-box">
+              <div class="mk-ico mk-ico-akt"><i class="fa-solid fa-calendar-check"></i></div>
+              <div style="min-width:0;">
+                <div class="mk-lbl">Keaktifan</div>
+                <div class="mk-val" id="mkKeaktifanVal">-</div>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="bento-card">
           <h3 class="sec-title"><i class="fa-solid fa-list-ol" style="color:#0f766e;"></i> Riwayat Pendataan Hafalan</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat catatan lengkap</div>
+          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat murojaah, keaktifan &amp; catatan</div>
           <div class="table-wrap">
             <table class="tbl-hafalan">
               <thead>
-                <tr><th>Tanggal</th><th>Juz</th><th>Surat</th><th>Hal</th><th>Ayat</th><th>Kualitas</th><th>Catatan Ustaz/Pembina</th></tr>
+                <tr><th>Tanggal</th><th>Juz</th><th>Surat</th><th>Hal</th><th>Ayat</th><th>Kualitas</th><th>Murojaah</th><th>Keaktifan</th><th>Catatan Ustaz/Pembina</th></tr>
               </thead>
               <tbody id="resHafalan"></tbody>
             </table>
@@ -863,7 +975,7 @@
     );
 
     // ============================================================
-    // INISIALISASI PWA (SERVICE WORKER) & DETEKSI BROWSER WHATSAPP
+    // INISIALISASI PWA, DETEKSI BROWSER WA & INFO BERANDA
     // ============================================================
     function isInAppBrowser() {
       var ua = navigator.userAgent || "";
@@ -904,6 +1016,31 @@
       });
     });
 
+    function muatInfoBeranda() {
+      apiGet({ action: "infoBeranda" })
+        .then(function(res) {
+          if (!res || !res.ok) return;
+
+          if (res.lastUpdate && res.lastUpdate !== "-") {
+            document.getElementById("lastUpdateText").innerText = "Pembaruan data terakhir: " + res.lastUpdate;
+            document.getElementById("lastUpdatePill").style.display = "inline-flex";
+          }
+
+          var p = res.pengumuman;
+          var card = document.getElementById("announcementCard");
+          if (p && p.aktif && (p.judul || p.isi)) {
+            document.getElementById("annTitle").innerText = p.judul || "Pengumuman Kamar";
+            document.getElementById("annTitle").style.display = p.judul ? "block" : "none";
+            document.getElementById("annBody").innerHTML = escapeHTML(p.isi || "").replace(/\n/g, "<br>");
+            document.getElementById("annTime").innerText = p.diperbarui || "";
+            card.style.display = "block";
+          } else {
+            card.style.display = "none";
+          }
+        })
+        .catch(function() {});
+    }
+
     window.addEventListener("DOMContentLoaded", function() {
       try { localStorage.removeItem("ma09_wali_saved_nis"); } catch (e) {}
 
@@ -913,6 +1050,8 @@
       } else if (isInAppBrowser()) {
         document.getElementById("wa-browser-notice").style.display = "block";
       }
+
+      muatInfoBeranda();
     });
 
     function pasangAplikasiDiHp() {
@@ -1109,6 +1248,7 @@
       document.getElementById("app-screen").style.display = "none";
       document.getElementById("public-standalone-screen").style.display = "none";
       document.getElementById("home-screen").style.display = "block";
+      muatInfoBeranda();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1208,6 +1348,16 @@
       document.getElementById("hfValKiri").innerText = st.hafalanBelakangLabel || "-";
       document.getElementById("hfValKanan").innerText = st.posisiTerakhirLabel || "-";
 
+      // Nomor Halaman Mushaf (1-604)
+      var mushafEl = document.getElementById("hfMushafSub");
+      if (!st.isKhatam && st.halamanMushaf) {
+        mushafEl.innerText = "Mushaf Hal. " + st.halamanMushaf + " / " + TOTAL_HALAMAN_QURAN;
+        mushafEl.style.display = "block";
+      } else {
+        mushafEl.innerText = "";
+        mushafEl.style.display = "none";
+      }
+
       var totalHal = st.totalHalaman || 0;
       var persen = typeof st.persenKhatam === "number"
         ? st.persenKhatam
@@ -1229,6 +1379,22 @@
       badge.classList.add(cls);
       badge.innerHTML = '<i class="fa-solid ' + ico + '"></i> ' + escapeHTML(st.teksTren || "-");
 
+      // Kartu Murojaah & Keaktifan Pekan Terakhir
+      var murRaw = (st.murojaahTerakhir && st.murojaahTerakhir !== "-") ? String(st.murojaahTerakhir).trim() : "";
+      var aktRaw = (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") ? String(st.keaktifanTerakhir).trim() : "";
+      var perRaw = (st.periodeTerakhir && st.periodeTerakhir !== "-") ? String(st.periodeTerakhir).trim() : "";
+
+      document.getElementById("mkMurojaahVal").innerText = murRaw ? (murRaw + " Juz") : "Belum tercatat";
+      document.getElementById("mkKeaktifanVal").innerText = aktRaw ? (aktRaw + "x Setoran") : "Belum tercatat";
+
+      var perBadge = document.getElementById("mkPeriodeBadge");
+      if (perRaw) {
+        perBadge.innerText = perRaw;
+        perBadge.style.display = "inline-block";
+      } else {
+        perBadge.style.display = "none";
+      }
+
       var bmStrip = document.getElementById("benchmarkStrip");
       if (st.chartData && st.chartData.length > 0) {
         bmStrip.style.display = "grid";
@@ -1239,8 +1405,8 @@
       }
 
       var emptyHaf = st.isKhatam
-        ? "<tr><td colspan='7' style='padding:1.4rem; font-weight:700; color:#047857;'>Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.</td></tr>"
-        : "<tr><td colspan='7' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat setoran hafalan yang tercatat.</td></tr>";
+        ? "<tr><td colspan='9' style='padding:1.4rem; font-weight:700; color:#047857;'>Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.</td></tr>"
+        : "<tr><td colspan='9' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat setoran hafalan yang tercatat.</td></tr>";
       document.getElementById("resHafalan").innerHTML = res.hafalanHTML || emptyHaf;
 
       // Tab Pelanggaran
@@ -1270,12 +1436,13 @@
       else card.classList.remove("nihil");
     }
 
-    // GRAFIK MINGGUAN (TERKUNCI DI DALAM KARTU)
+    // GRAFIK MINGGUAN + PANDUAN BACAAN
     function renderGrafik(stats) {
       if (chartInstance) { chartInstance.destroy(); chartInstance = null; }
       var scroll = document.getElementById("chartScroll");
       var box = document.getElementById("chartBox");
       var empty = document.getElementById("chartEmpty");
+      var guide = document.getElementById("chartGuide");
       var title = document.getElementById("chartTitle");
       var legend = document.getElementById("chartLegend");
 
@@ -1284,11 +1451,12 @@
       if (!stats || !Array.isArray(stats.chartData) || stats.chartData.length === 0 || typeof Chart === "undefined") {
         scroll.style.display = "none";
         legend.style.display = "none";
+        guide.style.display = "none";
         empty.style.display = "block";
         if (stats && stats.isKhatam) {
           title.innerHTML = '<i class="fa-solid fa-star" style="color:#d97706;"></i> Status Khatam 30 Juz';
           empty.classList.add("khatam");
-          empty.innerHTML = '<i class="fa-solid fa-award" style="font-size:1.8rem; color:#d97706; display:block; margin-bottom:6px;"></i><b>MasyaAllah, Barakallahu Fiikum.</b><br>Ananda telah menyelesaikan hafalan 30 Juz Al-Qur\'an dan kini fokus pada program murojaah.';
+          empty.innerHTML = '<i class="fa-solid fa-award" style="font-size:1.8rem; color:#d97706; display:block; margin-bottom:6px;"></i><b>MasyaAllah, Barakallahu Fiikum.</b><br>Ananda telah menyelesaikan hafalan 30 Juz Al-Qur\'an dan kini fokus pada program murojaah rutin.';
         } else {
           title.innerHTML = '<i class="fa-solid fa-chart-line"></i> Grafik Mingguan (Hal / Pekan)';
           empty.innerHTML = '<i class="fa-regular fa-clock" style="font-size:1.4rem; color:#0d9488; display:block; margin-bottom:6px;"></i>Grafik perkembangan mingguan akan tampil otomatis mulai pendataan pekan ke-2.';
@@ -1298,6 +1466,7 @@
 
       scroll.style.display = "block";
       legend.style.display = "flex";
+      guide.style.display = "block";
       empty.style.display = "none";
       title.innerHTML = stats.isKhatam
         ? '<i class="fa-solid fa-chart-line"></i> Arsip Grafik Menuju Khatam'
