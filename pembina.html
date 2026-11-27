@@ -271,7 +271,7 @@
     .main-view.active { display: block; }
 
     /* ============================================================
-       TAB 1: BERANDA ANALITIK KAMAR
+       TAB 1: BERANDA ANALITIK KAMAR + EDITOR PENGUMUMAN
        ============================================================ */
     .kpi-grid {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-bottom: 14px;
@@ -313,6 +313,41 @@
     }
     .box-title span { display: inline-flex; align-items: center; gap: 8px; }
 
+    /* KARTU EDITOR PENGUMUMAN KAMAR */
+    .ann-editor-box {
+      margin-bottom: 14px;
+      border: 1.5px solid #fde68a;
+      background: linear-gradient(180deg, #fffdf5 0%, #ffffff 100%);
+    }
+    .ann-status-pill {
+      font-size: 0.72rem; font-weight: 800; padding: 3px 10px; border-radius: 99px;
+      background: #e2e8f0; color: #475569;
+    }
+    .ann-status-pill.is-live { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
+    .ann-form-grid { display: flex; flex-direction: column; gap: 10px; }
+    .ann-toggle-row {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 0.7rem 0.9rem;
+    }
+    .ann-input, .ann-textarea {
+      width: 100%; padding: 0.74rem 0.9rem; border: 2px solid #cbd5e1; border-radius: 12px;
+      font-family: inherit; font-size: 0.9rem; font-weight: 600; color: var(--text);
+      outline: none; background: #f8fafc;
+    }
+    .ann-textarea { min-height: 76px; resize: vertical; font-weight: 500; }
+    .ann-input:focus, .ann-textarea:focus { border-color: #d97706; background: white; }
+    .ann-footer-row {
+      display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px;
+    }
+    .btn-save-ann {
+      padding: 0.72rem 1.2rem; border: none; border-radius: 12px;
+      background: linear-gradient(135deg, #b45309, #d97706); color: white;
+      font-size: 0.86rem; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.28);
+    }
+    .btn-save-ann:disabled { opacity: 0.6; cursor: not-allowed; }
+
     .top-list { display: flex; flex-direction: column; gap: 9px; }
     .top-item {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
@@ -350,7 +385,7 @@
     .sebaran-chart-wrap { position: relative; height: 220px; width: 100%; }
 
     /* ============================================================
-       TAB 2: MODE INPUT MASSAL (1 LAYAR, RAPI & ANTI-HILANG)
+       TAB 2: MODE INPUT MASSAL (24 SANTRI + KHATAM + MUROJAAH + KEAKTIFAN)
        ============================================================ */
     .mass-header-card {
       background: white; border: 1px solid var(--border); border-radius: var(--radius);
@@ -358,10 +393,10 @@
       display: flex; flex-direction: column; gap: 10px;
     }
     .mass-top-controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
-    .mass-field label { display: block; font-size: 0.78rem; font-weight: 800; color: #065f46; margin-bottom: 4px; }
+    .mass-field label { display: block; font-size: 0.76rem; font-weight: 800; color: #065f46; margin-bottom: 4px; }
     .mass-field input {
-      width: 100%; padding: 0.74rem 0.9rem; border: 2px solid #cbd5e1; border-radius: 12px;
-      font-family: inherit; font-size: 0.92rem; font-weight: 700; outline: none; background: #f8fafc;
+      width: 100%; padding: 0.72rem 0.85rem; border: 2px solid #cbd5e1; border-radius: 12px;
+      font-family: inherit; font-size: 0.9rem; font-weight: 700; outline: none; background: #f8fafc;
     }
     .mass-field input:focus { border-color: var(--primary-mid); background: white; box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); }
 
@@ -379,38 +414,61 @@
     }
     .btn-mini-tool:hover { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
 
-    .mass-list { display: flex; flex-direction: column; gap: 10px; padding-bottom: 78px; }
+    .mass-list { display: flex; flex-direction: column; gap: 11px; padding-bottom: 82px; }
     .mass-row {
       background: white; border: 1.5px solid var(--border); border-left: 4px solid #cbd5e1;
       border-radius: 17px; padding: 0.95rem; box-shadow: var(--shadow-sm);
       transition: border-color 0.18s, background 0.18s;
     }
+    .mass-row.row-khatam { border-left-color: #d97706; background: #fffdf7; }
     .mass-row.is-checked { border-color: #6ee7b7; border-left-color: #059669; background: #f0fdf4; }
+    .mass-row.row-khatam.is-checked { border-color: #fcd34d; border-left-color: #b45309; background: #fffbeb; }
     .mass-row.is-error { border-color: #fda4af; border-left-color: #e11d48; background: #fff1f2; }
 
-    .mr-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 9px; }
-    .mr-left { display: flex; align-items: center; gap: 9px; min-width: 0; }
-    .mr-chk { width: 20px; height: 20px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
+    .mr-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 9px; }
+    .mr-left { display: flex; align-items: flex-start; gap: 9px; min-width: 0; }
+    .mr-chk { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--primary); cursor: pointer; flex-shrink: 0; }
     .mr-name { font-size: 0.93rem; font-weight: 800; color: var(--text); line-height: 1.25; }
-    .mr-prev { font-size: 0.75rem; color: var(--muted-dark); font-weight: 600; }
+    .mr-prev { font-size: 0.74rem; color: var(--muted-dark); font-weight: 600; margin-top: 2px; }
 
+    .mr-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
     .delta-chip {
-      font-size: 0.74rem; font-weight: 800; padding: 4px 10px; border-radius: 99px; white-space: nowrap;
-      background: #e2e8f0; color: #475569; flex-shrink: 0;
+      font-size: 0.73rem; font-weight: 800; padding: 3px 10px; border-radius: 99px; white-space: nowrap;
+      background: #e2e8f0; color: #475569;
     }
     .delta-chip.d-naik { background: #d1fae5; color: #065f46; }
     .delta-chip.d-nol { background: #ffe4e6; color: #9f1239; }
-    .delta-chip.d-khatam { background: #fef3c7; color: #92400e; }
+    .delta-chip.d-khatam { background: #fef3c7; color: #92400e; border: 1px solid #fde68a; }
+    .mushaf-chip {
+      font-size: 0.69rem; font-weight: 800; padding: 2px 8px; border-radius: 99px; white-space: nowrap;
+      background: #e0f2fe; color: #0369a1;
+    }
+
+    .khatam-lock-banner {
+      background: #fef3c7; border: 1px dashed #f59e0b; color: #92400e;
+      border-radius: 11px; padding: 0.52rem 0.78rem; font-size: 0.78rem; font-weight: 700;
+      margin-bottom: 9px; display: flex; align-items: center; gap: 7px;
+    }
 
     .mr-inputs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
     .mr-inp-group label { display: block; font-size: 0.68rem; font-weight: 800; color: #475569; text-transform: uppercase; margin-bottom: 3px; }
     .mr-inp-group input {
-      width: 100%; padding: 0.58rem 0.65rem; border: 1.5px solid #cbd5e1; border-radius: 10px;
-      font-family: inherit; font-size: 0.86rem; font-weight: 700; background: white; outline: none;
+      width: 100%; padding: 0.56rem 0.62rem; border: 1.5px solid #cbd5e1; border-radius: 10px;
+      font-family: inherit; font-size: 0.85rem; font-weight: 700; background: white; outline: none;
     }
     .mr-inp-group input:focus { border-color: var(--primary-mid); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); }
     .mr-span-2 { grid-column: span 2; }
     .mr-span-3 { grid-column: span 3; }
+
+    /* INPUT MUROJAAH + TOMBOL PECAHAN CEPAT (¼ ½ ¾) */
+    .murojaah-inp-wrap { display: flex; gap: 4px; align-items: stretch; }
+    .murojaah-inp-wrap input { min-width: 0; flex: 1; }
+    .btn-frac {
+      padding: 0 7px; border-radius: 9px; border: 1.5px solid #99f6e4;
+      background: #f0fdfa; color: #0f766e; font-size: 0.82rem; font-weight: 800;
+      cursor: pointer; flex-shrink: 0; transition: all 0.12s;
+    }
+    .btn-frac:hover { background: #0d9488; color: white; border-color: #0d9488; }
 
     /* BAR SIMPAN MASSAL MELAYANG */
     .mass-save-bar {
@@ -491,6 +549,14 @@
     .mini-bar-fill.khatam { background: linear-gradient(90deg, #d97706, #fbbf24); }
     .sc-pos { font-size: 0.78rem; color: var(--muted-dark); font-weight: 600; }
 
+    .sc-mk-row { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
+    .sc-mk-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.71rem; font-weight: 800; padding: 2px 8px; border-radius: 99px;
+      background: #ccfbf1; color: #0f766e;
+    }
+    .sc-mk-pill.akt { background: #fef3c7; color: #92400e; }
+
     .tren-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 99px; font-size: 0.73rem; font-weight: 800; margin-top: 7px; }
     .tp-khatam { background: #fef3c7; color: #92400e; }
     .tp-naik { background: #d1fae5; color: #065f46; }
@@ -560,7 +626,9 @@
 
     .modal-induk-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
     .mini-box { background: #f0fdfa; border: 1.5px solid #99f6e4; border-radius: 14px; padding: 0.82rem; }
+    .mini-box.amber { background: #fffbeb; border-color: #fde68a; }
     .mini-box-title { font-size: 0.7rem; font-weight: 800; color: #0f766e; text-transform: uppercase; }
+    .mini-box.amber .mini-box-title { color: #b45309; }
     .mini-box-val { font-size: 1.02rem; font-weight: 800; color: var(--text); margin-top: 2px; }
     .mini-box-sub { font-size: 0.76rem; color: var(--muted-dark); font-weight: 600; }
 
@@ -589,6 +657,7 @@
       padding: 0.68rem 0.88rem; border-radius: 11px; font-size: 0.8rem; font-weight: 700;
     }
     .form-hint.warn { background: #fff1f2; border-color: #fecdd3; color: #9f1239; }
+    .form-hint.khatam { background: #fffbeb; border-color: #fde68a; color: #92400e; }
 
     .btn-save-sheet {
       width: 100%; padding: 0.96rem; border: none; border-radius: 13px;
@@ -653,9 +722,13 @@
       .mass-save-bar { bottom: 16px; }
       .kpi-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .bento-2col { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
-      .mass-top-controls { grid-template-columns: 230px minmax(0, 1fr); }
-      .mr-inputs { grid-template-columns: 76px 86px 96px 1.2fr 1fr 1.4fr; }
-      .mr-span-2, .mr-span-3 { grid-column: auto; }
+      .mass-top-controls { grid-template-columns: 190px 1.2fr 1fr; }
+      .mr-inputs { grid-template-columns: 74px 86px 86px 1.15fr 1.45fr 86px; }
+      .mr-inputs.khatam-grid { grid-template-columns: 1.4fr 110px 1fr 1.6fr; }
+      .mr-span-2 { grid-column: span 2; }
+      .mr-span-3 { grid-column: span 4; }
+      .mr-inputs.khatam-grid .mr-span-2,
+      .mr-inputs.khatam-grid .mr-span-3 { grid-column: auto; }
       .toolbar { flex-direction: row; align-items: center; justify-content: space-between; }
       .search-input { max-width: 320px; }
       .santri-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
@@ -675,7 +748,7 @@
       </div>
       <div class="login-badge"><i class="fa-solid fa-shield-halved"></i> Akses Khusus Pembina</div>
       <h1>Kamar Maqomin Amin 09</h1>
-      <p>Analitik Kamar &bull; Input Massal 24 Santri &bull; Rapor PDF &amp; WA</p>
+      <p>Analitik Kamar &bull; Input Massal &amp; Murojaah &bull; Rapor PDF &amp; WA</p>
 
       <div class="pin-wrap">
         <input type="password" id="inputPin" autocomplete="off" inputmode="numeric" placeholder="••••••" onkeydown="if(event.key==='Enter'){ event.preventDefault(); masukPembina(); }">
@@ -692,7 +765,7 @@
     </div>
   </div>
 
-  <!-- 2. DASBOR PEMBINA v2.3 (STANDAR 604 HALAMAN) -->
+  <!-- 2. DASBOR PEMBINA v3.0 -->
   <div id="dashboard-screen">
     <div class="topbar">
       <div class="topbar-inner">
@@ -719,7 +792,7 @@
       <!-- NAVIGASI DESKTOP -->
       <div class="desktop-nav">
         <button type="button" class="dnav-btn active" data-view="beranda" onclick="pindahView('beranda')">
-          <i class="fa-solid fa-chart-pie"></i> Beranda Kamar
+          <i class="fa-solid fa-chart-pie"></i> Beranda &amp; Pengumuman
         </button>
         <button type="button" class="dnav-btn" data-view="massal" onclick="pindahView('massal')">
           <i class="fa-solid fa-table-list"></i> Input Massal (1 Layar)
@@ -731,7 +804,7 @@
       </div>
 
       <!-- ============================================================
-           VIEW 1: BERANDA ANALITIK KAMAR
+           VIEW 1: BERANDA ANALITIK KAMAR + EDITOR PENGUMUMAN KAMAR
            ============================================================ -->
       <section id="view-beranda" class="main-view active">
         <div class="kpi-grid">
@@ -769,6 +842,31 @@
           </div>
         </div>
 
+        <!-- EDITOR PAPAN PENGUMUMAN PORTAL WALI -->
+        <div class="bento-box ann-editor-box">
+          <h3 class="box-title">
+            <span><i class="fa-solid fa-bullhorn" style="color:#d97706;"></i> Papan Pengumuman Portal Wali</span>
+            <span class="ann-status-pill" id="annStatusPill">Disembunyikan</span>
+          </h3>
+          <div class="ann-form-grid">
+            <div class="ann-toggle-row">
+              <label class="chk-inline" style="color:#92400e;">
+                <input type="checkbox" id="inAnnAktif" onchange="perbaruiPreviewStatusAnn()">
+                <span>Tampilkan pengumuman ini di Halaman Depan Portal Wali</span>
+              </label>
+              <small id="annLastUpdated" style="font-size:0.74rem; color:#92400e; font-weight:700;"></small>
+            </div>
+            <input type="text" id="inAnnJudul" class="ann-input" placeholder="Judul pengumuman (misal: Jadwal Telepon Hari Jum'at / Info Sambangan)">
+            <textarea id="inAnnIsi" class="ann-textarea" placeholder="Tulis isi pengumuman singkat untuk wali santri di sini..."></textarea>
+            <div class="ann-footer-row">
+              <small style="font-size:0.75rem; color:#64748b; font-weight:600;">Tersimpan otomatis di tab <b>Pengumuman</b> Spreadsheet Kamar.</small>
+              <button type="button" id="btnSimpanAnn" class="btn-save-ann" onclick="simpanPengumumanKamar()">
+                <i class="fa-solid fa-paper-plane"></i> Simpan Pengumuman
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="bento-2col">
           <div class="bento-box">
             <h3 class="box-title">
@@ -797,24 +895,28 @@
       </section>
 
       <!-- ============================================================
-           VIEW 2: MODE INPUT MASSAL (1 LAYAR UNTUK 24 SANTRI)
+           VIEW 2: MODE INPUT MASSAL (24 SANTRI + KHATAM + MUROJAAH + KEAKTIFAN)
            ============================================================ -->
       <section id="view-massal" class="main-view">
         <div class="mass-header-card">
           <div class="mass-top-controls">
             <div class="mass-field">
-              <label for="massTanggalGlobal"><i class="fa-regular fa-calendar"></i> Tanggal Setoran Pekan Ini</label>
+              <label for="massTanggalGlobal"><i class="fa-regular fa-calendar"></i> Tanggal Rekap</label>
               <input type="date" id="massTanggalGlobal">
             </div>
             <div class="mass-field">
-              <label for="massCariInput"><i class="fa-solid fa-magnifying-glass"></i> Cari Nama / NIS (Ketikan Tidak Hilang)</label>
-              <input type="text" id="massCariInput" placeholder="Ketik nama santri yang mau diisi..." oninput="terapkanFilterMassal()">
+              <label for="massPeriodeGlobal"><i class="fa-regular fa-calendar-days"></i> Periode Pekanan (Masuk WA &amp; PDF)</label>
+              <input type="text" id="massPeriodeGlobal" placeholder="Misal: 21 November - 26 November 2026">
+            </div>
+            <div class="mass-field">
+              <label for="massCariInput"><i class="fa-solid fa-magnifying-glass"></i> Cari Nama / NIS (Ketikan Aman)</label>
+              <input type="text" id="massCariInput" placeholder="Cari santri..." oninput="terapkanFilterMassal()">
             </div>
           </div>
 
           <div class="mass-tools-row">
             <label class="chk-inline">
-              <input type="checkbox" id="chkHideKhatam" checked onchange="terapkanFilterMassal()">
+              <input type="checkbox" id="chkHideKhatam" onchange="terapkanFilterMassal()">
               <span>Sembunyikan santri Khatam 30 Juz</span>
             </label>
             <div class="mass-btn-group">
@@ -911,7 +1013,7 @@
         </button>
       </div>
 
-      <!-- TAB 1: RAPOR PDF & WA -->
+      <!-- TAB 1: RAPOR PDF & WA GABUNGAN -->
       <div id="pane-rapor" class="modal-pane active">
         <div class="modal-induk-row">
           <div class="mini-box">
@@ -920,9 +1022,22 @@
             <div class="mini-box-sub" id="mTren">-</div>
           </div>
           <div class="mini-box">
-            <div class="mini-box-title">Posisi &amp; Pembaruan</div>
+            <div class="mini-box-title">Posisi &amp; Mushaf</div>
             <div class="mini-box-val" id="mPosisi">-</div>
             <div class="mini-box-sub" id="mTanggal">-</div>
+          </div>
+        </div>
+
+        <div class="modal-induk-row">
+          <div class="mini-box amber">
+            <div class="mini-box-title">Murojaah Pekan Terakhir</div>
+            <div class="mini-box-val" id="mMurojaah">-</div>
+            <div class="mini-box-sub" id="mPeriodeSub">Periode: -</div>
+          </div>
+          <div class="mini-box amber">
+            <div class="mini-box-title">Keaktifan Setoran</div>
+            <div class="mini-box-val" id="mKeaktifan">-</div>
+            <div class="mini-box-sub">Frekuensi maju sepekan</div>
           </div>
         </div>
 
@@ -938,15 +1053,15 @@
           <label for="inputEvaluasi"><i class="fa-solid fa-pen-to-square"></i> Catatan Evaluasi Mingguan (Masuk PDF &amp; WA)</label>
           <textarea id="inputEvaluasi" oninput="simpanDraftEvaluasi()" placeholder="Ketik catatan evaluasi pembina untuk ananda di sini (opsional)..."></textarea>
           <div class="quick-templates">
-            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah perkembangan hafalan ananda pekan ini sangat baik dan terus meningkat. Mohon doa Bapak/Ibu agar ananda senantiasa istiqamah.')">+ Apresiasi Naik</button>
-            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Pekan ini capaian hafalan ananda masih stagnan/belum bertambah. Mohon dukungan doa dan semangat dari Bapak/Ibu agar pekan depan kembali lancar.')">+ Motivasi Stagnan</button>
-            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah ananda telah khatam 30 Juz dan kini fokus menjaga kelancaran melalui program murojaah rutin. Mohon doa agar senantiasa istiqamah.')">+ Apresiasi Khatam</button>
+            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah perkembangan hafalan dan murojaah ananda pekan ini sangat baik. Mohon doa Bapak/Ibu agar ananda senantiasa istiqamah.')">+ Apresiasi Naik</button>
+            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Pekan ini hafalan baru ananda masih stagnan/belum bertambah. Mohon dukungan doa dan semangat dari Bapak/Ibu agar pekan depan kembali lancar.')">+ Motivasi Stagnan</button>
+            <button type="button" class="btn-tpl" onclick="isiTemplateEval('Alhamdulillah ananda telah khatam 30 Juz dan sangat aktif menjaga kelancaran melalui murojaah rutin. Mohon doa agar senantiasa istiqamah.')">+ Apresiasi Khatam</button>
             <button type="button" class="btn-tpl" onclick="isiTemplateEval('')">Bersihkan</button>
           </div>
         </div>
 
         <div class="action-panel">
-          <div class="step-hint">1. Unduh file PDF dulu, lalu 2. Klik tombol WA Ayah/Ibu dan lampirkan file PDF-nya:</div>
+          <div class="step-hint">1. Unduh Rapor PDF dulu, lalu 2. Klik WA Ayah/Ibu (pesan sudah memuat Ziyadah, Murojaah, Keaktifan &amp; imbauan telepon Jum'at):</div>
           <button type="button" class="btn-pdf" onclick="unduhPdfSantriAktif()">
             <i class="fa-solid fa-file-pdf"></i> Unduh Rapor PDF (1 Lembar A4)
           </button>
@@ -968,39 +1083,64 @@
         </div>
       </div>
 
-      <!-- TAB 2: INPUT SETORAN SATUAN -->
+      <!-- TAB 2: INPUT SETORAN SATUAN (+ MUROJAAH, KEAKTIFAN & MODE KHATAM) -->
       <div id="pane-hafalan" class="modal-pane">
         <div class="form-hint" id="hintPosisiHafalan"></div>
 
         <div class="form-grid-2">
           <div class="form-group">
-            <label for="inHafTanggal">Tanggal Setoran</label>
+            <label for="inHafTanggal">Tanggal Rekap</label>
             <input type="date" id="inHafTanggal">
           </div>
           <div class="form-group">
-            <label for="inHafKualitas">Kualitas Hafalan</label>
-            <input type="text" id="inHafKualitas" list="daftarKualitasMassal" placeholder="Pilih atau ketik...">
+            <label for="inHafPeriode">Periode Pekanan</label>
+            <input type="text" id="inHafPeriode" placeholder="Misal: 21 Nov - 26 Nov 2026">
           </div>
         </div>
 
-        <div class="form-grid-3">
+        <!-- BAGIAN ZIYADAH (OTOMATIS SEMBUNYI UNTUK SANTRI KHATAM 30 JUZ) -->
+        <div id="boxZiyadahSatuan" style="display:flex; flex-direction:column; gap:12px;">
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label for="inHafJuz">Juz (1-30)</label>
+              <input type="number" id="inHafJuz" min="1" max="30" inputmode="numeric" placeholder="1 - 30" oninput="perbaruiBatasHalSatuan()">
+            </div>
+            <div class="form-group">
+              <label for="inHafHal" id="lblInHafHal">Halaman (1-20)</label>
+              <input type="number" id="inHafHal" min="1" max="20" inputmode="numeric" placeholder="1 - 20" oninput="perbaruiInfoMushafSatuan()">
+            </div>
+            <div class="form-group">
+              <label for="inHafAyat">Ayat</label>
+              <input type="text" id="inHafAyat" placeholder="Misal: 125 / 1-10">
+            </div>
+          </div>
+
           <div class="form-group">
-            <label for="inHafJuz">Juz (1-30)</label>
-            <input type="number" id="inHafJuz" min="1" max="30" inputmode="numeric" placeholder="1 - 30" oninput="perbaruiBatasHalSatuan()">
+            <label for="inHafSurat">Nama Surat <span id="badgeMushafSatuan" style="color:#0369a1; font-weight:700; margin-left:6px;"></span></label>
+            <input type="text" id="inHafSurat" placeholder="Contoh: Al-Baqarah / Ali Imran">
+          </div>
+        </div>
+
+        <!-- BAGIAN MUROJAAH & KEAKTIFAN (UNTUK SEMUA SANTRI TERMASUK KHATAM) -->
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label for="inHafMurojaah">Murojaah Pekan Ini (Juz)</label>
+            <div class="murojaah-inp-wrap">
+              <input type="text" id="inHafMurojaah" placeholder="Misal: 1½ / 2">
+              <button type="button" class="btn-frac" onclick="sisipPecahan('inHafMurojaah', '¼')">¼</button>
+              <button type="button" class="btn-frac" onclick="sisipPecahan('inHafMurojaah', '½')">½</button>
+              <button type="button" class="btn-frac" onclick="sisipPecahan('inHafMurojaah', '¾')">¾</button>
+            </div>
           </div>
           <div class="form-group">
-            <label for="inHafHal" id="lblInHafHal">Halaman (1-20)</label>
-            <input type="number" id="inHafHal" min="1" max="20" inputmode="numeric" placeholder="1 - 20">
-          </div>
-          <div class="form-group">
-            <label for="inHafAyat">Ayat</label>
-            <input type="text" id="inHafAyat" placeholder="Misal: 125 / 1-10">
+            <label for="inHafKeaktifan">Keaktifan (Kali Setoran)</label>
+            <input type="number" id="inHafKeaktifan" min="0" max="30" inputmode="numeric" placeholder="Misal: 6">
           </div>
         </div>
 
         <div class="form-group">
-          <label for="inHafSurat">Nama Surat</label>
-          <input type="text" id="inHafSurat" placeholder="Contoh: Al-Baqarah / Ali Imran">
+          <label for="inHafKualitas">Kualitas Hafalan / Murojaah</label>
+          <input type="text" id="inHafKualitas" list="daftarKualitasMassal" placeholder="Pilih atau ketik...">
         </div>
 
         <div class="form-group">
@@ -1072,6 +1212,8 @@
     var pinAktif = "";
     var semuaSantri = [];
     var ringkasanKamar = {};
+    var pengumumanKamar = { aktif: false, judul: "", isi: "", diperbarui: "" };
+    var periodeTerakhirKamar = "";
     var tanggalCetakServer = "";
     var viewAktif = "beranda";
     var filterAktif = "semua";
@@ -1091,7 +1233,6 @@
       try { localStorage.setItem(STORAGE_KEY_SENT, JSON.stringify(petaTerkirim)); } catch (e) {}
     }
 
-    // Fallback Logo Kamar
     var LOGO_FALLBACKS = [
       "https://i.ibb.co/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png",
       "https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png",
@@ -1108,13 +1249,22 @@
     }
 
     // =========================================================================
-    // HELPER STANDAR MUSHAF POJOK 15 BARIS (604 HALAMAN)
+    // HELPER STANDAR MUSHAF POJOK 15 BARIS (604 HALAMAN) & PECAHAN
     // =========================================================================
     function getMaxHalamanJuz(juz) {
       var j = Number(juz);
       if (j === 1) return 21;
       if (j === 30) return 23;
       return 20;
+    }
+
+    function hitungHalamanMushaf(juz, hal) {
+      var j = Number(juz);
+      var h = Number(hal);
+      if (isNaN(j) || isNaN(h) || j < 1 || j > 30 || h < 1) return null;
+      var total = 0;
+      for (var i = 1; i < j; i++) total += getMaxHalamanJuz(i);
+      return Math.min(total + Math.min(h, getMaxHalamanJuz(j)), TOTAL_HALAMAN_QURAN);
     }
 
     function hitungHalamanJuzDepan(juz, hal) {
@@ -1141,6 +1291,21 @@
         return Math.max(0, delta + currHal);
       }
       return 0;
+    }
+
+    // Sisipkan pecahan ¼, ½, ¾ rapi (mengganti pecahan terakhir bila diketuk ulang)
+    function sisipPecahan(inputId, pecahan, nisMassal) {
+      var inp = document.getElementById(inputId);
+      if (!inp) return;
+      var cur = String(inp.value || "").trim();
+      if (/[¼½¾]$/.test(cur)) {
+        cur = cur.slice(0, -1) + pecahan;
+      } else {
+        cur = cur + pecahan;
+      }
+      inp.value = cur;
+      inp.focus();
+      if (nisMassal) onEditMassRow(nisMassal);
     }
 
     // =========================================================================
@@ -1253,9 +1418,7 @@
         var timer = setTimeout(function() {
           if (settled) return;
           settled = true;
-          img.onload = null;
-          img.onerror = null;
-          img.src = "";
+          img.onload = null; img.onerror = null; img.src = "";
           resolve(false);
         }, timeoutMs || AVATAR_TIMEOUT_MS);
 
@@ -1443,7 +1606,7 @@
     }
 
     // =========================================================================
-    // HELPER API & TEKS
+    // HELPER API & TEKS (TERMASUK KONVERSI PECAHAN UNTUK PDF)
     // =========================================================================
     function apiPost(payload) {
       return fetch(API_URL, {
@@ -1473,6 +1636,9 @@
       var def = fallback !== undefined ? fallback : "-";
       if (str === null || str === undefined) return def;
       var hasil = String(str)
+        .replace(/(\d)\s*\u00BC/g, "$1 1/4").replace(/\u00BC/g, "1/4")
+        .replace(/(\d)\s*\u00BD/g, "$1 1/2").replace(/\u00BD/g, "1/2")
+        .replace(/(\d)\s*\u00BE/g, "$1 3/4").replace(/\u00BE/g, "3/4")
         .replace(/[\u2018\u2019]/g, "'")
         .replace(/[\u201C\u201D]/g, '"')
         .replace(/[\u2013\u2014]/g, "-")
@@ -1570,7 +1736,7 @@
 
       Swal.fire({
         title: 'Menyinkronkan Data Kamar...',
-        html: 'Mengambil rekap hafalan, analitik &amp; daftar santri dari Spreadsheet...',
+        html: 'Mengambil rekap hafalan, murojaah, pengumuman &amp; daftar santri...',
         allowOutsideClick: false, showConfirmButton: false,
         didOpen: function() { Swal.showLoading(); }
       });
@@ -1586,6 +1752,8 @@
           pinAktif = pin;
           semuaSantri = res.daftarSantri || [];
           ringkasanKamar = res.ringkasanKamar || {};
+          pengumumanKamar = res.pengumuman || { aktif: false, judul: "", isi: "", diperbarui: "" };
+          periodeTerakhirKamar = res.periodeTerakhirKamar || "";
           tanggalCetakServer = res.tanggalCetak || "";
 
           document.getElementById("topbarSubtitle").innerText = "Kamar Maqomin Amin 09 • Sinkron " + (tanggalCetakServer || "Hari Ini");
@@ -1594,6 +1762,11 @@
           document.body.classList.add("dash-active");
 
           document.getElementById("massTanggalGlobal").value = todayYmd();
+          if (!document.getElementById("massPeriodeGlobal").value.trim() && periodeTerakhirKamar) {
+            document.getElementById("massPeriodeGlobal").value = periodeTerakhirKamar;
+          }
+
+          isiFormPengumuman();
           renderBeranda();
           bangunDaftarInputMassal();
           renderDaftarSantri();
@@ -1602,7 +1775,7 @@
         })
         .catch(function() {
           if (btn) btn.disabled = false;
-          Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Pastikan Kode.gs versi terbaru sudah di-deploy dan internet stabil.', confirmButtonColor: '#065f46' });
+          Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Pastikan Kode.gs v3.0 sudah di-deploy dan internet stabil.', confirmButtonColor: '#065f46' });
         });
     }
 
@@ -1610,6 +1783,7 @@
       pinAktif = "";
       semuaSantri = [];
       ringkasanKamar = {};
+      pengumumanKamar = { aktif: false, judul: "", isi: "", diperbarui: "" };
       draftEvalMap = {};
       avatarResolvedCache = Object.create(null);
       avatarInFlight = Object.create(null);
@@ -1635,6 +1809,65 @@
           simpanPetaTerkirim();
           renderDaftarSantri();
         }
+      });
+    }
+
+    // =========================================================================
+    // EDITOR PAPAN PENGUMUMAN KAMAR (LANGSUNG DARI DASBOR PEMBINA)
+    // =========================================================================
+    function isiFormPengumuman() {
+      var p = pengumumanKamar || {};
+      document.getElementById("inAnnAktif").checked = !!p.aktif;
+      document.getElementById("inAnnJudul").value = p.judul || "";
+      document.getElementById("inAnnIsi").value = p.isi || "";
+      document.getElementById("annLastUpdated").innerText = p.diperbarui ? ("Terakhir diubah: " + p.diperbarui) : "";
+      perbaruiPreviewStatusAnn();
+    }
+
+    function perbaruiPreviewStatusAnn() {
+      var aktif = document.getElementById("inAnnAktif").checked;
+      var pill = document.getElementById("annStatusPill");
+      if (aktif) {
+        pill.innerText = "Tayang di Portal Wali";
+        pill.classList.add("is-live");
+      } else {
+        pill.innerText = "Disembunyikan";
+        pill.classList.remove("is-live");
+      }
+    }
+
+    function simpanPengumumanKamar() {
+      var aktif = document.getElementById("inAnnAktif").checked;
+      var judul = document.getElementById("inAnnJudul").value.trim();
+      var isi = document.getElementById("inAnnIsi").value.trim();
+
+      if (aktif && !judul && !isi) {
+        Swal.fire({ icon: 'warning', title: 'Pengumuman Masih Kosong', text: 'Isi judul atau pesan pengumuman sebelum mengaktifkannya.', confirmButtonColor: '#d97706' });
+        return;
+      }
+
+      var btn = document.getElementById("btnSimpanAnn");
+      btn.disabled = true;
+      Swal.fire({ title: 'Menyimpan Pengumuman...', allowOutsideClick: false, showConfirmButton: false, didOpen: function() { Swal.showLoading(); } });
+
+      apiPost({
+        action: "simpanPengumuman",
+        pin: pinAktif,
+        aktif: aktif,
+        judul: judul,
+        isi: isi
+      }).then(function(res) {
+        btn.disabled = false;
+        if (!res || !res.ok) {
+          Swal.fire({ icon: 'error', title: 'Gagal Menyimpan', text: (res && res.error) ? res.error : 'Terjadi kesalahan server.', confirmButtonColor: '#065f46' });
+          return;
+        }
+        pengumumanKamar = res.pengumuman || { aktif: aktif, judul: judul, isi: isi, diperbarui: "" };
+        isiFormPengumuman();
+        Swal.fire({ icon: 'success', title: 'Berhasil Disimpan!', text: res.message || 'Pengumuman kamar diperbarui.', timer: 1800, showConfirmButton: false });
+      }).catch(function() {
+        btn.disabled = false;
+        Swal.fire({ icon: 'error', title: 'Koneksi Gagal', text: 'Tidak dapat mengirim pengumuman ke server.', confirmButtonColor: '#065f46' });
       });
     }
 
@@ -1693,7 +1926,6 @@
       document.getElementById("kpiKhatam").innerText = khatam;
       document.getElementById("kpiNaikCount").innerText = naik + " santri meningkat/stabil";
 
-      // Top 3 Santri Pekan Ini
       var topBox = document.getElementById("listTopSantri");
       var topArr = Array.isArray(rk.topSantri) ? rk.topSantri : [];
       if (topArr.length === 0) {
@@ -1716,7 +1948,6 @@
         hydrateAvatars(topBox);
       }
 
-      // Daftar Prioritas Perhatian
       var perBox = document.getElementById("listPerhatianBeranda");
       if (listPerhatian.length === 0) {
         perBox.innerHTML = '<div style="padding:1rem; text-align:center; color:#059669; font-size:0.86rem; font-weight:700; background:#f0fdf4; border-radius:12px;">Alhamdulillah, tidak ada santri yang stagnan atau menurun pekan ini.</div>';
@@ -1786,7 +2017,7 @@
     }
 
     // =========================================================================
-    // TAB 2: MODE INPUT MASSAL (BATAS HALAMAN DINAMIS PER JUZ)
+    // TAB 2: MODE INPUT MASSAL (24 SANTRI TERMASUK KHATAM + MUROJAAH + KEAKTIFAN)
     // =========================================================================
     function bangunDaftarInputMassal() {
       var container = document.getElementById("massListContainer");
@@ -1796,60 +2027,125 @@
         var s = semuaSantri[i];
         var st = s.hafalanStats || {};
         var last = s.lastEntry || {};
-        var pJuz = (last.juz && last.juz !== "-") ? last.juz : "";
+        var isKhatam = !!st.isKhatam;
+        var pJuz = (last.juz && last.juz !== "-" && last.juz !== "Khatam") ? last.juz : "";
         var pHal = (last.hal && last.hal !== "-") ? last.hal : "";
         var pAyat = (last.ayat && last.ayat !== "-") ? last.ayat : "";
-        var pSurat = (last.surat && last.surat !== "-") ? last.surat : "";
+        var pSurat = (last.surat && last.surat !== "-" && last.surat !== "Murojaah 30 Juz") ? last.surat : "";
         var pKual = (last.kualitas && last.kualitas !== "-") ? last.kualitas : "Baik";
         var maxHalAwal = getMaxHalamanJuz(parseInt(pJuz, 10));
 
-        var chipAwal = st.isKhatam
-          ? '<span class="delta-chip d-khatam">Khatam 30 Juz</span>'
-          : '<span class="delta-chip" id="mDelta-' + escapeHTML(s.nis) + '">Belum diubah</span>';
+        var prevMk = [];
+        if (st.murojaahTerakhir && st.murojaahTerakhir !== "-") prevMk.push("Mur: " + st.murojaahTerakhir + " Juz");
+        if (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") prevMk.push("Aktif: " + st.keaktifanTerakhir + "x");
+        var prevMkText = prevMk.length > 0 ? (" &bull; Pekan lalu: " + escapeHTML(prevMk.join(", "))) : "";
 
-        html += '<div class="mass-row" id="mRow-' + escapeHTML(s.nis) + '" ' +
-            'data-nis="' + escapeHTML(s.nis) + '" ' +
-            'data-nama="' + escapeHTML(s.nama.toLowerCase()) + '" ' +
-            'data-khatam="' + (st.isKhatam ? "1" : "0") + '" ' +
-            'data-pjuz="' + escapeHTML(pJuz) + '" ' +
-            'data-phal="' + escapeHTML(pHal) + '">' +
-          '<div class="mr-head">' +
-            '<label class="mr-left" style="cursor:pointer;">' +
-              '<input type="checkbox" class="mr-chk" id="mChk-' + escapeHTML(s.nis) + '" onchange="onToggleMassRow(\'' + escapeHTML(s.nis) + '\')">' +
-              '<div style="min-width:0;">' +
-                '<div class="mr-name">' + escapeHTML(s.nama) + '</div>' +
-                '<div class="mr-prev">NIS ' + escapeHTML(s.nis) + ' &bull; Terakhir: ' + escapeHTML(st.posisiTerakhirLabel) + '</div>' +
+        var mushafAwal = !isKhatam ? hitungHalamanMushaf(parseInt(pJuz, 10), parseInt(pHal, 10)) : TOTAL_HALAMAN_QURAN;
+        var mushafBadgeHtml = mushafAwal
+          ? '<span class="mushaf-chip" id="mMushaf-' + escapeHTML(s.nis) + '">Hal. Mushaf ' + mushafAwal + '</span>'
+          : '<span class="mushaf-chip" id="mMushaf-' + escapeHTML(s.nis) + '" style="display:none;"></span>';
+
+        if (isKhatam) {
+          html += '<div class="mass-row row-khatam" id="mRow-' + escapeHTML(s.nis) + '" ' +
+              'data-nis="' + escapeHTML(s.nis) + '" ' +
+              'data-nama="' + escapeHTML(s.nama.toLowerCase()) + '" ' +
+              'data-khatam="1">' +
+            '<div class="mr-head">' +
+              '<label class="mr-left" style="cursor:pointer;">' +
+                '<input type="checkbox" class="mr-chk" id="mChk-' + escapeHTML(s.nis) + '" onchange="onToggleMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+                '<div style="min-width:0;">' +
+                  '<div class="mr-name">' + escapeHTML(s.nama) + '</div>' +
+                  '<div class="mr-prev">NIS ' + escapeHTML(s.nis) + ' &bull; Khatam 30 Juz' + prevMkText + '</div>' +
+                '</div>' +
+              '</label>' +
+              '<div class="mr-badges"><span class="delta-chip d-khatam">Khatam 30 Juz</span></div>' +
+            '</div>' +
+            '<div class="khatam-lock-banner"><i class="fa-solid fa-award"></i> Mode Khatam: Juz &amp; Halaman otomatis Murojaah 30 Juz — cukup isi Murojaah &amp; Keaktifan pekan ini.</div>' +
+            '<div class="mr-inputs khatam-grid">' +
+              '<div class="mr-inp-group mr-span-2">' +
+                '<label>Murojaah (Juz)</label>' +
+                '<div class="murojaah-inp-wrap">' +
+                  '<input type="text" id="mMur-' + escapeHTML(s.nis) + '" placeholder="Misal: 2½" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+                  '<button type="button" class="btn-frac" onclick="sisipPecahan(\'mMur-' + escapeHTML(s.nis) + '\', \'¼\', \'' + escapeHTML(s.nis) + '\')">¼</button>' +
+                  '<button type="button" class="btn-frac" onclick="sisipPecahan(\'mMur-' + escapeHTML(s.nis) + '\', \'½\', \'' + escapeHTML(s.nis) + '\')">½</button>' +
+                  '<button type="button" class="btn-frac" onclick="sisipPecahan(\'mMur-' + escapeHTML(s.nis) + '\', \'¾\', \'' + escapeHTML(s.nis) + '\')">¾</button>' +
+                '</div>' +
               '</div>' +
-            '</label>' +
-            chipAwal +
-          '</div>' +
-          '<div class="mr-inputs">' +
-            '<div class="mr-inp-group">' +
-              '<label>Juz</label>' +
-              '<input type="number" min="1" max="30" inputmode="numeric" id="mJuz-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pJuz) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '<div class="mr-inp-group">' +
+                '<label>Keaktifan (x)</label>' +
+                '<input type="number" min="0" max="30" inputmode="numeric" id="mAkt-' + escapeHTML(s.nis) + '" placeholder="Misal: 6" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group">' +
+                '<label>Kualitas</label>' +
+                '<input type="text" list="daftarKualitasMassal" id="mKual-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pKual) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group mr-span-2">' +
+                '<label>Catatan Singkat (Opsional)</label>' +
+                '<input type="text" id="mCat-' + escapeHTML(s.nis) + '" placeholder="Catatan murojaah..." oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
             '</div>' +
-            '<div class="mr-inp-group">' +
-              '<label id="mLblHal-' + escapeHTML(s.nis) + '">Hal (1-' + maxHalAwal + ')</label>' +
-              '<input type="number" min="1" max="' + maxHalAwal + '" inputmode="numeric" id="mHal-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pHal) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+          '</div>';
+        } else {
+          html += '<div class="mass-row" id="mRow-' + escapeHTML(s.nis) + '" ' +
+              'data-nis="' + escapeHTML(s.nis) + '" ' +
+              'data-nama="' + escapeHTML(s.nama.toLowerCase()) + '" ' +
+              'data-khatam="0" ' +
+              'data-pjuz="' + escapeHTML(pJuz) + '" ' +
+              'data-phal="' + escapeHTML(pHal) + '">' +
+            '<div class="mr-head">' +
+              '<label class="mr-left" style="cursor:pointer;">' +
+                '<input type="checkbox" class="mr-chk" id="mChk-' + escapeHTML(s.nis) + '" onchange="onToggleMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+                '<div style="min-width:0;">' +
+                  '<div class="mr-name">' + escapeHTML(s.nama) + '</div>' +
+                  '<div class="mr-prev">NIS ' + escapeHTML(s.nis) + ' &bull; Terakhir: ' + escapeHTML(st.posisiTerakhirLabel) + prevMkText + '</div>' +
+                '</div>' +
+              '</label>' +
+              '<div class="mr-badges">' +
+                '<span class="delta-chip" id="mDelta-' + escapeHTML(s.nis) + '">Belum diubah</span>' +
+                mushafBadgeHtml +
+              '</div>' +
             '</div>' +
-            '<div class="mr-inp-group">' +
-              '<label>Ayat</label>' +
-              '<input type="text" id="mAyat-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pAyat) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+            '<div class="mr-inputs">' +
+              '<div class="mr-inp-group">' +
+                '<label>Juz</label>' +
+                '<input type="number" min="1" max="30" inputmode="numeric" id="mJuz-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pJuz) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group">' +
+                '<label id="mLblHal-' + escapeHTML(s.nis) + '">Hal (1-' + maxHalAwal + ')</label>' +
+                '<input type="number" min="1" max="' + maxHalAwal + '" inputmode="numeric" id="mHal-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pHal) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group">' +
+                '<label>Ayat</label>' +
+                '<input type="text" id="mAyat-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pAyat) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group mr-span-2">' +
+                '<label>Nama Surat</label>' +
+                '<input type="text" id="mSurat-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pSurat) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group mr-span-2">' +
+                '<label>Murojaah (Juz)</label>' +
+                '<div class="murojaah-inp-wrap">' +
+                  '<input type="text" id="mMur-' + escapeHTML(s.nis) + '" placeholder="Misal: 1½" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+                  '<button type="button" class="btn-frac" onclick="sisipPecahan(\'mMur-' + escapeHTML(s.nis) + '\', \'¼\', \'' + escapeHTML(s.nis) + '\')">¼</button>' +
+                  '<button type="button" class="btn-frac" onclick="sisipPecahan(\'mMur-' + escapeHTML(s.nis) + '\', \'½\', \'' + escapeHTML(s.nis) + '\')">½</button>' +
+                  '<button type="button" class="btn-frac" onclick="sisipPecahan(\'mMur-' + escapeHTML(s.nis) + '\', \'¾\', \'' + escapeHTML(s.nis) + '\')">¾</button>' +
+                '</div>' +
+              '</div>' +
+              '<div class="mr-inp-group">' +
+                '<label>Aktif (x)</label>' +
+                '<input type="number" min="0" max="30" inputmode="numeric" id="mAkt-' + escapeHTML(s.nis) + '" placeholder="Misal: 5" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group">' +
+                '<label>Kualitas</label>' +
+                '<input type="text" list="daftarKualitasMassal" id="mKual-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pKual) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
+              '<div class="mr-inp-group mr-span-3">' +
+                '<label>Catatan Singkat (Opsional)</label>' +
+                '<input type="text" id="mCat-' + escapeHTML(s.nis) + '" placeholder="Kosongkan jika tidak ada catatan..." oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
+              '</div>' +
             '</div>' +
-            '<div class="mr-inp-group mr-span-2">' +
-              '<label>Nama Surat</label>' +
-              '<input type="text" id="mSurat-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pSurat) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
-            '</div>' +
-            '<div class="mr-inp-group">' +
-              '<label>Kualitas</label>' +
-              '<input type="text" list="daftarKualitasMassal" id="mKual-' + escapeHTML(s.nis) + '" value="' + escapeHTML(pKual) + '" oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
-            '</div>' +
-            '<div class="mr-inp-group mr-span-3">' +
-              '<label>Catatan Singkat (Opsional)</label>' +
-              '<input type="text" id="mCat-' + escapeHTML(s.nis) + '" placeholder="Kosongkan jika tidak ada catatan..." oninput="onEditMassRow(\'' + escapeHTML(s.nis) + '\')">' +
-            '</div>' +
-          '</div>' +
-        '</div>';
+          '</div>';
+        }
       }
 
       container.innerHTML = html;
@@ -1876,19 +2172,34 @@
     function onEditMassRow(nis) {
       var chk = document.getElementById("mChk-" + nis);
       var row = document.getElementById("mRow-" + nis);
-      var juzVal = parseInt(document.getElementById("mJuz-" + nis).value, 10);
-      var maxHal = getMaxHalamanJuz(juzVal);
-      var halInp = document.getElementById("mHal-" + nis);
-      var halLbl = document.getElementById("mLblHal-" + nis);
-      if (halInp) halInp.max = String(maxHal);
-      if (halLbl) halLbl.innerText = "Hal (1-" + maxHal + ")";
+      if (!row) return;
+      var isKhatam = row.getAttribute("data-khatam") === "1";
+
+      if (!isKhatam) {
+        var juzVal = parseInt(document.getElementById("mJuz-" + nis).value, 10);
+        var halVal = parseInt(document.getElementById("mHal-" + nis).value, 10);
+        var maxHal = getMaxHalamanJuz(juzVal);
+        var halInp = document.getElementById("mHal-" + nis);
+        var halLbl = document.getElementById("mLblHal-" + nis);
+        if (halInp) halInp.max = String(maxHal);
+        if (halLbl) halLbl.innerText = "Hal (1-" + maxHal + ")";
+
+        var mChip = document.getElementById("mMushaf-" + nis);
+        if (mChip) {
+          var mPage = hitungHalamanMushaf(juzVal, halVal);
+          if (mPage) {
+            mChip.innerText = "Hal. Mushaf " + mPage;
+            mChip.style.display = "inline-block";
+          } else {
+            mChip.style.display = "none";
+          }
+        }
+      }
 
       if (chk && !chk.checked) chk.checked = true;
-      if (row) {
-        row.classList.add("is-checked");
-        row.classList.remove("is-error");
-      }
-      perbaruiDeltaBadgeMassal(nis);
+      row.classList.add("is-checked");
+      row.classList.remove("is-error");
+      if (!isKhatam) perbaruiDeltaBadgeMassal(nis);
       perbaruiCounterMassal();
     }
 
@@ -1898,7 +2209,7 @@
       if (!row || !chk) return;
       row.classList.toggle("is-checked", chk.checked);
       row.classList.remove("is-error");
-      perbaruiDeltaBadgeMassal(nis);
+      if (row.getAttribute("data-khatam") !== "1") perbaruiDeltaBadgeMassal(nis);
       perbaruiCounterMassal();
     }
 
@@ -1967,8 +2278,10 @@
 
     function simpanSemuaMassal() {
       var tglGlobal = document.getElementById("massTanggalGlobal").value;
+      var periodeGlobal = document.getElementById("massPeriodeGlobal").value.trim();
+
       if (!tglGlobal) {
-        Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih Tanggal Setoran di bagian atas terlebih dahulu.', confirmButtonColor: '#065f46' });
+        Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih Tanggal Rekap di bagian atas terlebih dahulu.', confirmButtonColor: '#065f46' });
         return;
       }
 
@@ -1980,44 +2293,73 @@
         var chk = document.getElementById("mChk-" + nis);
         if (!chk || !chk.checked) continue;
 
+        var isKhatam = row.getAttribute("data-khatam") === "1";
         var santriObj = semuaSantri.find(function(x) { return x.nis === nis; });
         var nama = santriObj ? santriObj.nama : ("NIS " + nis);
-        var juzRaw = String(document.getElementById("mJuz-" + nis).value || "").trim();
-        var halRaw = String(document.getElementById("mHal-" + nis).value || "").trim();
-        var surat = String(document.getElementById("mSurat-" + nis).value || "").trim();
-        var ayat = String(document.getElementById("mAyat-" + nis).value || "").trim();
+        var mur = String(document.getElementById("mMur-" + nis).value || "").trim();
+        var aktRaw = String(document.getElementById("mAkt-" + nis).value || "").trim();
         var kual = String(document.getElementById("mKual-" + nis).value || "").trim() || "Baik";
         var cat = String(document.getElementById("mCat-" + nis).value || "").trim();
 
-        var juzNum = parseInt(juzRaw, 10);
-        var halNum = parseInt(halRaw, 10);
-        var maxHal = getMaxHalamanJuz(juzNum);
-
-        if (!juzRaw || isNaN(juzNum) || juzNum < 1 || juzNum > 30 || !halRaw || isNaN(halNum) || halNum < 1 || halNum > maxHal || !surat) {
-          row.classList.add("is-error");
-          row.style.display = "";
-          row.scrollIntoView({ behavior: "smooth", block: "center" });
-          Swal.fire({
-            icon: 'warning',
-            title: 'Data Belum Valid',
-            text: nama + ': Pastikan Juz (1-30), Halaman (1-' + maxHal + ' untuk Juz ' + (isNaN(juzNum) ? '-' : juzNum) + '), dan Nama Surat terisi benar.',
-            confirmButtonColor: '#065f46'
-          });
-          return;
+        if (aktRaw !== "") {
+          var aktNum = parseInt(aktRaw, 10);
+          if (isNaN(aktNum) || aktNum < 0 || aktNum > 30) {
+            row.classList.add("is-error"); row.style.display = "";
+            row.scrollIntoView({ behavior: "smooth", block: "center" });
+            Swal.fire({ icon: 'warning', title: 'Keaktifan Tidak Valid', text: nama + ': Keaktifan harus angka 0 sampai 30.', confirmButtonColor: '#065f46' });
+            return;
+          }
         }
 
-        items.push({
-          nis: nis, nama: nama, tanggal: tglGlobal, juz: juzNum,
-          surat: surat, halaman: halNum, ayat: ayat, kualitas: kual, catatan: cat
-        });
+        if (isKhatam) {
+          if (!mur && aktRaw === "") {
+            row.classList.add("is-error"); row.style.display = "";
+            row.scrollIntoView({ behavior: "smooth", block: "center" });
+            Swal.fire({ icon: 'warning', title: 'Data Murojaah Kosong', text: nama + ' (Khatam 30 Juz): Minimal isi Murojaah atau Keaktifan pekan ini.', confirmButtonColor: '#065f46' });
+            return;
+          }
+          items.push({
+            nis: nis, nama: nama, isKhatam: true, tanggal: tglGlobal,
+            murojaah: mur, keaktifan: aktRaw, periode: periodeGlobal,
+            kualitas: kual, catatan: cat
+          });
+        } else {
+          var juzRaw = String(document.getElementById("mJuz-" + nis).value || "").trim();
+          var halRaw = String(document.getElementById("mHal-" + nis).value || "").trim();
+          var surat = String(document.getElementById("mSurat-" + nis).value || "").trim();
+          var ayat = String(document.getElementById("mAyat-" + nis).value || "").trim();
+
+          var juzNum = parseInt(juzRaw, 10);
+          var halNum = parseInt(halRaw, 10);
+          var maxHal = getMaxHalamanJuz(juzNum);
+
+          if (!juzRaw || isNaN(juzNum) || juzNum < 1 || juzNum > 30 || !halRaw || isNaN(halNum) || halNum < 1 || halNum > maxHal || !surat) {
+            row.classList.add("is-error"); row.style.display = "";
+            row.scrollIntoView({ behavior: "smooth", block: "center" });
+            Swal.fire({
+              icon: 'warning',
+              title: 'Data Belum Valid',
+              text: nama + ': Pastikan Juz (1-30), Halaman (1-' + maxHal + ' untuk Juz ' + (isNaN(juzNum) ? '-' : juzNum) + '), dan Nama Surat terisi benar.',
+              confirmButtonColor: '#065f46'
+            });
+            return;
+          }
+
+          items.push({
+            nis: nis, nama: nama, isKhatam: false, tanggal: tglGlobal,
+            juz: juzNum, surat: surat, halaman: halNum, ayat: ayat,
+            murojaah: mur, keaktifan: aktRaw, periode: periodeGlobal,
+            kualitas: kual, catatan: cat
+          });
+        }
       }
 
       if (items.length === 0) return;
 
       Swal.fire({
         icon: 'question',
-        title: 'Simpan ' + items.length + ' Setoran?',
-        text: 'Data akan langsung masuk ke tab Setoran Hafalan di Spreadsheet pada tanggal ' + tglGlobal + '.',
+        title: 'Simpan ' + items.length + ' Rekap Santri?',
+        text: 'Data hafalan, murojaah & keaktifan akan langsung tersimpan ke tab Setoran Hafalan di Spreadsheet.',
         showCancelButton: true,
         confirmButtonColor: '#065f46',
         confirmButtonText: 'Ya, Simpan Semua',
@@ -2028,7 +2370,7 @@
         var btn = document.getElementById("btnSimpanMassal");
         btn.disabled = true;
         Swal.fire({
-          title: 'Menyimpan ' + items.length + ' Setoran...',
+          title: 'Menyimpan ' + items.length + ' Data...',
           html: 'Menulis serentak ke Spreadsheet Kamar...',
           allowOutsideClick: false, showConfirmButton: false,
           didOpen: function() { Swal.showLoading(); }
@@ -2038,6 +2380,7 @@
           action: "simpanSetoranMassal",
           pin: pinAktif,
           tanggal: tglGlobal,
+          periode: periodeGlobal,
           items: items
         }).then(function(res) {
           if (!res || !res.ok) {
@@ -2054,8 +2397,8 @@
           muatDataDariServer(pinAktif, function() {
             Swal.fire({
               icon: 'success',
-              title: res.jumlahTersimpan + ' Setoran Tersimpan!',
-              text: 'Seluruh grafik & rapor PDF sudah diperbarui. Lanjut kirim rapor WA?',
+              title: res.jumlahTersimpan + ' Rekap Tersimpan!',
+              text: 'Seluruh grafik, rapor PDF & pesan WA sudah diperbarui. Lanjut kirim rapor WA?',
               showCancelButton: true,
               confirmButtonColor: '#065f46',
               confirmButtonText: 'Buka Santri & WA',
@@ -2129,6 +2472,19 @@
         var totalClass = st.isKhatam ? "sc-total khatam" : "sc-total";
         var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / TOTAL_HALAMAN_QURAN) * 1000) / 10;
         var fillClass = st.isKhatam ? "mini-bar-fill khatam" : "mini-bar-fill";
+        var mushafTag = (!st.isKhatam && st.halamanMushaf) ? (" (Mushaf " + st.halamanMushaf + ")") : "";
+
+        var mkBadges = "";
+        if ((st.murojaahTerakhir && st.murojaahTerakhir !== "-") || (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-")) {
+          mkBadges = '<div class="sc-mk-row">';
+          if (st.murojaahTerakhir && st.murojaahTerakhir !== "-") {
+            mkBadges += '<span class="sc-mk-pill"><i class="fa-solid fa-repeat"></i> Mur: ' + escapeHTML(st.murojaahTerakhir) + ' Juz</span>';
+          }
+          if (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") {
+            mkBadges += '<span class="sc-mk-pill akt"><i class="fa-solid fa-check-double"></i> Aktif: ' + escapeHTML(st.keaktifanTerakhir) + 'x</span>';
+          }
+          mkBadges += '</div>';
+        }
 
         html += '<div class="' + cardClass + '">' +
           '<div class="sc-head">' +
@@ -2147,8 +2503,9 @@
               '<span class="sc-pct">' + persen + '%</span>' +
             '</div>' +
             '<div class="mini-bar-track"><div class="' + fillClass + '" style="width:' + Math.min(Math.max(persen, 0), 100) + '%;"></div></div>' +
-            '<div class="sc-pos">' + escapeHTML(st.posisiTerakhirLabel || "-") + ' &bull; ' + escapeHTML(st.tanggalTerakhir || "-") + '</div>' +
+            '<div class="sc-pos">' + escapeHTML(st.posisiTerakhirLabel || "-") + escapeHTML(mushafTag) + '</div>' +
             getTrenBadgeHtml(st) +
+            mkBadges +
           '</div>' +
           '<div class="sc-actions">' +
             '<button type="button" class="btn-card-input" onclick="bukaModalRapor(\'' + escapeHTML(item.nis) + '\', \'hafalan\')">' +
@@ -2195,6 +2552,14 @@
         halInp.placeholder = "1 - " + maxHal;
       }
       if (halLbl) halLbl.innerText = "Halaman (1-" + maxHal + ")";
+      perbaruiInfoMushafSatuan();
+    }
+
+    function perbaruiInfoMushafSatuan() {
+      var j = parseInt(document.getElementById("inHafJuz").value, 10);
+      var h = parseInt(document.getElementById("inHafHal").value, 10);
+      var m = hitungHalamanMushaf(j, h);
+      document.getElementById("badgeMushafSatuan").innerText = m ? ("(Hal. Mushaf " + m + " / 604)") : "";
     }
 
     function isiKontenModalAktif() {
@@ -2202,6 +2567,7 @@
       var st = santriAktif.hafalanStats || {};
       var ortu = santriAktif.ortu || {};
       var last = santriAktif.lastEntry || {};
+      var isKhatam = !!st.isKhatam;
       var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round(((st.totalHalaman || 0) / TOTAL_HALAMAN_QURAN) * 1000) / 10;
 
       var slotAva = document.getElementById("mAvatarSlot");
@@ -2213,7 +2579,16 @@
       document.getElementById("mTotal").innerText = (st.totalLabel || "-") + " (" + persen + "%)";
       document.getElementById("mTren").innerText = st.teksTren || "-";
       document.getElementById("mPosisi").innerText = st.posisiTerakhirLabel || "-";
-      document.getElementById("mTanggal").innerText = st.tanggalTerakhir || "-";
+      document.getElementById("mTanggal").innerText = (!isKhatam && st.halamanMushaf)
+        ? ("Mushaf Hal. " + st.halamanMushaf + "/604 • " + (st.tanggalTerakhir || "-"))
+        : (st.tanggalTerakhir || "-");
+
+      var murStr = (st.murojaahTerakhir && st.murojaahTerakhir !== "-") ? (st.murojaahTerakhir + " Juz") : "Belum tercatat";
+      var aktStr = (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") ? (st.keaktifanTerakhir + "x Setoran") : "Belum tercatat";
+      var perStr = (st.periodeTerakhir && st.periodeTerakhir !== "-") ? st.periodeTerakhir : "-";
+      document.getElementById("mMurojaah").innerText = murStr;
+      document.getElementById("mKeaktifan").innerText = aktStr;
+      document.getElementById("mPeriodeSub").innerText = "Periode: " + perStr;
 
       var teksAwal = (draftEvalMap[santriAktif.nis] !== undefined)
         ? draftEvalMap[santriAktif.nis]
@@ -2222,17 +2597,33 @@
 
       // Form Setoran Satuan
       document.getElementById("inHafTanggal").value = todayYmd();
-      document.getElementById("inHafJuz").value = (last.juz && last.juz !== "-") ? last.juz : "";
-      document.getElementById("inHafHal").value = (last.hal && last.hal !== "-") ? last.hal : "";
-      document.getElementById("inHafAyat").value = (last.ayat && last.ayat !== "-") ? last.ayat : "";
-      document.getElementById("inHafSurat").value = (last.surat && last.surat !== "-") ? last.surat : "";
+      var defaultPer = document.getElementById("massPeriodeGlobal").value.trim() || periodeTerakhirKamar || last.periode || "";
+      document.getElementById("inHafPeriode").value = defaultPer;
+      document.getElementById("inHafMurojaah").value = "";
+      document.getElementById("inHafKeaktifan").value = "";
       document.getElementById("inHafKualitas").value = (last.kualitas && last.kualitas !== "-") ? last.kualitas : "Baik";
       document.getElementById("inHafCatatan").value = "";
-      perbaruiBatasHalSatuan();
 
-      document.getElementById("hintPosisiHafalan").innerHTML = st.adaData
-        ? '<i class="fa-solid fa-circle-info"></i> Terakhir tercatat: <b>' + escapeHTML(st.posisiTerakhirLabel) + '</b> (' + escapeHTML(last.surat || "-") + '). Ubah halaman/ayat terbaru lalu Simpan.'
-        : '<i class="fa-solid fa-circle-info"></i> Belum ada catatan setoran. Silakan isi setoran perdana ananda.';
+      var boxZiyadah = document.getElementById("boxZiyadahSatuan");
+      var hintEl = document.getElementById("hintPosisiHafalan");
+      hintEl.classList.remove("khatam");
+
+      if (isKhatam) {
+        boxZiyadah.style.display = "none";
+        hintEl.classList.add("khatam");
+        hintEl.innerHTML = '<i class="fa-solid fa-award"></i> <b>Santri Khatam 30 Juz:</b> Kolom ziyadah dikunci otomatis sebagai Murojaah 30 Juz. Cukup isi capaian <b>Murojaah</b> &amp; <b>Keaktifan</b> pekan ini.';
+      } else {
+        boxZiyadah.style.display = "flex";
+        document.getElementById("inHafJuz").value = (last.juz && last.juz !== "-" && last.juz !== "Khatam") ? last.juz : "";
+        document.getElementById("inHafHal").value = (last.hal && last.hal !== "-") ? last.hal : "";
+        document.getElementById("inHafAyat").value = (last.ayat && last.ayat !== "-") ? last.ayat : "";
+        document.getElementById("inHafSurat").value = (last.surat && last.surat !== "-" && last.surat !== "Murojaah 30 Juz") ? last.surat : "";
+        perbaruiBatasHalSatuan();
+
+        hintEl.innerHTML = st.adaData
+          ? '<i class="fa-solid fa-circle-info"></i> Terakhir tercatat: <b>' + escapeHTML(st.posisiTerakhirLabel) + '</b> (' + escapeHTML(last.surat || "-") + '). Ubah posisi terbaru, lalu isi Murojaah &amp; Keaktifan.'
+          : '<i class="fa-solid fa-circle-info"></i> Belum ada catatan setoran. Silakan isi setoran perdana ananda.';
+      }
 
       // Form Pelanggaran
       document.getElementById("inPlgTanggal").value = todayYmd();
@@ -2285,30 +2676,23 @@
 
     function simpanSetoranSatuan() {
       if (!santriAktif) return;
+      var st = santriAktif.hafalanStats || {};
+      var isKhatam = !!st.isKhatam;
       var tgl = document.getElementById("inHafTanggal").value;
-      var juzRaw = String(document.getElementById("inHafJuz").value || "").trim();
-      var halRaw = String(document.getElementById("inHafHal").value || "").trim();
-      var surat = document.getElementById("inHafSurat").value.trim();
-
-      var juzNum = parseInt(juzRaw, 10);
-      var halNum = parseInt(halRaw, 10);
-      var maxHal = getMaxHalamanJuz(juzNum);
+      var periode = document.getElementById("inHafPeriode").value.trim();
+      var mur = document.getElementById("inHafMurojaah").value.trim();
+      var aktRaw = document.getElementById("inHafKeaktifan").value.trim();
 
       if (!tgl) {
-        Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih tanggal setoran.', confirmButtonColor: '#065f46' });
+        Swal.fire({ icon: 'warning', title: 'Tanggal Kosong', text: 'Silakan pilih tanggal rekap.', confirmButtonColor: '#065f46' });
         return;
       }
-      if (!juzRaw || isNaN(juzNum) || juzNum < 1 || juzNum > 30) {
-        Swal.fire({ icon: 'warning', title: 'Juz Tidak Valid', text: 'Kolom Juz harus angka bulat 1 sampai 30.', confirmButtonColor: '#065f46' });
-        return;
-      }
-      if (!halRaw || isNaN(halNum) || halNum < 1 || halNum > maxHal) {
-        Swal.fire({ icon: 'warning', title: 'Halaman Tidak Valid', text: 'Halaman untuk Juz ' + juzNum + ' harus angka bulat 1 sampai ' + maxHal + '.', confirmButtonColor: '#065f46' });
-        return;
-      }
-      if (!surat) {
-        Swal.fire({ icon: 'warning', title: 'Nama Surat Kosong', text: 'Silakan isi Nama Surat terlebih dahulu.', confirmButtonColor: '#065f46' });
-        return;
+      if (aktRaw !== "") {
+        var aktNum = parseInt(aktRaw, 10);
+        if (isNaN(aktNum) || aktNum < 0 || aktNum > 30) {
+          Swal.fire({ icon: 'warning', title: 'Keaktifan Tidak Valid', text: 'Keaktifan harus angka bulat 0 sampai 30.', confirmButtonColor: '#065f46' });
+          return;
+        }
       }
 
       var payload = {
@@ -2316,14 +2700,45 @@
         pin: pinAktif,
         nis: santriAktif.nis,
         nama: santriAktif.nama,
+        isKhatam: isKhatam,
         tanggal: tgl,
-        juz: juzNum,
-        surat: surat,
-        halaman: halNum,
-        ayat: document.getElementById("inHafAyat").value.trim(),
+        periode: periode,
+        murojaah: mur,
+        keaktifan: aktRaw,
         kualitas: document.getElementById("inHafKualitas").value.trim() || "Baik",
         catatan: document.getElementById("inHafCatatan").value.trim()
       };
+
+      if (isKhatam) {
+        if (!mur && aktRaw === "") {
+          Swal.fire({ icon: 'warning', title: 'Data Masih Kosong', text: 'Minimal isi Murojaah atau Keaktifan pekan ini untuk santri Khatam 30 Juz.', confirmButtonColor: '#065f46' });
+          return;
+        }
+      } else {
+        var juzRaw = String(document.getElementById("inHafJuz").value || "").trim();
+        var halRaw = String(document.getElementById("inHafHal").value || "").trim();
+        var surat = document.getElementById("inHafSurat").value.trim();
+        var juzNum = parseInt(juzRaw, 10);
+        var halNum = parseInt(halRaw, 10);
+        var maxHal = getMaxHalamanJuz(juzNum);
+
+        if (!juzRaw || isNaN(juzNum) || juzNum < 1 || juzNum > 30) {
+          Swal.fire({ icon: 'warning', title: 'Juz Tidak Valid', text: 'Kolom Juz harus angka bulat 1 sampai 30.', confirmButtonColor: '#065f46' });
+          return;
+        }
+        if (!halRaw || isNaN(halNum) || halNum < 1 || halNum > maxHal) {
+          Swal.fire({ icon: 'warning', title: 'Halaman Tidak Valid', text: 'Halaman untuk Juz ' + juzNum + ' harus angka bulat 1 sampai ' + maxHal + '.', confirmButtonColor: '#065f46' });
+          return;
+        }
+        if (!surat) {
+          Swal.fire({ icon: 'warning', title: 'Nama Surat Kosong', text: 'Silakan isi Nama Surat terlebih dahulu.', confirmButtonColor: '#065f46' });
+          return;
+        }
+        payload.juz = juzNum;
+        payload.surat = surat;
+        payload.halaman = halNum;
+        payload.ayat = document.getElementById("inHafAyat").value.trim();
+      }
 
       var btn = document.getElementById("btnSimpanHafalan");
       btn.disabled = true;
@@ -2345,7 +2760,7 @@
           santriAktif = semuaSantri.find(function(x) { return x.nis === nisTarget; }) || null;
           isiKontenModalAktif();
           pindahModalTab("rapor");
-          Swal.fire({ icon: 'success', title: 'Setoran Tersimpan!', text: 'Grafik dan Rapor PDF sudah diperbarui.', timer: 1800, showConfirmButton: false });
+          Swal.fire({ icon: 'success', title: 'Setoran Tersimpan!', text: 'Grafik, Rapor PDF & pesan WA sudah diperbarui.', timer: 1800, showConfirmButton: false });
         });
       }).catch(function() {
         btn.disabled = false;
@@ -2565,7 +2980,7 @@
       return { bg: [226, 232, 240], text: [51, 65, 85] };
     }
 
-    // --- GENERATOR PDF RAPOR 1 LEMBAR A4 (604 HALAMAN + LINK GITHUB PERMANEN) ---
+    // --- GENERATOR PDF RAPOR 1 LEMBAR A4 (604 HAL + MUROJAAH + KEAKTIFAN + MUSHAF) ---
     function unduhPdfSantriAktif() {
       if (!santriAktif) return;
       if (!window.jspdf || !window.jspdf.jsPDF) {
@@ -2587,188 +3002,230 @@
       var totalHal = st.totalHalaman || 0;
       var persen = typeof st.persenKhatam === "number" ? st.persenKhatam : Math.round((totalHal / TOTAL_HALAMAN_QURAN) * 1000) / 10;
 
-      // 1. KOP KAMAR
+      // 1. KOP KAMAR (Y: 10..33mm)
       doc.setFillColor(6, 95, 70);
-      doc.roundedRect(14, 10, 182, 24, 3, 3, 'F');
+      doc.roundedRect(14, 10, 182, 23, 3, 3, 'F');
       doc.setFillColor(217, 119, 6);
-      doc.rect(14, 32.6, 182, 1.4, 'F');
+      doc.rect(14, 31.6, 182, 1.4, 'F');
 
       doc.setTextColor(255, 255, 255);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(13);
-      doc.text("KAMAR MAQOMIN AMIN 09", 105, 17.5, { align: "center" });
+      doc.setFontSize(12.8);
+      doc.text("KAMAR MAQOMIN AMIN 09", 105, 17, { align: "center" });
 
       doc.setTextColor(209, 250, 229);
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.3);
-      doc.text("PP MADRASATUL QUR'AN TEBUIRENG  |  JOMBANG", 105, 22.8, { align: "center" });
+      doc.setFontSize(8.2);
+      doc.text("PP MADRASATUL QUR'AN TEBUIRENG  |  JOMBANG", 105, 22.1, { align: "center" });
 
       doc.setTextColor(254, 243, 199);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(9.2);
-      doc.text("LAPORAN PERKEMBANGAN HAFALAN AL-QUR'AN MINGGUAN", 105, 29, { align: "center" });
+      doc.setFontSize(9);
+      doc.text("LAPORAN PERKEMBANGAN HAFALAN & MUROJAAH AL-QUR'AN MINGGUAN", 105, 28.2, { align: "center" });
 
-      // 2. IDENTITAS SANTRI & DATA INDUK HAFALAN
+      // 2. IDENTITAS SANTRI & DATA INDUK HAFALAN (Y: 36..75mm)
       doc.setFillColor(248, 250, 252);
       doc.setDrawColor(203, 213, 225);
       doc.setLineWidth(0.35);
-      doc.roundedRect(14, 38, 100, 40, 2.5, 2.5, 'FD');
+      doc.roundedRect(14, 36, 100, 39, 2.5, 2.5, 'FD');
 
       doc.setTextColor(6, 95, 70);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8);
-      doc.text("IDENTITAS SANTRI", 18, 43.5);
-      doc.line(18, 45.2, 110, 45.2);
+      doc.setFontSize(7.9);
+      doc.text("IDENTITAS SANTRI", 18, 41.2);
+      doc.line(18, 42.8, 110, 42.8);
 
       doc.setTextColor(15, 23, 42);
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.3);
-      doc.text("Nama", 18, 50.8);
+      doc.setFontSize(8.2);
+      doc.text("Nama", 18, 48.2);
       doc.setFont("helvetica", "bold");
-      tulisTeksPasLebar(doc, ": " + namaPdf, 36, 50.8, 74, 8.3, 6.4);
+      tulisTeksPasLebar(doc, ": " + namaPdf, 36, 48.2, 74, 8.2, 6.4);
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.3);
-      doc.text("NIS / Kelas", 18, 56.6);
+      doc.setFontSize(8.2);
+      doc.text("NIS / Kelas", 18, 53.8);
       doc.setFont("helvetica", "bold");
-      tulisTeksPasLebar(doc, ": " + santriAktif.nis + "  |  " + kelasPdf, 36, 56.6, 74, 8.3, 6.4);
+      tulisTeksPasLebar(doc, ": " + santriAktif.nis + "  |  " + kelasPdf, 36, 53.8, 74, 8.2, 6.4);
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.3);
-      doc.text("Ayah", 18, 62.4);
-      tulisTeksPasLebar(doc, ": " + ayahPdf, 36, 62.4, 74, 8.3, 6.4);
+      doc.setFontSize(8.2);
+      doc.text("Ayah", 18, 59.4);
+      tulisTeksPasLebar(doc, ": " + ayahPdf, 36, 59.4, 74, 8.2, 6.4);
 
-      doc.setFontSize(8.3);
-      doc.text("Ibu", 18, 68.2);
-      tulisTeksPasLebar(doc, ": " + ibuPdf, 36, 68.2, 74, 8.3, 6.4);
+      doc.setFontSize(8.2);
+      doc.text("Ibu", 18, 65);
+      tulisTeksPasLebar(doc, ": " + ibuPdf, 36, 65, 74, 8.2, 6.4);
 
       doc.setTextColor(71, 85, 105);
-      doc.setFontSize(7.8);
-      doc.text("Tgl Cetak", 18, 74);
-      tulisTeksPasLebar(doc, ": " + tglCetakPdf, 36, 74, 74, 7.8, 6.4);
+      doc.setFontSize(7.7);
+      doc.text("Tgl Cetak", 18, 70.6);
+      tulisTeksPasLebar(doc, ": " + tglCetakPdf, 36, 70.6, 74, 7.7, 6.4);
 
+      // Kotak Kanan: Total Hafalan Riil + Progres 604 Halaman
       if (st.isKhatam) { doc.setFillColor(255, 251, 235); doc.setDrawColor(217, 119, 6); }
       else { doc.setFillColor(240, 253, 250); doc.setDrawColor(13, 148, 136); }
       doc.setLineWidth(0.5);
-      doc.roundedRect(118, 38, 78, 40, 2.5, 2.5, 'FD');
+      doc.roundedRect(118, 36, 78, 39, 2.5, 2.5, 'FD');
 
       doc.setTextColor(st.isKhatam ? 146 : 15, st.isKhatam ? 64 : 118, st.isKhatam ? 14 : 110);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(7.5);
-      doc.text("TOTAL HAFALAN RIIL SAAT INI", 157, 43.2, { align: "center" });
+      doc.setFontSize(7.4);
+      doc.text("TOTAL HAFALAN RIIL SAAT INI", 157, 41, { align: "center" });
 
       doc.setTextColor(st.isKhatam ? 180 : 6, st.isKhatam ? 83 : 95, st.isKhatam ? 9 : 70);
-      tulisTeksPasLebar(doc, st.totalLabel, 157, 50.5, 72, 13.8, 9.8, { align: "center" });
+      tulisTeksPasLebar(doc, st.totalLabel, 157, 48, 72, 13.5, 9.6, { align: "center" });
 
       doc.setFillColor(226, 232, 240);
-      doc.roundedRect(124, 52.8, 66, 2.2, 1, 1, 'F');
+      doc.roundedRect(124, 50.2, 66, 2.1, 1, 1, 'F');
       var fillW = Math.max(2, (Math.min(Math.max(persen, 0), 100) / 100) * 66);
       if (st.isKhatam) doc.setFillColor(217, 119, 6);
       else doc.setFillColor(13, 148, 136);
-      doc.roundedRect(124, 52.8, fillW, 2.2, 1, 1, 'F');
+      doc.roundedRect(124, 50.2, fillW, 2.1, 1, 1, 'F');
 
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(6.9);
+      doc.setFontSize(6.8);
       doc.setTextColor(71, 85, 105);
-      doc.text(persen + "% menuju 30 Juz (" + totalHal + "/" + TOTAL_HALAMAN_QURAN + " hal)", 157, 58.2, { align: "center" });
+      doc.text(persen + "% menuju 30 Juz (" + totalHal + "/" + TOTAL_HALAMAN_QURAN + " hal)", 157, 55.4, { align: "center" });
 
       var badgeCol = getWarnaBadgePdf(st.statusTren);
       doc.setFillColor(badgeCol.bg[0], badgeCol.bg[1], badgeCol.bg[2]);
-      doc.roundedRect(122, 60.2, 70, 5.8, 2.6, 2.6, 'F');
+      doc.roundedRect(122, 57.3, 70, 5.5, 2.5, 2.5, 'F');
       doc.setTextColor(badgeCol.text[0], badgeCol.text[1], badgeCol.text[2]);
       doc.setFont("helvetica", "bold");
-      tulisTeksPasLebar(doc, st.teksTren, 157, 64.1, 66, 7.2, 5.9, { align: "center" });
+      tulisTeksPasLebar(doc, st.teksTren, 157, 61, 66, 7.1, 5.8, { align: "center" });
 
       doc.setFont("helvetica", "normal");
       doc.setTextColor(51, 65, 85);
-      tulisTeksPasLebar(doc, (st.isKhatam ? "Capaian: " : "Juz Belakang: ") + bersihkanTeksPdf(st.hafalanBelakangLabel), 157, 70.5, 72, 7.5, 6.2, { align: "center" });
-      tulisTeksPasLebar(doc, (st.isKhatam ? "Fokus: " : "Posisi Terakhir: ") + bersihkanTeksPdf(st.posisiTerakhirLabel), 157, 75.2, 72, 7.5, 6.2, { align: "center" });
+      tulisTeksPasLebar(doc, (st.isKhatam ? "Capaian: " : "Juz Belakang: ") + bersihkanTeksPdf(st.hafalanBelakangLabel), 157, 67.4, 72, 7.4, 6.1, { align: "center" });
+      tulisTeksPasLebar(doc, (st.isKhatam ? "Fokus: " : "Posisi Terakhir: ") + bersihkanTeksPdf(st.posisiTerakhirLabel), 157, 72, 72, 7.4, 6.1, { align: "center" });
 
-      // 3. GRAFIK MINGGUAN
+      // 3. STRIP MUROJAAH, KEAKTIFAN & HALAMAN MUSHAF (Y: 77.5..88.5mm)
+      doc.setFillColor(255, 251, 235);
+      doc.setDrawColor(252, 211, 77);
+      doc.setLineWidth(0.35);
+      doc.roundedRect(14, 77.5, 182, 11, 2.2, 2.2, 'FD');
+
+      var murPdf = (st.murojaahTerakhir && st.murojaahTerakhir !== "-") ? (bersihkanTeksPdf(st.murojaahTerakhir) + " Juz") : "-";
+      var aktPdf = (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") ? (bersihkanTeksPdf(st.keaktifanTerakhir) + "x Setoran") : "-";
+      var perPdf = (st.periodeTerakhir && st.periodeTerakhir !== "-") ? bersihkanTeksPdf(st.periodeTerakhir) : tglCetakPdf;
+      var mushafPdf = st.halamanMushaf ? ("Hal. " + st.halamanMushaf + " / " + TOTAL_HALAMAN_QURAN) : "-";
+
+      // 4 kolom merata dalam strip 182mm (tiap kolom ~45.5mm)
+      var colsStrip = [
+        { lbl: "PERIODE REKAP", val: perPdf, x: 36.75 },
+        { lbl: "MUROJAAH PEKAN INI", val: murPdf, x: 82.25 },
+        { lbl: "KEAKTIFAN SETORAN", val: aktPdf, x: 127.75 },
+        { lbl: "HALAMAN MUSHAF", val: mushafPdf, x: 173.25 }
+      ];
+      for (var c = 0; c < colsStrip.length; c++) {
+        if (c > 0) {
+          doc.setDrawColor(253, 230, 138);
+          doc.line(14 + (c * 45.5), 79.3, 14 + (c * 45.5), 86.7);
+        }
+        doc.setTextColor(146, 64, 14);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(6.3);
+        doc.text(colsStrip[c].lbl, colsStrip[c].x, 81.4, { align: "center" });
+
+        doc.setTextColor(15, 23, 42);
+        doc.setFont("helvetica", "bold");
+        tulisTeksPasLebar(doc, colsStrip[c].val, colsStrip[c].x, 86.2, 42, 8.2, 6.2, { align: "center" });
+      }
+
+      // 4. GRAFIK MINGGUAN (Y: 93..138.5mm)
       doc.setTextColor(15, 118, 110);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8.3);
-      doc.text(st.isKhatam ? "ARSIP GRAFIK PERKEMBANGAN MENUJU KHATAM" : "GRAFIK PERKEMBANGAN MINGGUAN (HALAMAN / PEKAN)", 14, 83.6);
+      doc.setFontSize(8.1);
+      doc.text(st.isKhatam ? "ARSIP GRAFIK PERKEMBANGAN MENUJU KHATAM" : "GRAFIK PERKEMBANGAN ZIYADAH MINGGUAN (HALAMAN / PEKAN)", 14, 93.4);
 
       if (Array.isArray(st.chartData) && st.chartData.length > 0) {
         var avgK = Number(st.rataRataKamar || (ringkasanKamar && ringkasanKamar.rataRataKamar) || 0);
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(7);
+        doc.setFontSize(6.9);
         doc.setTextColor(13, 148, 136);
-        doc.text("Hijau: Naik", 136, 83.6);
+        doc.text("Hijau: Naik", 136, 93.4);
         doc.setTextColor(190, 18, 60);
-        doc.text("Merah: 0", 156, 83.6);
+        doc.text("Merah: 0", 156, 93.4);
         if (avgK > 0) {
           doc.setTextColor(180, 83, 9);
-          doc.text("-- Rata2 Kamar (" + avgK + ")", 196, 83.6, { align: "right" });
+          doc.text("-- Rata2 Kamar (" + avgK + ")", 196, 93.4, { align: "right" });
         }
       }
 
       doc.setDrawColor(204, 251, 241);
       doc.setFillColor(255, 255, 255);
       doc.setLineWidth(0.45);
-      doc.roundedRect(14, 85.4, 182, 48, 2.5, 2.5, 'FD');
+      doc.roundedRect(14, 95, 182, 43.5, 2.5, 2.5, 'FD');
 
       var imgGrafik = buatGambarGrafikUntukPdf(st);
       if (imgGrafik) {
-        doc.addImage(imgGrafik, 'PNG', 16, 86.8, 178, 45);
+        doc.addImage(imgGrafik, 'PNG', 16, 96.2, 178, 41);
       } else if (st.isKhatam) {
         doc.setFillColor(255, 251, 235);
-        doc.roundedRect(16, 87.5, 178, 43.5, 2, 2, 'F');
+        doc.roundedRect(16, 97, 178, 39.5, 2, 2, 'F');
         doc.setTextColor(146, 64, 14);
         doc.setFont("helvetica", "bold");
-        doc.setFontSize(11);
-        doc.text("MasyaAllah, Barakallahu Fiikum", 105, 105.5, { align: "center" });
+        doc.setFontSize(10.8);
+        doc.text("MasyaAllah, Barakallahu Fiikum", 105, 113.5, { align: "center" });
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(8.6);
-        doc.text("Ananda telah menyelesaikan hafalan 30 Juz Al-Qur'an dan kini fokus pada program murojaah.", 105, 113.5, { align: "center" });
+        doc.setFontSize(8.4);
+        doc.text("Ananda telah menyelesaikan hafalan 30 Juz Al-Qur'an dan kini fokus pada program murojaah rutin.", 105, 121.2, { align: "center" });
       } else {
         doc.setTextColor(100, 116, 139);
         doc.setFont("helvetica", "normal");
-        doc.setFontSize(8.5);
-        doc.text("Grafik perkembangan mingguan akan tampil otomatis mulai pendataan pekan ke-2.", 105, 110, { align: "center" });
+        doc.setFontSize(8.4);
+        doc.text("Grafik perkembangan mingguan akan tampil otomatis mulai pendataan pekan ke-2.", 105, 117.5, { align: "center" });
       }
 
-      // 4. TABEL RIWAYAT (MAKS 8 PEKAN)
+      // 5. TABEL RIWAYAT (MAKS 8 PEKAN, 9 KOLOM = 182mm PAS)
       doc.setTextColor(15, 118, 110);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8.3);
+      doc.setFontSize(8.1);
       var riwayat = santriAktif.riwayatTerbaru || [];
       doc.text(santriAktif.totalBarisRiwayat > 8
-        ? "RIWAYAT PENDATAAN HAFALAN (8 PEKAN TERBARU DARI " + santriAktif.totalBarisRiwayat + " CATATAN)"
-        : "RIWAYAT PENDATAAN HAFALAN", 14, 139.8);
+        ? "RIWAYAT PENDATAAN HAFALAN & MUROJAAH (8 PEKAN TERBARU DARI " + santriAktif.totalBarisRiwayat + " CATATAN)"
+        : "RIWAYAT PENDATAAN HAFALAN & MUROJAAH", 14, 144.2);
 
       var bodyRows = [];
       if (riwayat.length > 0) {
         for (var r = 0; r < riwayat.length; r++) {
           var row = riwayat[r];
+          var murRow = (row.murojaah && row.murojaah !== "-") ? (bersihkanTeksPdf(row.murojaah) + " Juz") : "-";
+          var aktRow = (row.keaktifan && row.keaktifan !== "-") ? (bersihkanTeksPdf(row.keaktifan) + "x") : "-";
           bodyRows.push([
-            bersihkanTeksPdf(row.tgl), bersihkanTeksPdf(row.juz), potongTeks(row.surat, 20),
-            bersihkanTeksPdf(row.hal), potongTeks(row.ayat, 10), potongTeks(row.kualitas, 15),
-            potongTeks(row.catatan, 46)
+            bersihkanTeksPdf(row.tgl),
+            bersihkanTeksPdf(row.juz),
+            potongTeks(row.surat, 17),
+            bersihkanTeksPdf(row.hal),
+            potongTeks(row.ayat, 8),
+            potongTeks(row.kualitas, 12),
+            potongTeks(murRow, 11),
+            aktRow,
+            potongTeks(row.catatan, 40)
           ]);
         }
       } else if (st.isKhatam) {
-        bodyRows.push([{ content: "Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada program murojaah.", colSpan: 7, styles: { halign: 'center', fontStyle: 'bold', textColor: [6, 95, 70] } }]);
+        bodyRows.push([{ content: "Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada program murojaah.", colSpan: 9, styles: { halign: 'center', fontStyle: 'bold', textColor: [6, 95, 70] } }]);
       } else {
-        bodyRows.push([{ content: "Belum ada riwayat setoran hafalan yang tercatat.", colSpan: 7, styles: { halign: 'center', textColor: [100, 116, 139] } }]);
+        bodyRows.push([{ content: "Belum ada riwayat setoran hafalan yang tercatat.", colSpan: 9, styles: { halign: 'center', textColor: [100, 116, 139] } }]);
       }
 
       var lastRowIdx = riwayat.length - 1;
       doc.autoTable({
-        startY: 141.8, margin: { left: 14, right: 14 },
-        head: [['Tanggal', 'Juz', 'Surat', 'Hal', 'Ayat', 'Kualitas', 'Catatan']],
+        startY: 146, margin: { left: 14, right: 14 },
+        head: [['Tanggal', 'Juz', 'Surat', 'Hal', 'Ayat', 'Kualitas', 'Murojaah', 'Aktif', 'Catatan']],
         body: bodyRows, theme: 'grid',
         styles: {
-          font: 'helvetica', fontSize: 7.7, cellPadding: 1.9, halign: 'center', valign: 'middle',
+          font: 'helvetica', fontSize: 7.3, cellPadding: 1.7, halign: 'center', valign: 'middle',
           overflow: 'ellipsize', lineColor: [226, 232, 240], lineWidth: 0.25, textColor: [15, 23, 42]
         },
-        headStyles: { fillColor: [15, 118, 110], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.7 },
+        headStyles: { fillColor: [15, 118, 110], textColor: [255, 255, 255], fontStyle: 'bold', fontSize: 7.2 },
         alternateRowStyles: { fillColor: [240, 253, 250] },
         columnStyles: {
-          0: { cellWidth: 21 }, 1: { cellWidth: 11 }, 2: { cellWidth: 30 },
-          3: { cellWidth: 11 }, 4: { cellWidth: 16 }, 5: { cellWidth: 24 },
-          6: { cellWidth: 69, halign: 'left' }
+          0: { cellWidth: 19 }, 1: { cellWidth: 11 }, 2: { cellWidth: 25 },
+          3: { cellWidth: 9 },  4: { cellWidth: 13 }, 5: { cellWidth: 18 },
+          6: { cellWidth: 18 }, 7: { cellWidth: 11 }, 8: { cellWidth: 58, halign: 'left' }
         },
         didParseCell: function(data) {
           if (data.section === 'body' && lastRowIdx >= 0 && data.row.index === lastRowIdx) {
@@ -2779,9 +3236,9 @@
         pageBreak: 'avoid'
       });
 
-      // 5. KOTAK EVALUASI PEMBINA
+      // 6. KOTAK EVALUASI PEMBINA (DINAMIS ANTI-OVERLAP)
       var finalY = (doc.lastAutoTable && doc.lastAutoTable.finalY) ? doc.lastAutoTable.finalY : 206;
-      var evalStartY = finalY + 5.5;
+      var evalStartY = finalY + 5;
       var sisaRuang = 281 - evalStartY;
 
       var isiEvaluasi = evalTeks || (st.isKhatam
@@ -2789,14 +3246,14 @@
         : "Mohon doa dan dukungan semangat dari Bapak/Ibu wali santri agar ananda senantiasa istiqamah dalam menambah serta menjaga kelancaran hafalan Al-Qur'an.");
 
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.7);
+      doc.setFontSize(8.5);
       var linesEval = doc.splitTextToSize(isiEvaluasi, 171);
-      var maxBaris = Math.max(2, Math.floor((sisaRuang - 13) / 4.4));
+      var maxBaris = Math.max(2, Math.floor((sisaRuang - 12.5) / 4.2));
       if (linesEval.length > maxBaris) {
         linesEval = linesEval.slice(0, maxBaris);
         linesEval[maxBaris - 1] = linesEval[maxBaris - 1].slice(0, -3) + "...";
       }
-      var evalBoxH = Math.min(sisaRuang, Math.max(24, 13 + (linesEval.length * 4.4)));
+      var evalBoxH = Math.min(sisaRuang, Math.max(22, 12.5 + (linesEval.length * 4.2)));
 
       doc.setFillColor(240, 253, 244);
       doc.setDrawColor(134, 239, 172);
@@ -2808,15 +3265,15 @@
 
       doc.setTextColor(6, 95, 70);
       doc.setFont("helvetica", "bold");
-      doc.setFontSize(8.1);
-      doc.text("CATATAN EVALUASI PEMBINA KAMAR", 19.5, evalStartY + 6.4);
+      doc.setFontSize(8);
+      doc.text("CATATAN EVALUASI PEMBINA KAMAR", 19.5, evalStartY + 6);
 
       doc.setTextColor(15, 23, 42);
       doc.setFont("helvetica", "normal");
-      doc.setFontSize(8.7);
-      doc.text(linesEval, 19.5, evalStartY + 12);
+      doc.setFontSize(8.5);
+      doc.text(linesEval, 19.5, evalStartY + 11.4);
 
-      // 6. FOOTER
+      // 7. FOOTER
       doc.setDrawColor(226, 232, 240);
       doc.setLineWidth(0.3);
       doc.line(14, 284.5, 196, 284.5);
@@ -2839,7 +3296,7 @@
       });
     }
 
-    // --- KIRIM WHATSAPP PERSONAL ---
+    // --- KIRIM WHATSAPP GABUNGAN (ZIYADAH + MUROJAAH + KEAKTIFAN + JADWAL TELEPON JUM'AT + PDF) ---
     function kirimWaSantriAktif(target) {
       if (!santriAktif) return;
       var ortu = santriAktif.ortu || {};
@@ -2859,34 +3316,41 @@
         ? ("Yth. " + panggilan + " *" + namaOrtu + "*, Wali Santri dari *" + santriAktif.nama + "*,")
         : ("Yth. " + panggilan + " Wali Santri dari *" + santriAktif.nama + "*,");
 
-      var kalimatPembuka = st.isKhatam
-        ? "Berikut kami sampaikan laporan capaian hafalan Al-Qur'an ananda:"
-        : "Berikut kami sampaikan laporan perkembangan hafalan Al-Qur'an ananda pekan ini:";
-
-      var barisPosisi = st.isKhatam
-        ? "📍 *Fokus Saat Ini:* " + (st.posisiTerakhirLabel || "Tahap Murojaah")
-        : "📍 *Posisi Terakhir:* " + (st.posisiTerakhirLabel || "-");
-
-      var ikonTren = "📈";
-      if (st.statusTren === "khatam") ikonTren = "🏆";
-      else if (st.statusTren === "kosong" || st.statusTren === "turun") ikonTren = "📊";
-
+      var periodeTeks = (st.periodeTerakhir && st.periodeTerakhir !== "-") ? st.periodeTerakhir : "";
+      var murojaahTeks = (st.murojaahTerakhir && st.murojaahTerakhir !== "-") ? st.murojaahTerakhir : "";
+      var keaktifanTeks = (st.keaktifanTerakhir && st.keaktifanTerakhir !== "-") ? st.keaktifanTerakhir : "";
       var evalTeks = String(document.getElementById("inputEvaluasi").value || "").trim();
 
       var pesan = "*Assalamu’alaikum Warahmatullahi Wabarakatuh.*\n\n" +
         sapaanLengkap + "\n" +
         "Semoga " + panggilan + " sekeluarga senantiasa dalam lindungan, kesehatan, dan keberkahan Allah SWT.\n\n" +
-        kalimatPembuka + "\n\n" +
-        "📖 *Total Hafalan Riil:* " + (st.totalLabel || "-") + " (" + persen + "% menuju 30 Juz)\n" +
-        barisPosisi + "\n" +
-        ikonTren + " *Perkembangan:* " + (st.teksTren || "-") + "\n";
+        "Berikut kami sampaikan laporan perkembangan hafalan & murojaah Al-Qur'an ananda" +
+        (periodeTeks ? (" periode *" + periodeTeks + "*") : " pekan ini") + ":\n\n";
 
+      if (st.isKhatam) {
+        pesan += "🏆 *Capaian Hafalan:* 30 Juz (Khatam)\n" +
+          "📍 *Fokus Saat Ini:* Program Murojaah 30 Juz\n";
+      } else {
+        var mushafSuffix = st.halamanMushaf ? (" (Hal. Mushaf " + st.halamanMushaf + "/604)") : "";
+        var ikonTren = (st.statusTren === "kosong" || st.statusTren === "turun") ? "📊" : "📈";
+        pesan += "📖 *Total Hafalan Riil:* " + (st.totalLabel || "-") + " (" + persen + "% menuju 30 Juz)\n" +
+          "📍 *Posisi Terakhir:* " + (st.posisiTerakhirLabel || "-") + mushafSuffix + "\n" +
+          ikonTren + " *Perkembangan Ziyadah:* " + (st.teksTren || "-") + "\n";
+      }
+
+      if (murojaahTeks) {
+        pesan += "🔁 *Murojaah Pekan Ini:* " + murojaahTeks + " Juz\n";
+      }
+      if (keaktifanTeks) {
+        pesan += "✅ *Keaktifan Setoran:* " + keaktifanTeks + " kali setoran\n";
+      }
       if (evalTeks) {
         pesan += "📝 *Evaluasi Pembina:* " + evalTeks + "\n";
       }
 
-      pesan += "\nUntuk melihat *grafik perkembangan* beserta *riwayat rincinya*, silakan " + panggilan + " membuka *file rapor PDF* yang kami lampirkan pada pesan ini.\n\n" +
-        "Atas perhatian dan dukungan doa " + panggilan + " untuk putra tercinta, kami haturkan jazakumullah khairan katsiran.\n" +
+      pesan += "\n📞 *Mohon dukungan semangatnya:* Karena setiap hari Jum'at adalah jadwal telepon, mohon " + panggilan + " berkenan menyapa serta memotivasi ananda melalui telepon/video call agar senantiasa bersemangat dan istiqamah dalam menghafal serta memurojaah Al-Qur'an.\n\n" +
+        "📄 Untuk melihat *grafik perkembangan* beserta *riwayat lengkapnya*, silakan " + panggilan + " membuka *file rapor PDF* yang kami lampirkan pada pesan ini.\n\n" +
+        "Atas perhatian dan doa " + panggilan + " untuk putra tercinta, kami haturkan jazakumullah khairan katsiran.\n" +
         "*Wassalamu’alaikum Warahmatullahi Wabarakatuh.*\n\n" +
         "*Pengurus Kamar Maqomin Amin 09*";
 
