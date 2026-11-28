@@ -59,6 +59,7 @@
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
     }
+    button, input, select { font-family: inherit; }
     body.app-mode { padding-bottom: 96px; }
 
     @keyframes fadeUp {
@@ -93,7 +94,7 @@
       background: #fef3c7;
       color: #92400e;
       border-bottom: 1px solid #fde68a;
-      padding: 0.65rem 1rem;
+      padding: calc(0.65rem + env(safe-area-inset-top)) 1rem 0.65rem;
       font-size: 0.8rem;
       font-weight: 700;
       text-align: center;
@@ -114,7 +115,6 @@
       border: none;
       background: transparent;
       color: white;
-      font-family: inherit;
       font-weight: 800;
       font-size: 0.78rem;
       padding: 0.36rem 0.6rem;
@@ -140,7 +140,7 @@
         radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.25), transparent 45%),
         radial-gradient(circle at 85% 15%, rgba(253, 230, 138, 0.16), transparent 40%),
         linear-gradient(145deg, #064e3b 0%, #047857 58%, #0d9488 100%);
-      color: white; padding: 1.25rem 1.25rem 3.4rem; text-align: center;
+      color: white; padding: calc(1.25rem + env(safe-area-inset-top)) 1.25rem 3.4rem; text-align: center;
       border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
       box-shadow: var(--shadow-md);
     }
@@ -249,7 +249,7 @@
     }
     .btn-primary-full:disabled { opacity: 0.65; cursor: not-allowed; }
 
-    /* INGAT NIS OTOMATIS (PINTASAN 1-KLIK) */
+    /* INGAT NIS OTOMATIS (PINTASAN 1-KLIK LOKAL DI HP WALI) */
     .recent-nis-wrap {
       display: none;
       margin-top: 1rem;
@@ -365,7 +365,8 @@
        LAYAR 2: MODE PUBLIK (KEUANGAN & INVENTARIS)
        ============================================================ */
     #public-standalone-screen {
-      display: none; width: 100%; max-width: 980px; margin: 0 auto; padding: 1rem 1rem 3rem;
+      display: none; width: 100%; max-width: 980px; margin: 0 auto;
+      padding: calc(1rem + env(safe-area-inset-top)) 1rem 3rem;
     }
     .btn-back-pill {
       display: inline-flex; align-items: center; gap: 8px; margin-bottom: 1rem;
@@ -379,8 +380,7 @@
       border-radius: 12px;
       border: 2px solid #cbd5e1;
       background: #f8fafc;
-      font-family: inherit;
-      font-size: 0.92rem;
+      font-size: 1rem;
       font-weight: 600;
       margin-bottom: 11px;
       outline: none;
@@ -395,27 +395,31 @@
     .app-topbar {
       width: 100%;
       background: linear-gradient(135deg, #064e3b 0%, #047857 65%, #0d9488 100%);
-      color: white; padding: 1.05rem 1rem 2.15rem;
+      color: white; padding: calc(1.05rem + env(safe-area-inset-top)) 1rem 2.15rem;
       border-bottom-left-radius: 26px; border-bottom-right-radius: 26px;
       box-shadow: var(--shadow-md);
     }
     .app-topbar-inner {
       width: 100%; max-width: 980px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: space-between;
+      row-gap: 10px; column-gap: 10px; flex-wrap: wrap;
     }
-    .student-chip { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+    .student-chip { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1 1 240px; }
     .mini-avatar {
-      width: 46px; height: 46px; border-radius: 14px; object-fit: cover; object-position: top center;
+      width: 48px; height: 48px; border-radius: 14px; object-fit: cover; object-position: top center;
       border: 2px solid rgba(255,255,255,0.8); background: #e2e8f0; flex-shrink: 0; cursor: pointer;
     }
     .student-chip-text { min-width: 0; flex: 1; }
     .student-chip-name {
-      font-size: 1rem; font-weight: 800; margin: 0; line-height: 1.25;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      font-size: 1.02rem; font-weight: 800; margin: 0; line-height: 1.25;
+      word-break: break-word;
     }
-    .student-chip-meta { font-size: 0.78rem; opacity: 0.92; font-weight: 600; margin-top: 1px; }
+    .student-chip-meta { font-size: 0.78rem; opacity: 0.92; font-weight: 600; margin-top: 2px; line-height: 1.3; }
 
-    .topbar-btns { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
+    .topbar-btns {
+      display: flex; gap: 6px; flex-shrink: 0; align-items: center;
+      margin-left: auto; flex-wrap: wrap; justify-content: flex-end;
+    }
     .btn-ico-top {
       background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.3);
       border-radius: 12px; padding: 0.48rem 0.64rem; font-size: 0.84rem; font-weight: 800;
@@ -507,7 +511,7 @@
     .rekap-banner .block-name { color: #78350f; }
     .btn-help-beda {
       border: 1px solid #6ee7b7; background: white; color: #065f46;
-      border-radius: 99px; padding: 4px 10px; font-family: inherit;
+      border-radius: 99px; padding: 4px 10px;
       font-size: 0.72rem; font-weight: 800; cursor: pointer;
       display: inline-flex; align-items: center; gap: 4px;
     }
@@ -641,20 +645,21 @@
     .rk-status-pill.libur { background: #fef3c7; color: #b45309; border: 1px solid #f59e0b; }
 
     .rk-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
+    html.font-xl .rk-grid { grid-template-columns: minmax(0, 1fr); }
     .rk-box {
       background: white; border: 1px solid #fde68a; border-radius: 14px;
-      padding: 0.85rem 0.9rem; display: flex; align-items: flex-start; gap: 10px;
+      padding: 0.8rem 0.85rem; display: flex; flex-direction: column; align-items: flex-start; gap: 7px;
     }
     .rk-ico {
-      width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; font-size: 1.05rem;
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1rem;
     }
     .rk-ico-tmb { background: #d1fae5; color: #065f46; }
     .rk-ico-mur { background: #ccfbf1; color: #0f766e; }
     .rk-ico-akt { background: #fef3c7; color: #b45309; }
     .rk-ico-hal { background: #e0f2fe; color: #0369a1; }
     .rk-lbl { font-size: 0.71rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.3px; }
-    .rk-val { font-size: 0.98rem; font-weight: 800; color: var(--text); margin-top: 2px; line-height: 1.2; word-break: break-word; }
+    .rk-val { font-size: 0.96rem; font-weight: 800; color: var(--text); margin-top: 2px; line-height: 1.25; word-break: break-word; }
 
     .rk-target-pill {
       display: inline-flex; align-items: center; gap: 4px;
@@ -752,7 +757,7 @@
       display: inline-flex; align-items: center; gap: 5px;
       padding: 5px 11px; border-radius: 99px;
       border: 1.5px solid #cbd5e1; background: #f8fafc; color: #334155;
-      font-family: inherit; font-size: 0.74rem; font-weight: 800; cursor: pointer;
+      font-size: 0.74rem; font-weight: 800; cursor: pointer;
     }
     .btn-view-toggle:hover { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
 
@@ -789,7 +794,7 @@
     .btn-expand-cards {
       width: 100%; margin-top: 4px; padding: 0.65rem; border-radius: 12px;
       border: 1.5px dashed #94a3b8; background: white; color: #334155;
-      font-family: inherit; font-size: 0.8rem; font-weight: 800; cursor: pointer;
+      font-size: 0.8rem; font-weight: 800; cursor: pointer;
     }
     .btn-expand-cards:hover { background: #f8fafc; border-color: #065f46; color: #065f46; }
 
@@ -900,7 +905,7 @@
     .month-filter label { font-size: 0.88rem; font-weight: 800; color: #065f46; }
     .month-filter select {
       padding: 0.8rem; border-radius: 10px; border: 2px solid #86efac;
-      font-family: inherit; font-weight: 700; font-size: 0.96rem; background: white; outline: none; width: 100%;
+      font-weight: 700; font-size: 0.96rem; background: white; outline: none; width: 100%;
     }
 
     .swipe-tip {
@@ -939,6 +944,8 @@
       .bento-grid-haf { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); align-items: stretch; }
       .konsistensi-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .rk-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      html.font-xl .rk-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .rk-box { flex-direction: row; gap: 10px; padding: 0.85rem 0.9rem; }
       .bm-pill { flex-direction: row; align-items: center; justify-content: space-between; }
       .profile-layout { flex-direction: row; align-items: flex-start; }
       .info-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -1017,7 +1024,7 @@
           <i class="fa-solid fa-magnifying-glass"></i> Lihat Data Santri
         </button>
 
-        <!-- PINTASAN NIS TERAKHIR (INGAT NIS OTOMATIS DI HP WALI) -->
+        <!-- PINTASAN NIS TERAKHIR (INGAT NIS OTOMATIS LOKAL DI HP WALI) -->
         <div id="recentNisWrap" class="recent-nis-wrap">
           <div class="recent-nis-title"><i class="fa-solid fa-clock-rotate-left"></i> Lanjutkan Pantau (1-Klik)</div>
           <div id="recentNisList" class="recent-nis-list"></div>
@@ -1504,9 +1511,12 @@
     var currentHafalanStats = null;
     var chartInstance = null;
     var cacheKeuangan = null;
+    var cacheDaftarBulan = null;
     var cacheInventaris = null;
     var activeRequestId = 0;
     var activePhotoToken = 0;
+    var photoTimeoutId = null;
+    var progressTimer = null;
     var deferredPwaPrompt = null;
     var fontLevel = 0; // 0 = Normal, 1 = Besar, 2 = Ekstra
 
@@ -1522,10 +1532,14 @@
       "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=256&output=png",
       "https://cdn-icons-png.flaticon.com/512/8251/8251508.png"
     ];
-    var logoStep = 0;
     function fallbackLogo(el) {
-      if (logoStep < LOGO_FALLBACKS.length) el.src = LOGO_FALLBACKS[logoStep++];
-      else el.onerror = null;
+      var step = parseInt(el.getAttribute("data-step") || "0", 10);
+      if (step < LOGO_FALLBACKS.length) {
+        el.setAttribute("data-step", String(step + 1));
+        el.src = LOGO_FALLBACKS[step];
+      } else {
+        el.onerror = null;
+      }
     }
 
     var DEFAULT_AVATAR = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
@@ -1552,6 +1566,12 @@
       if (hLbl) hLbl.innerText = fontLevel === 0 ? "Normal" : (fontLevel === 1 ? "Besar" : "Ekstra");
       if (aLbl) aLbl.innerText = fontLevel === 0 ? "N" : (fontLevel === 1 ? "B" : "E");
       try { localStorage.setItem(STORAGE_FONT_LVL, String(fontLevel)); } catch (e) {}
+
+      var paneHaf = document.getElementById("pane-hafalan");
+      var appScr = document.getElementById("app-screen");
+      if (appScr && appScr.style.display === "block" && paneHaf && paneHaf.classList.contains("active") && currentHafalanStats) {
+        setTimeout(function() { renderGrafik(currentHafalanStats); }, 60);
+      }
     }
 
     function ubahUkuranTeks(delta) {
@@ -1572,7 +1592,7 @@
     }
 
     // ============================================================
-    // INGAT NIS OTOMATIS (MAKS. 3 NIS TERAKHIR DI BROWSER HP WALI)
+    // INGAT NIS OTOMATIS (MAKS. 3 NIS TERAKHIR LOKAL DI HP WALI)
     // ============================================================
     function getInisialNama(nama) {
       var kata = String(nama || "S").trim().split(/\s+/).filter(Boolean);
@@ -1591,10 +1611,12 @@
 
     function simpanRecentNis(bio) {
       if (!bio || !bio.nis) return;
-      var list = bacaRecentNis().filter(function(x) { return x.nis !== bio.nis; });
+      var nisStr = String(bio.nis).trim();
+      if (!nisStr) return;
+      var list = bacaRecentNis().filter(function(x) { return String(x.nis || "").trim() !== nisStr; });
       list.unshift({
-        nis: String(bio.nis).trim(),
-        nama: String(bio.nama || ("Santri " + bio.nis)).trim(),
+        nis: nisStr,
+        nama: String(bio.nama || ("Santri " + nisStr)).trim(),
         kelas: String(bio.kelas || "Kamar MA 09").trim()
       });
       list = list.slice(0, 3);
@@ -1604,7 +1626,8 @@
 
     function hapusRecentNis(nis, ev) {
       if (ev) ev.stopPropagation();
-      var list = bacaRecentNis().filter(function(x) { return x.nis !== nis; });
+      var nisStr = String(nis || "").trim();
+      var list = bacaRecentNis().filter(function(x) { return String(x.nis || "").trim() !== nisStr; });
       try { localStorage.setItem(STORAGE_RECENT_NIS, JSON.stringify(list)); } catch (e) {}
       renderRecentNis();
     }
@@ -1621,22 +1644,25 @@
       }
       wrap.style.display = "block";
       box.innerHTML = list.map(function(item) {
-        return '<div class="recent-nis-item" onclick="pilihRecentNis(\'' + escapeHTML(item.nis) + '\')">' +
+        var safeNis = escapeHTML(item.nis || "");
+        return '<div class="recent-nis-item" data-nis="' + safeNis + '" onclick="pilihRecentNis(this.getAttribute(\'data-nis\'))">' +
           '<div class="recent-nis-left">' +
             '<div class="recent-ava">' + escapeHTML(getInisialNama(item.nama)) + '</div>' +
             '<div class="recent-nis-info">' +
               '<div class="recent-nis-name">' + escapeHTML(item.nama) + '</div>' +
-              '<div class="recent-nis-meta">NIS ' + escapeHTML(item.nis) + ' &bull; ' + escapeHTML(item.kelas) + '</div>' +
+              '<div class="recent-nis-meta">NIS ' + safeNis + ' &bull; ' + escapeHTML(item.kelas) + '</div>' +
             '</div>' +
           '</div>' +
-          '<button type="button" class="recent-nis-del" title="Hapus pintasan" onclick="hapusRecentNis(\'' + escapeHTML(item.nis) + '\', event)"><i class="fa-solid fa-xmark"></i></button>' +
+          '<button type="button" class="recent-nis-del" title="Hapus pintasan" data-nis="' + safeNis + '" onclick="hapusRecentNis(this.getAttribute(\'data-nis\'), event)"><i class="fa-solid fa-xmark"></i></button>' +
         '</div>';
       }).join("");
     }
 
     function pilihRecentNis(nis) {
-      document.getElementById("inputNis").value = nis;
-      muatDataSantri(nis);
+      var nisStr = String(nis || "").trim();
+      if (!nisStr) return;
+      document.getElementById("inputNis").value = nisStr;
+      muatDataSantri(nisStr);
     }
 
     // ============================================================
@@ -1816,7 +1842,7 @@
     }
 
     // ============================================================
-    // HELPER UMUM, FORMAT REKAP, FOTO CEPAT & PERBESAR FOTO
+    // HELPER UMUM, FORMAT REKAP, FOTO CEPAT + TIMEOUT & PERBESAR FOTO
     // ============================================================
     function apiGet(params) {
       var q = new URLSearchParams(params).toString();
@@ -1879,6 +1905,8 @@
 
     function muatFoto(urlRaw) {
       var token = ++activePhotoToken;
+      if (photoTimeoutId) { clearTimeout(photoTimeoutId); photoTimeoutId = null; }
+
       var imgMain = document.getElementById("fotoSantri");
       var imgMini = document.getElementById("topAvatar");
       var loader = document.getElementById("fotoLoader");
@@ -1920,6 +1948,8 @@
       var idx = 0;
       function selesai(finalSrc, isValid) {
         if (token !== activePhotoToken) return;
+        if (photoTimeoutId) { clearTimeout(photoTimeoutId); photoTimeoutId = null; }
+        imgMain.onload = null; imgMain.onerror = null;
         loader.style.display = "none";
         imgMain.style.opacity = "1";
         imgMini.src = finalSrc;
@@ -1927,17 +1957,29 @@
       }
       function cobaBerikutnya() {
         if (token !== activePhotoToken) return;
+        if (photoTimeoutId) { clearTimeout(photoTimeoutId); photoTimeoutId = null; }
         if (idx >= daftar.length) {
-          imgMain.onload = null; imgMain.onerror = null;
           imgMain.src = DEFAULT_AVATAR;
           selesai(DEFAULT_AVATAR, false);
           return;
         }
         var target = daftar[idx++];
-        imgMain.onload = function() { selesai(target, true); };
-        imgMain.onerror = function() { cobaBerikutnya(); };
+        var handled = false;
+        function onSukses() {
+          if (handled || token !== activePhotoToken) return;
+          handled = true;
+          selesai(target, true);
+        }
+        function onGagal() {
+          if (handled || token !== activePhotoToken) return;
+          handled = true;
+          cobaBerikutnya();
+        }
+        imgMain.onload = onSukses;
+        imgMain.onerror = onGagal;
+        photoTimeoutId = setTimeout(onGagal, 6000);
         imgMain.src = target;
-        if (imgMain.complete && imgMain.naturalWidth > 1) selesai(target, true);
+        if (imgMain.complete && imgMain.naturalWidth > 1) onSukses();
       }
       cobaBerikutnya();
     }
@@ -1990,8 +2032,9 @@
       sinkronLabelTombol(wrapId, btnId);
     }
 
-    function ekstrakBarisHtml(htmlRows) {
+    function ekstrakBarisHtml(htmlRows, minCols) {
       if (!htmlRows || !String(htmlRows).trim()) return [];
+      var batasKolom = minCols || 1;
       var tbl = document.createElement("table");
       var tb = document.createElement("tbody");
       tb.innerHTML = htmlRows;
@@ -2000,7 +2043,7 @@
       for (var i = 0; i < trs.length; i++) {
         var cells = [], tds = trs[i].querySelectorAll("td");
         for (var j = 0; j < tds.length; j++) cells.push((tds[j].textContent || "").trim());
-        if (cells.length > 0) hasil.push(cells);
+        if (cells.length >= batasKolom) hasil.push(cells);
       }
       return hasil;
     }
@@ -2019,6 +2062,7 @@
       var html = slice.map(function(c) {
         var kLow = String(c[5] || "").toLowerCase();
         var pillCls = kLow.indexOf("kurang") !== -1 ? "hc-pill warn" : "hc-pill";
+        var catatan = String(c[6] || "").trim();
         return '<div class="history-card">' +
           '<div class="hc-top">' +
             '<span class="hc-title">' + escapeHTML(c[0]) + ' &bull; Juz ' + escapeHTML(c[1]) + ' Hal. ' + escapeHTML(c[3]) + '</span>' +
@@ -2028,7 +2072,7 @@
             '<div>Surat: <b>' + escapeHTML(c[2] || "-") + '</b></div>' +
             '<div>Ayat: <b>' + escapeHTML(c[4] || "-") + '</b></div>' +
           '</div>' +
-          (c[6] && c[6] !== "-" ? ('<div class="hc-note"><i class="fa-solid fa-comment-dots" style="color:#0d9488;"></i> ' + escapeHTML(c[6]) + '</div>') : '') +
+          (catatan && catatan !== "-" ? ('<div class="hc-note"><i class="fa-solid fa-comment-dots" style="color:#0d9488;"></i> ' + escapeHTML(catatan) + '</div>') : '') +
         '</div>';
       }).join("");
 
@@ -2057,6 +2101,7 @@
         else if (r.statusTarget === "kurang") pill = '<span class="hc-pill warn">Belum Memenuhi (Min. ' + escapeHTML(r.targetMinimal) + 'x)</span>';
         else if (r.statusTarget === "pendek") pill = '<span class="hc-pill info">Pekan Pendek (' + escapeHTML(r.hariEfektif) + ' Hari)</span>';
 
+        var ketStr = String(r.keterangan || "").trim();
         return '<div class="history-card is-rekap">' +
           '<div class="hc-top">' +
             '<span class="hc-title">' + escapeHTML(r.periode || "-") + '</span>' + pill +
@@ -2067,7 +2112,7 @@
             '<div>Keaktifan: <b>' + escapeHTML(formatRekapKeaktifan(r.keaktifan)) + '</b></div>' +
             '<div>Hal. Terakhir: <b>' + escapeHTML(r.halamanTerakhir || "-") + '</b></div>' +
           '</div>' +
-          (r.keterangan ? ('<div class="hc-note"><i class="fa-solid fa-note-sticky" style="color:#d97706;"></i> <b>Keterangan:</b> ' + escapeHTML(r.keterangan) + '</div>') : '') +
+          (ketStr && ketStr !== "-" ? ('<div class="hc-note"><i class="fa-solid fa-note-sticky" style="color:#d97706;"></i> <b>Keterangan:</b> ' + escapeHTML(ketStr) + '</div>') : '') +
         '</div>';
       }).join("");
 
@@ -2091,13 +2136,14 @@
       var limit = expandState.plg ? dataKartuPlg.length : 6;
       var slice = dataKartuPlg.slice(0, limit);
       var html = slice.map(function(c) {
+        var takzir = String(c[6] || "").trim() || "-";
         return '<div class="history-card is-plg">' +
           '<div class="hc-top">' +
             '<span class="hc-title">' + escapeHTML(c[0]) + '</span>' +
             '<span class="hc-pill warn">' + escapeHTML(c[1]) + '</span>' +
           '</div>' +
-          '<div style="font-size:0.86rem; font-weight:700; color:#0f172a;">' + escapeHTML(c[5]) + '</div>' +
-          '<div class="hc-note"><i class="fa-solid fa-gavel" style="color:#be123c;"></i> <b>Takzir / Pembinaan:</b> ' + escapeHTML(c[6]) + '</div>' +
+          '<div style="font-size:0.86rem; font-weight:700; color:#0f172a;">' + escapeHTML(c[5] || "-") + '</div>' +
+          '<div class="hc-note"><i class="fa-solid fa-gavel" style="color:#be123c;"></i> <b>Takzir / Pembinaan:</b> ' + escapeHTML(takzir) + '</div>' +
         '</div>';
       }).join("");
 
@@ -2141,7 +2187,7 @@
       Swal.fire({
         icon: 'question',
         title: 'Keluar dari Data Santri?',
-        text: 'Anda akan kembali ke Halaman Depan (pintasan NIS tetap tersimpan agar mudah dibuka lagi).',
+        text: 'Anda akan kembali ke Halaman Depan (pintasan NIS tetap tersimpan di HP ini agar mudah dibuka lagi).',
         showCancelButton: true,
         confirmButtonColor: '#dc2626',
         cancelButtonColor: '#64748b',
@@ -2155,6 +2201,9 @@
     function lakukanLogout() {
       activeRequestId++;
       activePhotoToken++;
+      if (photoTimeoutId) { clearTimeout(photoTimeoutId); photoTimeoutId = null; }
+      if (progressTimer) { clearTimeout(progressTimer); progressTimer = null; }
+
       nisAktif = "";
       currentSantriNama = "";
       currentPhotoFinalUrl = "";
@@ -2166,6 +2215,7 @@
         chartInstance = null;
       }
 
+      document.getElementById("hfProgressFill").style.width = "0%";
       document.getElementById("resHafalan").innerHTML = "";
       document.getElementById("resRekapSetoran").innerHTML = "";
       document.getElementById("resPelanggaran").innerHTML = "";
@@ -2180,6 +2230,14 @@
       document.getElementById("app-screen").style.display = "none";
       document.getElementById("public-standalone-screen").style.display = "none";
       document.getElementById("home-screen").style.display = "block";
+
+      // Bersihkan parameter ?nis=... di URL agar tidak auto-login lagi saat refresh
+      try {
+        if (window.location.search && window.history && window.history.replaceState) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+      } catch (e) {}
+
       renderRecentNis();
       muatInfoBeranda();
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2187,11 +2245,14 @@
 
     function muatDataSantri(nis) {
       var myReq = ++activeRequestId;
+      var btnCari = document.getElementById("btnCariHome");
+      if (btnCari) btnCari.disabled = true;
       showLoader("Mengambil Data Santri...");
 
       apiGet({ action: "cariSantri", nis: nis })
         .then(function(res) {
           if (myReq !== activeRequestId) return;
+          if (btnCari) btnCari.disabled = false;
           hideLoader();
 
           if (!res || res.error || !res.ditemukan) {
@@ -2213,9 +2274,10 @@
             return;
           }
 
-          nisAktif = res.bio.nis || nis;
-          currentSantriNama = res.bio.nama || "";
-          simpanRecentNis(res.bio);
+          var bio = res.bio || {};
+          nisAktif = bio.nis || nis;
+          currentSantriNama = bio.nama || "";
+          simpanRecentNis(bio);
           isiSemuaDataSantri(res);
 
           document.getElementById("home-screen").style.display = "none";
@@ -2229,6 +2291,7 @@
         })
         .catch(function() {
           if (myReq !== activeRequestId) return;
+          if (btnCari) btnCari.disabled = false;
           hideLoader();
           Swal.fire({ icon: 'error', title: 'Koneksi Terputus', text: 'Periksa jaringan internet Bapak/Ibu lalu coba kembali.', confirmButtonColor: '#065f46' });
         });
@@ -2324,8 +2387,12 @@
         : Math.round((totalHal / TOTAL_HALAMAN_QURAN) * 1000) / 10;
       document.getElementById("hfPersen").innerText = persen + "%";
       document.getElementById("hfProgressSub").innerText = totalHal + " dari " + TOTAL_HALAMAN_QURAN + " halaman Al-Qur'an";
-      setTimeout(function() {
-        document.getElementById("hfProgressFill").style.width = Math.min(Math.max(persen, 0), 100) + "%";
+
+      var fillEl = document.getElementById("hfProgressFill");
+      if (progressTimer) { clearTimeout(progressTimer); progressTimer = null; }
+      fillEl.style.width = "0%";
+      progressTimer = setTimeout(function() {
+        fillEl.style.width = Math.min(Math.max(persen, 0), 100) + "%";
       }, 80);
 
       var badge = document.getElementById("hfTrenBadge");
@@ -2362,15 +2429,21 @@
         document.getElementById("konTargetSub").innerText = "Menunggu rekap pekan efektif";
       }
 
-      document.getElementById("konAktifVal").innerText = (rk.rataRataKeaktifan || 0) + "x / Pekan";
-      document.getElementById("konAktifSub").innerText = (rk.totalPekanRekap || 0) + " pekan rekapan tercatat";
+      var totalPekanRek = Number(rk.totalPekanRekap || 0);
+      if (totalPekanRek > 0) {
+        document.getElementById("konAktifVal").innerText = (rk.rataRataKeaktifan || 0) + "x / Pekan";
+        document.getElementById("konAktifSub").innerText = totalPekanRek + " pekan rekapan tercatat";
+      } else {
+        document.getElementById("konAktifVal").innerText = "-";
+        document.getElementById("konAktifSub").innerText = "Belum ada rekapan tercatat";
+      }
 
-      // Tabel & Kartu Riwayat Hafalan Riil (Kartu HP terbaru di atas)
+      // Tabel & Kartu Riwayat Hafalan Riil (Kartu HP terbaru di atas, validasi min 6 kolom)
       var emptyHaf = st.isKhatam
         ? "<tr><td colspan='7' style='padding:1.4rem; font-weight:700; color:#047857;'>Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.</td></tr>"
         : "<tr><td colspan='7' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat hafalan riil yang tercatat.</td></tr>";
       document.getElementById("resHafalan").innerHTML = res.hafalanHTML || emptyHaf;
-      dataKartuRiil = ekstrakBarisHtml(res.hafalanHTML).reverse();
+      dataKartuRiil = ekstrakBarisHtml(res.hafalanHTML, 6).reverse();
       renderKartuRiil();
 
       // ============================================================
@@ -2445,8 +2518,9 @@
             tPill.style.display = "none";
           }
 
-          if (rk.keterangan && rk.keterangan !== "-") {
-            ketStrip.innerHTML = '<i class="fa-solid fa-note-sticky"></i> <b>Keterangan Pekan Ini:</b> ' + escapeHTML(rk.keterangan);
+          var rkKet = String(rk.keterangan || "").trim();
+          if (rkKet && rkKet !== "-") {
+            ketStrip.innerHTML = '<i class="fa-solid fa-note-sticky"></i> <b>Keterangan Pekan Ini:</b> ' + escapeHTML(rkKet);
             ketStrip.style.display = "block";
           }
         } else {
@@ -2465,9 +2539,9 @@
       dataKartuRekap = Array.isArray(rk.riwayat) ? rk.riwayat : [];
       renderKartuRekap();
 
-      // Tab Pelanggaran (Ringkasan + Tabel + Kartu HP)
+      // Tab Pelanggaran (Ringkasan + Tabel + Kartu HP, validasi min 6 kolom)
       var tbodyPlg = document.getElementById("resPelanggaran");
-      var rowsPlgArr = ekstrakBarisHtml(res.pelanggaranHTML);
+      var rowsPlgArr = ekstrakBarisHtml(res.pelanggaranHTML, 6);
       if (rowsPlgArr.length > 0) {
         tbodyPlg.innerHTML = res.pelanggaranHTML;
         var lastCells = rowsPlgArr[rowsPlgArr.length - 1];
@@ -2504,7 +2578,7 @@
 
       empty.classList.remove("khatam");
 
-      if (!stats || !Array.isArray(stats.chartData) || stats.chartData.length === 0 || typeof Chart === "undefined") {
+      if (!stats || !Array.isArray(stats.chartData) || stats.chartData.length === 0 || !Array.isArray(stats.chartLabels) || stats.chartLabels.length === 0 || typeof Chart === "undefined") {
         scroll.style.display = "none";
         legend.style.display = "none";
         guide.style.display = "none";
@@ -2686,10 +2760,43 @@
       document.getElementById("btnSubRincian").classList.toggle("active", mode === "rincian");
       document.getElementById("boxIuranGlobal").style.display = mode === "iuran" ? "block" : "none";
       document.getElementById("boxRincianBulan").style.display = mode === "rincian" ? "block" : "none";
+
+      if (mode === "rincian") {
+        var sel = document.getElementById("pilihBulan");
+        if (sel && !sel.value) {
+          document.getElementById("headPengeluaran").innerHTML = "";
+          document.getElementById("resPengeluaran").innerHTML = "<tr><td colspan='10' style='padding:1.25rem; color:#64748b; font-weight:600;'>Silakan pilih bulan pengeluaran pada menu di atas.</td></tr>";
+        }
+        if (!cacheDaftarBulan) muatDaftarBulanKeuangan();
+      }
+    }
+
+    function isiDropdownBulan(list) {
+      var sel = document.getElementById("pilihBulan");
+      if (!sel) return;
+      var prev = sel.value;
+      sel.innerHTML = '<option value="" disabled' + (!prev ? ' selected' : '') + '>-- Ketuk untuk Pilih Bulan --</option>';
+      for (var i = 0; i < list.length; i++) {
+        var selectedAttr = (prev === list[i]) ? ' selected' : '';
+        sel.innerHTML += '<option value="' + escapeHTML(list[i]) + '"' + selectedAttr + '>' + escapeHTML(list[i]) + '</option>';
+      }
+    }
+
+    function muatDaftarBulanKeuangan() {
+      apiGet({ action: "daftarBulan" }).then(function(bRes) {
+        var list = (bRes && Array.isArray(bRes.data)) ? bRes.data : [];
+        if (list.length > 0) {
+          cacheDaftarBulan = list;
+          isiDropdownBulan(list);
+        }
+      }).catch(function() {});
     }
 
     function muatKeuangan() {
       pindahSubKeuangan("iuran");
+      if (cacheDaftarBulan) isiDropdownBulan(cacheDaftarBulan);
+      else muatDaftarBulanKeuangan();
+
       if (cacheKeuangan) {
         renderStyledTable(cacheKeuangan.data, "headKeuangan", "resKeuangan");
         return;
@@ -2701,23 +2808,16 @@
           if (myReq !== activeRequestId) return;
           hideLoader();
           if (!res || res.error) {
-            document.getElementById("resKeuangan").innerHTML = "<tr><td colspan='12' style='color:#dc2626;'>" + escapeHTML((res && res.error) || "Gagal memuat data keuangan.") + "</td></tr>";
+            document.getElementById("resKeuangan").innerHTML = "<tr><td colspan='12' style='color:#dc2626; font-weight:700;'>" + escapeHTML((res && res.error) || "Gagal memuat data keuangan.") + "</td></tr>";
             return;
           }
           cacheKeuangan = res;
           renderStyledTable(res.data, "headKeuangan", "resKeuangan");
-          apiGet({ action: "daftarBulan" }).then(function(bRes) {
-            var list = (bRes && Array.isArray(bRes.data)) ? bRes.data : [];
-            var sel = document.getElementById("pilihBulan");
-            sel.innerHTML = '<option value="" selected disabled>-- Ketuk untuk Pilih Bulan --</option>';
-            for (var i = 0; i < list.length; i++) {
-              sel.innerHTML += '<option value="' + escapeHTML(list[i]) + '">' + escapeHTML(list[i]) + '</option>';
-            }
-          }).catch(function() {});
         })
         .catch(function() {
           if (myReq !== activeRequestId) return;
           hideLoader();
+          document.getElementById("resKeuangan").innerHTML = "<tr><td colspan='12' style='color:#dc2626; font-weight:700;'>Gagal terhubung ke server. Periksa koneksi internet Bapak/Ibu.</td></tr>";
           Swal.fire({ icon: 'error', title: 'Gagal Memuat', text: 'Tidak dapat mengambil data keuangan saat ini.', confirmButtonColor: '#065f46' });
         });
     }
@@ -2732,7 +2832,8 @@
           if (myReq !== activeRequestId) return;
           hideLoader();
           if (!res || res.error) {
-            document.getElementById("resPengeluaran").innerHTML = "<tr><td colspan='10' style='color:#dc2626;'>" + escapeHTML((res && res.error) || "Data bulan ini kosong.") + "</td></tr>";
+            document.getElementById("headPengeluaran").innerHTML = "";
+            document.getElementById("resPengeluaran").innerHTML = "<tr><td colspan='10' style='color:#dc2626; font-weight:700;'>" + escapeHTML((res && res.error) || "Data bulan ini kosong.") + "</td></tr>";
             return;
           }
           renderStyledTable(res.data, "headPengeluaran", "resPengeluaran");
@@ -2740,6 +2841,9 @@
         .catch(function() {
           if (myReq !== activeRequestId) return;
           hideLoader();
+          document.getElementById("headPengeluaran").innerHTML = "";
+          document.getElementById("resPengeluaran").innerHTML = "<tr><td colspan='10' style='color:#dc2626; font-weight:700;'>Gagal memuat rincian bulan " + escapeHTML(bulan) + ". Periksa koneksi lalu coba lagi.</td></tr>";
+          Swal.fire({ icon: 'error', title: 'Koneksi Terputus', text: 'Gagal mengambil rincian pengeluaran bulan ' + bulan + '.', confirmButtonColor: '#065f46' });
         });
     }
 
@@ -2757,7 +2861,8 @@
           if (myReq !== activeRequestId) return;
           hideLoader();
           if (!res || res.error) {
-            document.getElementById("resInventaris").innerHTML = "<tr><td colspan='10' style='color:#dc2626;'>" + escapeHTML((res && res.error) || "Gagal memuat inventaris.") + "</td></tr>";
+            document.getElementById("headInventaris").innerHTML = "";
+            document.getElementById("resInventaris").innerHTML = "<tr><td colspan='10' style='color:#dc2626; font-weight:700;'>" + escapeHTML((res && res.error) || "Gagal memuat inventaris.") + "</td></tr>";
             return;
           }
           cacheInventaris = res;
@@ -2766,10 +2871,14 @@
         .catch(function() {
           if (myReq !== activeRequestId) return;
           hideLoader();
+          document.getElementById("headInventaris").innerHTML = "";
+          document.getElementById("resInventaris").innerHTML = "<tr><td colspan='10' style='color:#dc2626; font-weight:700;'>Gagal terhubung ke server. Periksa koneksi lalu coba lagi.</td></tr>";
+          Swal.fire({ icon: 'error', title: 'Gagal Memuat', text: 'Tidak dapat mengambil data inventaris saat ini.', confirmButtonColor: '#065f46' });
         });
     }
 
     function filterInventaris() {
+      if (!cacheInventaris) return;
       var q = String(document.getElementById("cariInventaris").value || "").toLowerCase().trim();
       renderInventaris(cacheInventaris, q);
     }
