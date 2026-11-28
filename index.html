@@ -36,19 +36,25 @@
 
     *, *::before, *::after { box-sizing: border-box; }
 
-    html, body {
+    html {
+      font-size: 16px;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+    html.font-lg { font-size: 18px; }
+    html.font-xl { font-size: 20px; }
+
+    body {
       width: 100%;
       max-width: 100%;
       overflow-x: hidden;
       margin: 0;
       padding: 0;
-    }
-
-    body {
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
-      font-size: 16px;
+      font-size: 1rem;
       line-height: 1.55;
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
@@ -95,18 +101,54 @@
     }
     #wa-browser-notice i { color: #d97706; margin-right: 4px; }
 
+    /* KONTROL UKURAN TEKS (A- / A+) */
+    .font-ctrl {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 11px;
+      overflow: hidden;
+    }
+    .font-btn {
+      border: none;
+      background: transparent;
+      color: white;
+      font-family: inherit;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 0.36rem 0.6rem;
+      cursor: pointer;
+    }
+    .font-btn:hover { background: rgba(255, 255, 255, 0.22); }
+    .font-lbl {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: #ecfdf5;
+      padding: 0 0.4rem;
+      border-left: 1px solid rgba(255, 255, 255, 0.22);
+      border-right: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
     /* ============================================================
        LAYAR 1: HALAMAN DEPAN (STATUS KEGIATAN + PENGUMUMAN + INPUT NIS)
        ============================================================ */
     #home-screen { display: block; width: 100%; padding-bottom: 2.5rem; }
     .hero-home {
+      position: relative;
       background:
         radial-gradient(circle at 15% 20%, rgba(16, 185, 129, 0.25), transparent 45%),
         radial-gradient(circle at 85% 15%, rgba(253, 230, 138, 0.16), transparent 40%),
         linear-gradient(145deg, #064e3b 0%, #047857 58%, #0d9488 100%);
-      color: white; padding: 2.1rem 1.25rem 3.4rem; text-align: center;
+      color: white; padding: 1.25rem 1.25rem 3.4rem; text-align: center;
       border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
       box-shadow: var(--shadow-md);
+    }
+    .hero-top-tools {
+      max-width: 560px;
+      margin: 0 auto 0.75rem;
+      display: flex;
+      justify-content: flex-end;
     }
     .hero-logo {
       width: 88px; height: 88px; border-radius: 50%; object-fit: cover;
@@ -127,7 +169,7 @@
 
     .home-wrap { width: 100%; max-width: 560px; margin: -2.1rem auto 0; padding: 0 1rem; position: relative; z-index: 10; }
 
-    /* BANNER STATUS KEGIATAN (JEDA / LIBUR) DI HALAMAN DEPAN */
+    /* BANNER STATUS KEGIATAN (JEDA = BIRU | LIBUR = AMBER EMAS KONTRAS) */
     .kegiatan-home-card {
       display: none;
       background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
@@ -140,28 +182,28 @@
       animation: fadeUp 0.28s ease;
     }
     .kegiatan-home-card.is-libur {
-      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-      border-color: #6ee7b7;
-      border-left-color: #059669;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: #fcd34d;
+      border-left-color: #d97706;
     }
     .kh-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
     .kh-tag {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.45px;
-      color: #0369a1; background: rgba(255,255,255,0.8); padding: 3px 9px; border-radius: 99px;
+      color: #0369a1; background: rgba(255,255,255,0.85); padding: 3px 9px; border-radius: 99px;
     }
-    .kegiatan-home-card.is-libur .kh-tag { color: #065f46; }
+    .kegiatan-home-card.is-libur .kh-tag { color: #b45309; }
     .kh-title { margin: 0 0 3px; font-size: 0.95rem; font-weight: 800; color: #0c4a6e; line-height: 1.3; }
-    .kegiatan-home-card.is-libur .kh-title { color: #064e3b; }
+    .kegiatan-home-card.is-libur .kh-title { color: #78350f; }
     .kh-body { margin: 0; font-size: 0.84rem; color: #1e3a8a; font-weight: 600; line-height: 1.48; }
-    .kegiatan-home-card.is-libur .kh-body { color: #065f46; }
+    .kegiatan-home-card.is-libur .kh-body { color: #92400e; }
 
     /* PAPAN PENGUMUMAN KAMAR */
     .announcement-card {
       display: none;
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-      border: 1.5px solid #fcd34d;
-      border-left: 5px solid #d97706;
+      background: linear-gradient(135deg, #ffffff 0%, #fff7ed 100%);
+      border: 1.5px solid #fdba74;
+      border-left: 5px solid #ea580c;
       border-radius: 18px;
       padding: 1rem 1.1rem;
       margin-bottom: 12px;
@@ -175,11 +217,11 @@
     .ann-tag {
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
-      color: #b45309; background: rgba(255,255,255,0.75); padding: 3px 9px; border-radius: 99px;
+      color: #c2410c; background: #ffedd5; padding: 3px 9px; border-radius: 99px;
     }
-    .ann-time { font-size: 0.7rem; color: #92400e; font-weight: 700; opacity: 0.85; }
-    .ann-title { font-size: 0.96rem; font-weight: 800; color: #78350f; margin: 0 0 4px; line-height: 1.3; }
-    .ann-body { font-size: 0.86rem; color: #78350f; margin: 0; line-height: 1.5; font-weight: 500; word-break: break-word; }
+    .ann-time { font-size: 0.7rem; color: #9a3412; font-weight: 700; opacity: 0.88; }
+    .ann-title { font-size: 0.96rem; font-weight: 800; color: #7c2d12; margin: 0 0 4px; line-height: 1.3; }
+    .ann-body { font-size: 0.86rem; color: #7c2d12; margin: 0; line-height: 1.5; font-weight: 500; word-break: break-word; }
 
     .bento-login {
       background: white; border-radius: 22px; padding: 1.45rem 1.35rem;
@@ -206,6 +248,67 @@
       box-shadow: 0 6px 16px rgba(6, 95, 70, 0.26);
     }
     .btn-primary-full:disabled { opacity: 0.65; cursor: not-allowed; }
+
+    /* INGAT NIS OTOMATIS (PINTASAN 1-KLIK) */
+    .recent-nis-wrap {
+      display: none;
+      margin-top: 1rem;
+      padding-top: 0.95rem;
+      border-top: 1px dashed #cbd5e1;
+    }
+    .recent-nis-title {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 0.55rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .recent-nis-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .recent-nis-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0.62rem 0.75rem;
+      border-radius: 13px;
+      background: #f0fdf4;
+      border: 1.5px solid #86efac;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .recent-nis-item:hover { background: #dcfce7; }
+    .recent-nis-left {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+    }
+    .recent-ava {
+      width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+      background: #065f46; color: white; font-size: 0.78rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .recent-nis-info { min-width: 0; }
+    .recent-nis-name {
+      font-size: 0.86rem; font-weight: 800; color: #064e3b;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .recent-nis-meta { font-size: 0.73rem; font-weight: 700; color: #047857; }
+    .recent-nis-del {
+      border: none; background: rgba(6, 95, 70, 0.12); color: #065f46;
+      width: 26px; height: 26px; border-radius: 99px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      font-size: 0.78rem;
+    }
+    .recent-nis-del:hover { background: #fecaca; color: #b91c1c; }
 
     .home-divider {
       text-align: center; font-size: 0.76rem; font-weight: 800; color: #64748b;
@@ -270,6 +373,19 @@
       padding: 0.72rem 1.2rem; border-radius: 99px; font-weight: 800; font-size: 0.9rem;
       cursor: pointer; box-shadow: var(--shadow-sm);
     }
+    .inv-search-input {
+      width: 100%;
+      padding: 0.75rem 0.95rem;
+      border-radius: 12px;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-bottom: 11px;
+      outline: none;
+    }
+    .inv-search-input:focus { border-color: #4338ca; background: white; }
 
     /* ============================================================
        LAYAR 3: MODE DATA SANTRI (MURNI 4 MENU + TOMBOL KELUAR)
@@ -285,12 +401,12 @@
     }
     .app-topbar-inner {
       width: 100%; max-width: 980px; margin: 0 auto;
-      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
     }
     .student-chip { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
     .mini-avatar {
       width: 46px; height: 46px; border-radius: 14px; object-fit: cover; object-position: top center;
-      border: 2px solid rgba(255,255,255,0.8); background: #e2e8f0; flex-shrink: 0;
+      border: 2px solid rgba(255,255,255,0.8); background: #e2e8f0; flex-shrink: 0; cursor: pointer;
     }
     .student-chip-text { min-width: 0; flex: 1; }
     .student-chip-name {
@@ -302,7 +418,7 @@
     .topbar-btns { display: flex; gap: 6px; flex-shrink: 0; align-items: center; }
     .btn-ico-top {
       background: rgba(255,255,255,0.18); color: white; border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 12px; padding: 0.52rem 0.68rem; font-size: 0.84rem; font-weight: 800;
+      border-radius: 12px; padding: 0.48rem 0.64rem; font-size: 0.84rem; font-weight: 800;
       cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
     }
     .btn-ico-top:hover { background: rgba(255,255,255,0.28); }
@@ -310,7 +426,7 @@
 
     .btn-logout-top {
       background: rgba(254, 226, 226, 0.95); color: #b91c1c; border: 1px solid #fecaca;
-      border-radius: 12px; padding: 0.52rem 0.78rem; font-size: 0.8rem; font-weight: 800;
+      border-radius: 12px; padding: 0.48rem 0.74rem; font-size: 0.8rem; font-weight: 800;
       cursor: pointer; display: inline-flex; align-items: center; gap: 5px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.12);
     }
@@ -354,9 +470,27 @@
     .bnav-btn i { font-size: 1.25rem; }
     .bnav-btn.active { color: var(--primary); background: #ecfdf5; font-weight: 800; }
 
+    /* KOTAK MOTIVASI HALUS (v4.0) */
+    .motivasi-card {
+      display: none;
+      background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%);
+      border: 1.5px solid #fdba74;
+      border-left: 5px solid #ea580c;
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+      margin-bottom: 12px;
+      color: #9a3412;
+      gap: 10px;
+      align-items: flex-start;
+      box-shadow: var(--shadow-sm);
+    }
+    .motivasi-card i { font-size: 1.15rem; color: #ea580c; margin-top: 2px; flex-shrink: 0; }
+    .motivasi-card strong { display: block; font-size: 0.88rem; margin-bottom: 2px; color: #7c2d12; }
+    .motivasi-card span { display: block; font-size: 0.82rem; font-weight: 600; line-height: 1.48; }
+
     /* PEMISAH TEGAS BLOK A (HAFALAN RIIL) & BLOK B (REKAP SETORAN MINGGUAN) */
     .block-banner {
-      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;
       margin: 4px 0 11px; padding: 0.55rem 0.9rem;
       border-radius: 13px; background: #ecfdf5; border: 1px solid #a7f3d0;
     }
@@ -371,6 +505,13 @@
     .rekap-banner .block-num { background: #b45309; }
     .block-name { font-size: 0.92rem; font-weight: 800; color: #064e3b; }
     .rekap-banner .block-name { color: #78350f; }
+    .btn-help-beda {
+      border: 1px solid #6ee7b7; background: white; color: #065f46;
+      border-radius: 99px; padding: 4px 10px; font-family: inherit;
+      font-size: 0.72rem; font-weight: 800; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .btn-help-beda:hover { background: #d1fae5; }
 
     /* TAB PANES & KARTU ANTI-OVERFLOW */
     .app-pane { display: none; width: 100%; min-width: 0; animation: fadeUp 0.25s ease; }
@@ -444,7 +585,35 @@
     .hf-mini-val { font-size: 0.96rem; font-weight: 800; margin-top: 2px; line-height: 1.25; }
     .hf-mini-sub { font-size: 0.73rem; opacity: 0.9; font-weight: 600; margin-top: 3px; }
 
-    /* BLOK B: KARTU REKAPAN SETORAN MINGGUAN (TARGET KEAKTIFAN + UDZUR + JEDA/LIBUR) */
+    /* STRIP KONSISTENSI v4.0 */
+    .konsistensi-strip {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .kon-card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 0.85rem 1rem;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .kon-ico {
+      width: 40px; height: 40px; border-radius: 12px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.08rem;
+    }
+    .kon-ico-1 { background: #ccfbf1; color: #0f766e; }
+    .kon-ico-2 { background: #dcfce7; color: #15803d; }
+    .kon-ico-3 { background: #fef3c7; color: #b45309; }
+    .kon-lbl { font-size: 0.7rem; font-weight: 800; color: #64748b; text-transform: uppercase; letter-spacing: 0.35px; }
+    .kon-val { font-size: 0.98rem; font-weight: 800; color: var(--text); margin-top: 1px; }
+    .kon-sub { font-size: 0.75rem; font-weight: 600; color: var(--muted); margin-top: 1px; }
+
+    /* BLOK B: KARTU REKAPAN SETORAN MINGGUAN */
     .rekap-card {
       margin-bottom: 14px;
       background: linear-gradient(135deg, #ffffff 0%, #fffdf5 100%);
@@ -469,7 +638,7 @@
     }
     .rk-status-pill.belum { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
     .rk-status-pill.jeda { background: #e0f2fe; color: #0369a1; border: 1px solid #7dd3fc; }
-    .rk-status-pill.libur { background: #d1fae5; color: #065f46; border: 1px solid #6ee7b7; }
+    .rk-status-pill.libur { background: #fef3c7; color: #b45309; border: 1px solid #f59e0b; }
 
     .rk-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; }
     .rk-box {
@@ -531,13 +700,13 @@
       color: #0c4a6e;
     }
     .rk-jeda-box.is-libur {
-      background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-      border-color: #6ee7b7;
-      color: #064e3b;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border-color: #fcd34d;
+      color: #78350f;
     }
     .rk-jeda-title { font-size: 1.02rem; font-weight: 800; margin: 7px 0 5px; }
-    .rk-jeda-sub { font-size: 0.85rem; font-weight: 600; margin: 0; opacity: 0.92; line-height: 1.5; }
-    .rk-jeda-note { font-size: 0.76rem; font-weight: 600; margin-top: 8px; opacity: 0.82; }
+    .rk-jeda-sub { font-size: 0.85rem; font-weight: 600; margin: 0; opacity: 0.94; line-height: 1.5; }
+    .rk-jeda-note { font-size: 0.76rem; font-weight: 600; margin-top: 8px; opacity: 0.84; }
 
     /* GRAFIK & BENCHMARK RATA-RATA KAMAR */
     .chart-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 6px; margin-bottom: 10px; }
@@ -573,18 +742,82 @@
     }
     .chart-empty.khatam { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
 
+    /* MOBILE CARD VIEW + TOGGLE KARTU / TABEL (v4.0) */
+    .sec-head-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; flex-wrap: wrap; margin-bottom: 0.85rem;
+    }
+    .sec-head-row .sec-title { margin: 0; }
+    .btn-view-toggle {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 5px 11px; border-radius: 99px;
+      border: 1.5px solid #cbd5e1; background: #f8fafc; color: #334155;
+      font-family: inherit; font-size: 0.74rem; font-weight: 800; cursor: pointer;
+    }
+    .btn-view-toggle:hover { background: #ecfdf5; border-color: #6ee7b7; color: #065f46; }
+
+    .mobile-card-list { display: flex; flex-direction: column; gap: 10px; }
+    .history-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-left: 4px solid #0d9488;
+      border-radius: 14px;
+      padding: 0.85rem 0.95rem;
+    }
+    .history-card.is-rekap { border-left-color: #d97706; background: #fffdf7; border-color: #fde68a; }
+    .history-card.is-plg { border-left-color: #e11d48; background: #fff8f9; border-color: #fecdd3; }
+    .hc-top {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; flex-wrap: wrap; margin-bottom: 6px;
+    }
+    .hc-title { font-size: 0.88rem; font-weight: 800; color: var(--text); }
+    .hc-pill {
+      font-size: 0.7rem; font-weight: 800; padding: 2px 9px; border-radius: 99px;
+      background: #dcfce7; color: #166534;
+    }
+    .hc-pill.warn { background: #ffe4e6; color: #be123c; }
+    .hc-pill.info { background: #e0f2fe; color: #0369a1; }
+    .hc-grid {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 6px 10px; font-size: 0.8rem; color: var(--muted);
+    }
+    .hc-grid b { color: var(--text); }
+    .hc-note {
+      margin-top: 7px; padding-top: 7px; border-top: 1px dashed #cbd5e1;
+      font-size: 0.79rem; color: #334155; font-weight: 600;
+    }
+    .btn-expand-cards {
+      width: 100%; margin-top: 4px; padding: 0.65rem; border-radius: 12px;
+      border: 1.5px dashed #94a3b8; background: white; color: #334155;
+      font-family: inherit; font-size: 0.8rem; font-weight: 800; cursor: pointer;
+    }
+    .btn-expand-cards:hover { background: #f8fafc; border-color: #065f46; color: #065f46; }
+
+    /* Pengaturan tampilan default HP (Kartu) vs Desktop (Tabel), bisa dioverride tombol toggle */
+    .history-view-box .table-view-part { display: none; }
+    .history-view-box .card-view-part { display: block; }
+    .history-view-box.force-table .table-view-part { display: block; }
+    .history-view-box.force-table .card-view-part { display: none; }
+    .history-view-box.force-card .table-view-part { display: none; }
+    .history-view-box.force-card .card-view-part { display: block; }
+
     /* BIODATA & ORANG TUA */
     .profile-layout { display: flex; flex-direction: column; gap: 1.25rem; }
     .foto-frame {
       position: relative; width: 150px; height: 200px; margin: 0 auto;
       border-radius: 18px; overflow: hidden; border: 4px solid white;
-      box-shadow: var(--shadow-md); background: #e2e8f0; flex-shrink: 0;
+      box-shadow: var(--shadow-md); background: #e2e8f0; flex-shrink: 0; cursor: pointer;
     }
     .foto-frame img { width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0; transition: opacity 0.25s; }
     .foto-loader {
       position: absolute; inset: 0; display: flex; flex-direction: column;
       align-items: center; justify-content: center; gap: 6px;
       font-size: 0.76rem; font-weight: 700; color: #64748b; background: #f1f5f9;
+    }
+    .foto-zoom-hint {
+      position: absolute; bottom: 6px; right: 6px;
+      background: rgba(15, 23, 42, 0.65); color: white;
+      border-radius: 8px; padding: 3px 7px; font-size: 0.68rem; font-weight: 700;
     }
 
     .info-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; flex: 1; }
@@ -617,6 +850,34 @@
     .plg-stat-val { font-size: 1.6rem; font-weight: 800; color: #be123c; margin-top: 2px; }
     .plg-stat.nihil { border-color: #bbf7d0; background: #f0fdf4; }
     .plg-stat.nihil .plg-stat-lbl, .plg-stat.nihil .plg-stat-val { color: #166534; }
+
+    /* KARTU HUBUNGI PEMBINA DI PROFIL SANTRI */
+    .wa-pembina-app-card {
+      margin-top: 14px;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 1.5px solid #86efac;
+      border-radius: 18px;
+      padding: 0.95rem 1.05rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-wa-pembina-app {
+      padding: 0.68rem 1.05rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #15803d, #16a34a);
+      color: white;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      white-space: nowrap;
+    }
 
     /* KEUANGAN & TABEL */
     .sec-title {
@@ -676,6 +937,7 @@
       .desktop-nav { display: flex; }
       .btn-ico-top .lbl { display: inline; }
       .bento-grid-haf { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); align-items: stretch; }
+      .konsistensi-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }
       .rk-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
       .bm-pill { flex-direction: row; align-items: center; justify-content: space-between; }
       .profile-layout { flex-direction: row; align-items: flex-start; }
@@ -684,6 +946,9 @@
       .month-filter { flex-direction: row; align-items: center; justify-content: space-between; }
       .month-filter select { width: 270px; }
       .swipe-tip { display: none; }
+
+      .history-view-box:not(.force-card) .table-view-part { display: block; }
+      .history-view-box:not(.force-card) .card-view-part { display: none; }
     }
   </style>
 </head>
@@ -702,11 +967,19 @@
   </div>
 
   <!-- ============================================================
-       1. HALAMAN DEPAN (STATUS KEGIATAN + PENGUMUMAN + WAJIB NIS)
+       1. HALAMAN DEPAN (STATUS KEGIATAN + PENGUMUMAN + INPUT NIS)
        ============================================================ -->
   <div id="home-screen">
     <div class="hero-home">
-      <img src="https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png" alt="Logo Kamar" class="hero-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
+      <div class="hero-top-tools">
+        <div class="font-ctrl" title="Ubah Ukuran Teks">
+          <button type="button" class="font-btn" onclick="ubahUkuranTeks(-1)">A-</button>
+          <span id="fontHomeLbl" class="font-lbl">Normal</span>
+          <button type="button" class="font-btn" onclick="ubahUkuranTeks(1)">A+</button>
+        </div>
+      </div>
+
+      <img src="https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=180&h=180&fit=cover&output=webp" alt="Logo Kamar" class="hero-logo" referrerpolicy="no-referrer" onerror="fallbackLogo(this)">
       <h1>Pusat Informasi Santri</h1>
       <div class="hero-pill"><i class="fa-solid fa-mosque"></i> Kamar Maqomin Amin 09</div>
       <div id="lastUpdatePill" class="last-update-pill">
@@ -743,6 +1016,12 @@
         <button type="button" id="btnCariHome" class="btn-primary-full" onclick="cariSantriDariInput()">
           <i class="fa-solid fa-magnifying-glass"></i> Lihat Data Santri
         </button>
+
+        <!-- PINTASAN NIS TERAKHIR (INGAT NIS OTOMATIS DI HP WALI) -->
+        <div id="recentNisWrap" class="recent-nis-wrap">
+          <div class="recent-nis-title"><i class="fa-solid fa-clock-rotate-left"></i> Lanjutkan Pantau (1-Klik)</div>
+          <div id="recentNisList" class="recent-nis-list"></div>
+        </div>
       </div>
 
       <div class="home-divider">Informasi Umum Kamar (Tanpa NIS)</div>
@@ -828,6 +1107,7 @@
 
     <div id="inventaris-module" class="bento-card" style="display:none;">
       <h3 class="sec-title"><i class="fa-solid fa-boxes-stacked" style="color:#4338ca;"></i> Data Barang Inventaris Kamar</h3>
+      <input type="text" id="cariInventaris" class="inv-search-input" placeholder="Cari nama barang atau kondisi inventaris..." oninput="filterInventaris()">
       <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat detail kondisi</div>
       <div class="table-wrap">
         <table class="tbl-inventaris"><thead id="headInventaris"></thead><tbody id="resInventaris"></tbody></table>
@@ -842,13 +1122,18 @@
     <div class="app-topbar">
       <div class="app-topbar-inner">
         <div class="student-chip">
-          <img id="topAvatar" class="mini-avatar" src="" alt="Foto" referrerpolicy="no-referrer">
+          <img id="topAvatar" class="mini-avatar" src="" alt="Foto" referrerpolicy="no-referrer" onclick="perbesarFotoSantri()" title="Ketuk untuk perbesar foto">
           <div class="student-chip-text">
             <h2 class="student-chip-name" id="topNama">-</h2>
             <div class="student-chip-meta" id="topMeta">NIS - &bull; Kamar MA 09</div>
           </div>
         </div>
         <div class="topbar-btns">
+          <div class="font-ctrl" title="Ubah Ukuran Teks">
+            <button type="button" class="font-btn" onclick="ubahUkuranTeks(-1)">A-</button>
+            <span id="fontAppLbl" class="font-lbl">N</span>
+            <button type="button" class="font-btn" onclick="ubahUkuranTeks(1)">A+</button>
+          </div>
           <button type="button" class="btn-ico-top" onclick="muatUlangSantriAktif()" title="Segarkan Data">
             <i class="fa-solid fa-rotate"></i><span class="lbl">Segarkan</span>
           </button>
@@ -868,8 +1153,17 @@
         <button type="button" class="dnav-btn" data-tab="pelanggaran" onclick="pindahTab('pelanggaran')"><i class="fa-solid fa-clipboard-check"></i> Pelanggaran</button>
       </div>
 
-      <!-- TAB 1: HAFALAN (TERPISAH TEGAS: BLOK A HAFALAN RIIL & BLOK B REKAPAN SETORAN MINGGUAN) -->
+      <!-- TAB 1: HAFALAN (BLOK A HAFALAN RIIL + KONSISTENSI v4.0 + BLOK B REKAPAN SETORAN) -->
       <div id="pane-hafalan" class="app-pane active">
+
+        <!-- PESAN MOTIVASI HALUS (MUNCUL BILA KURANG TARGET / STAGNAN 2+ PEKAN, NON-LIBUR) -->
+        <div id="motivasiHalusCard" class="motivasi-card">
+          <i class="fa-solid fa-heart"></i>
+          <div>
+            <strong>Dukungan Semangat untuk Ananda</strong>
+            <span id="motivasiHalusTeks"></span>
+          </div>
+        </div>
 
         <!-- BLOK A: HAFALAN RIIL -->
         <div class="block-banner">
@@ -877,6 +1171,9 @@
             <span class="block-num">Bagian 1</span>
             <span class="block-name">Hafalan Riil Al-Qur'an (604 Halaman)</span>
           </div>
+          <button type="button" class="btn-help-beda" onclick="tampilInfoBedaRiilRekap()">
+            <i class="fa-regular fa-circle-question"></i> Beda Riil &amp; Rekap?
+          </button>
         </div>
 
         <div class="bento-grid-haf">
@@ -945,16 +1242,54 @@
           </div>
         </div>
 
-        <div class="bento-card">
-          <h3 class="sec-title"><i class="fa-solid fa-list-ol" style="color:#0f766e;"></i> Riwayat Pendataan Hafalan Riil</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat catatan lengkap</div>
-          <div class="table-wrap">
-            <table class="tbl-hafalan">
-              <thead>
-                <tr><th>Tanggal</th><th>Juz</th><th>Surat</th><th>Hal</th><th>Ayat</th><th>Kualitas</th><th>Catatan Ustaz/Pembina</th></tr>
-              </thead>
-              <tbody id="resHafalan"></tbody>
-            </table>
+        <!-- STRIP RINGKASAN KONSISTENSI v4.0 -->
+        <div class="konsistensi-strip" id="konsistensiStrip">
+          <div class="kon-card">
+            <div class="kon-ico kon-ico-1"><i class="fa-solid fa-seedling"></i></div>
+            <div style="min-width:0;">
+              <div class="kon-lbl">Pertumbuhan Tercatat</div>
+              <div class="kon-val" id="konTumbuhVal">-</div>
+              <div class="kon-sub" id="konTumbuhSub">-</div>
+            </div>
+          </div>
+          <div class="kon-card">
+            <div class="kon-ico kon-ico-2"><i class="fa-solid fa-bullseye"></i></div>
+            <div style="min-width:0;">
+              <div class="kon-lbl">Konsistensi Target</div>
+              <div class="kon-val" id="konTargetVal">-</div>
+              <div class="kon-sub" id="konTargetSub">-</div>
+            </div>
+          </div>
+          <div class="kon-card">
+            <div class="kon-ico kon-ico-3"><i class="fa-solid fa-calendar-check"></i></div>
+            <div style="min-width:0;">
+              <div class="kon-lbl">Rata-rata Keaktifan</div>
+              <div class="kon-val" id="konAktifVal">-</div>
+              <div class="kon-sub" id="konAktifSub">-</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card history-view-box" id="secRiilWrap">
+          <div class="sec-head-row">
+            <h3 class="sec-title"><i class="fa-solid fa-list-ol" style="color:#0f766e;"></i> Riwayat Pendataan Hafalan Riil</h3>
+            <button type="button" class="btn-view-toggle" id="btnToggleRiil" onclick="toggleModeRiwayat('secRiilWrap', 'btnToggleRiil')">
+              <i class="fa-solid fa-table"></i> Lihat Tabel
+            </button>
+          </div>
+          <div class="card-view-part">
+            <div class="mobile-card-list" id="cardsHafalan"></div>
+          </div>
+          <div class="table-view-part">
+            <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat catatan lengkap</div>
+            <div class="table-wrap">
+              <table class="tbl-hafalan">
+                <thead>
+                  <tr><th>Tanggal</th><th>Juz</th><th>Surat</th><th>Hal</th><th>Ayat</th><th>Kualitas</th><th>Catatan Ustaz/Pembina</th></tr>
+                </thead>
+                <tbody id="resHafalan"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -1019,20 +1354,30 @@
             <i id="rkJedaIcon" class="fa-solid fa-pause-circle" style="font-size:1.75rem;"></i>
             <div class="rk-jeda-title" id="rkJedaTitle">Kegiatan Setoran Sedang Jeda</div>
             <p class="rk-jeda-sub" id="rkJedaSub"></p>
-            <div class="rk-jeda-note">Riwayat rekapan setoran pekan-pekan sebelumnya tetap dapat dilihat pada tabel di bawah ini.</div>
+            <div class="rk-jeda-note">Riwayat rekapan setoran pekan-pekan sebelumnya tetap dapat dilihat di bawah ini.</div>
           </div>
         </div>
 
-        <div class="bento-card">
-          <h3 class="sec-title"><i class="fa-solid fa-clock-rotate-left" style="color:#b45309;"></i> Riwayat Rekapan Setoran Mingguan</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat status target &amp; keterangan</div>
-          <div class="table-wrap">
-            <table class="tbl-rekap">
-              <thead>
-                <tr><th>Periode</th><th>Tambahan</th><th>Murojaah</th><th>Keaktifan</th><th>Status Target</th><th>Hal. Terakhir</th><th>Keterangan</th></tr>
-              </thead>
-              <tbody id="resRekapSetoran"></tbody>
-            </table>
+        <div class="bento-card history-view-box" id="secRekapWrap">
+          <div class="sec-head-row">
+            <h3 class="sec-title"><i class="fa-solid fa-clock-rotate-left" style="color:#b45309;"></i> Riwayat Rekapan Setoran Mingguan</h3>
+            <button type="button" class="btn-view-toggle" id="btnToggleRekap" onclick="toggleModeRiwayat('secRekapWrap', 'btnToggleRekap')">
+              <i class="fa-solid fa-table"></i> Lihat Tabel
+            </button>
+          </div>
+          <div class="card-view-part">
+            <div class="mobile-card-list" id="cardsRekapSetoran"></div>
+          </div>
+          <div class="table-view-part">
+            <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat status target &amp; keterangan</div>
+            <div class="table-wrap">
+              <table class="tbl-rekap">
+                <thead>
+                  <tr><th>Periode</th><th>Tambahan</th><th>Murojaah</th><th>Keaktifan</th><th>Status Target</th><th>Hal. Terakhir</th><th>Keterangan</th></tr>
+                </thead>
+                <tbody id="resRekapSetoran"></tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -1042,12 +1387,13 @@
         <div class="bento-card">
           <h3 class="sec-title"><i class="fa-solid fa-id-card" style="color:#0284c7;"></i> Biodata Lengkap Santri</h3>
           <div class="profile-layout">
-            <div class="foto-frame">
+            <div class="foto-frame" onclick="perbesarFotoSantri()" title="Ketuk untuk perbesar foto">
               <div id="fotoLoader" class="foto-loader">
                 <div class="spinner-sm"></div>
                 <span>Memuat Foto...</span>
               </div>
               <img id="fotoSantri" src="" alt="Foto Santri" referrerpolicy="no-referrer">
+              <span class="foto-zoom-hint"><i class="fa-solid fa-magnifying-glass-plus"></i></span>
             </div>
             <div class="info-grid">
               <div class="info-tile"><div class="info-lbl">Nomor Induk (NIS)</div><div class="info-val" id="resNis">-</div></div>
@@ -1091,18 +1437,39 @@
           <div class="plg-stat" id="cardPlgPondok"><div class="plg-stat-lbl">Pondok</div><div class="plg-stat-val" id="cntPlgPondok">0</div></div>
         </div>
 
-        <div class="bento-card">
-          <h3 class="sec-title"><i class="fa-solid fa-clipboard-check" style="color:#be123c;"></i> Catatan Kedisiplinan &amp; Pelanggaran</h3>
-          <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat rincian takzir</div>
-          <div class="table-wrap">
-            <table class="tbl-disiplin">
-              <thead>
-                <tr><th>Tanggal</th><th>Kategori</th><th>Kamar</th><th>Komplek</th><th>Pondok</th><th>Bentuk Pelanggaran</th><th>Takzir / Pembinaan</th></tr>
-              </thead>
-              <tbody id="resPelanggaran"></tbody>
-            </table>
+        <div class="bento-card history-view-box" id="secPlgWrap">
+          <div class="sec-head-row">
+            <h3 class="sec-title"><i class="fa-solid fa-clipboard-check" style="color:#be123c;"></i> Catatan Kedisiplinan &amp; Pelanggaran</h3>
+            <button type="button" class="btn-view-toggle" id="btnTogglePlg" onclick="toggleModeRiwayat('secPlgWrap', 'btnTogglePlg')">
+              <i class="fa-solid fa-table"></i> Lihat Tabel
+            </button>
+          </div>
+          <div class="card-view-part">
+            <div class="mobile-card-list" id="cardsPelanggaran"></div>
+          </div>
+          <div class="table-view-part">
+            <div class="swipe-tip"><i class="fa-solid fa-arrows-left-right"></i> Geser tabel ke samping untuk melihat rincian takzir</div>
+            <div class="table-wrap">
+              <table class="tbl-disiplin">
+                <thead>
+                  <tr><th>Tanggal</th><th>Kategori</th><th>Kamar</th><th>Komplek</th><th>Pondok</th><th>Bentuk Pelanggaran</th><th>Takzir / Pembinaan</th></tr>
+                </thead>
+                <tbody id="resPelanggaran"></tbody>
+              </table>
+            </div>
           </div>
         </div>
+      </div>
+
+      <!-- TOMBOL HUBUNGI PEMBINA KAMAR (OTOMATIS MEMUAT NAMA & NIS ANANDA) -->
+      <div class="wa-pembina-app-card">
+        <div>
+          <strong style="display:block; font-size:0.88rem; color:#064e3b;">Butuh Konfirmasi atau Tanya Perkembangan Ananda?</strong>
+          <span style="font-size:0.78rem; color:#047857; font-weight:600;">Hubungi langsung Pembina Kamar Maqomin Amin 09 via WhatsApp.</span>
+        </div>
+        <a id="btnWaPembinaApp" class="btn-wa-pembina-app" href="#" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-whatsapp" style="font-size:1.1rem;"></i> Hubungi Pembina
+        </a>
       </div>
 
       <div class="footer-brand">Pengurus Kamar Maqomin Amin 09 &bull; PP Madrasatul Qur'an Tebuireng</div>
@@ -1124,13 +1491,16 @@
       </button>
     </nav>
   </div>
-
   <script>
     var API_URL = "https://script.google.com/macros/s/AKfycbwkimilgQq9LSHB_76eTzzjItmk-Jc_jOC8BMi6HlL7_LP-oFcop5CIBk8WilwSZygk/exec";
     var WA_PEMBINA = "6285706244701";
     var TOTAL_HALAMAN_QURAN = 604;
+    var STORAGE_RECENT_NIS = "ma09_wali_recent_nis_v4";
+    var STORAGE_FONT_LVL = "ma09_wali_font_lvl_v4";
 
     var nisAktif = "";
+    var currentSantriNama = "";
+    var currentPhotoFinalUrl = "";
     var currentHafalanStats = null;
     var chartInstance = null;
     var cacheKeuangan = null;
@@ -1138,10 +1508,17 @@
     var activeRequestId = 0;
     var activePhotoToken = 0;
     var deferredPwaPrompt = null;
+    var fontLevel = 0; // 0 = Normal, 1 = Besar, 2 = Ekstra
+
+    // Penyimpanan data kartu riwayat untuk tombol "Tampilkan Semua" (0 data terpotong)
+    var dataKartuRiil = [];
+    var dataKartuRekap = [];
+    var dataKartuPlg = [];
+    var expandState = { riil: false, rekap: false, plg: false };
 
     var LOGO_FALLBACKS = [
       "https://i.ibb.co/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png",
-      "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co.com%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=256&output=png",
+      "https://i.ibb.co.com/nMDt94mt/Desain-tanpa-judul-20260206-213429-0000.png",
       "https://wsrv.nl/?url=https%3A%2F%2Fi.ibb.co%2FnMDt94mt%2FDesain-tanpa-judul-20260206-213429-0000.png&w=256&output=png",
       "https://cdn-icons-png.flaticon.com/512/8251/8251508.png"
     ];
@@ -1159,6 +1536,108 @@
       '<text x="100" y="248" font-family="sans-serif" font-size="13" font-weight="bold" fill="#475569" text-anchor="middle">Foto Belum Tersedia</text>' +
       '</svg>'
     );
+
+    // ============================================================
+    // AKSESIBILITAS UKURAN TEKS (A- / A+) & PENJELASAN BEDA RIIL/REKAP
+    // ============================================================
+    function terapkanUkuranTeks(lvl) {
+      fontLevel = Math.max(0, Math.min(2, lvl));
+      var root = document.documentElement;
+      root.classList.remove("font-lg", "font-xl");
+      if (fontLevel === 1) root.classList.add("font-lg");
+      else if (fontLevel === 2) root.classList.add("font-xl");
+
+      var hLbl = document.getElementById("fontHomeLbl");
+      var aLbl = document.getElementById("fontAppLbl");
+      if (hLbl) hLbl.innerText = fontLevel === 0 ? "Normal" : (fontLevel === 1 ? "Besar" : "Ekstra");
+      if (aLbl) aLbl.innerText = fontLevel === 0 ? "N" : (fontLevel === 1 ? "B" : "E");
+      try { localStorage.setItem(STORAGE_FONT_LVL, String(fontLevel)); } catch (e) {}
+    }
+
+    function ubahUkuranTeks(delta) {
+      terapkanUkuranTeks(fontLevel + delta);
+    }
+
+    function tampilInfoBedaRiilRekap() {
+      Swal.fire({
+        icon: 'info',
+        title: 'Beda Hafalan Riil & Rekap Mingguan',
+        html: '<div style="text-align:left; font-size:0.88rem; line-height:1.6;">' +
+          '<b>1. Bagian 1 — Hafalan Riil (604 Halaman):</b><br>Posisi hafalan murni ananda saat pendataan kamar (standar Mushaf Pojok 15 baris) yang dihitung dalam persentase menuju 30 Juz dan ditampilkan di grafik.<br><br>' +
+          '<b>2. Bagian 2 — Rekapan Setoran Mingguan:</b><br>Catatan aktivitas setoran harian selama sepekan (tambahan, murojaah, dan keaktifan) dibandingkan dengan target minimal kamar (<b>Hari Efektif - 1</b>).' +
+          '</div>',
+        confirmButtonColor: '#065f46',
+        confirmButtonText: 'Mengerti'
+      });
+    }
+
+    // ============================================================
+    // INGAT NIS OTOMATIS (MAKS. 3 NIS TERAKHIR DI BROWSER HP WALI)
+    // ============================================================
+    function getInisialNama(nama) {
+      var kata = String(nama || "S").trim().split(/\s+/).filter(Boolean);
+      if (kata.length === 0) return "S";
+      var a = kata[0].charAt(0);
+      var b = kata.length > 1 ? kata[1].charAt(0) : (kata[0].length > 1 ? kata[0].charAt(1) : "");
+      return (a + b).toUpperCase().replace(/[^A-Z0-9]/g, "") || "S";
+    }
+
+    function bacaRecentNis() {
+      try {
+        var arr = JSON.parse(localStorage.getItem(STORAGE_RECENT_NIS) || "[]");
+        return Array.isArray(arr) ? arr : [];
+      } catch (e) { return []; }
+    }
+
+    function simpanRecentNis(bio) {
+      if (!bio || !bio.nis) return;
+      var list = bacaRecentNis().filter(function(x) { return x.nis !== bio.nis; });
+      list.unshift({
+        nis: String(bio.nis).trim(),
+        nama: String(bio.nama || ("Santri " + bio.nis)).trim(),
+        kelas: String(bio.kelas || "Kamar MA 09").trim()
+      });
+      list = list.slice(0, 3);
+      try { localStorage.setItem(STORAGE_RECENT_NIS, JSON.stringify(list)); } catch (e) {}
+      renderRecentNis();
+    }
+
+    function hapusRecentNis(nis, ev) {
+      if (ev) ev.stopPropagation();
+      var list = bacaRecentNis().filter(function(x) { return x.nis !== nis; });
+      try { localStorage.setItem(STORAGE_RECENT_NIS, JSON.stringify(list)); } catch (e) {}
+      renderRecentNis();
+    }
+
+    function renderRecentNis() {
+      var list = bacaRecentNis();
+      var wrap = document.getElementById("recentNisWrap");
+      var box = document.getElementById("recentNisList");
+      if (!wrap || !box) return;
+      if (list.length === 0) {
+        wrap.style.display = "none";
+        box.innerHTML = "";
+        return;
+      }
+      wrap.style.display = "block";
+      box.innerHTML = list.map(function(item) {
+        return '<div class="recent-nis-item" onclick="pilihRecentNis(\'' + escapeHTML(item.nis) + '\')">' +
+          '<div class="recent-nis-left">' +
+            '<div class="recent-ava">' + escapeHTML(getInisialNama(item.nama)) + '</div>' +
+            '<div class="recent-nis-info">' +
+              '<div class="recent-nis-name">' + escapeHTML(item.nama) + '</div>' +
+              '<div class="recent-nis-meta">NIS ' + escapeHTML(item.nis) + ' &bull; ' + escapeHTML(item.kelas) + '</div>' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="recent-nis-del" title="Hapus pintasan" onclick="hapusRecentNis(\'' + escapeHTML(item.nis) + '\', event)"><i class="fa-solid fa-xmark"></i></button>' +
+        '</div>';
+      }).join("");
+    }
+
+    function pilihRecentNis(nis) {
+      document.getElementById("inputNis").value = nis;
+      muatDataSantri(nis);
+    }
 
     // ============================================================
     // INISIALISASI PWA, DETEKSI BROWSER WA & INFO BERANDA
@@ -1212,7 +1691,7 @@
             document.getElementById("lastUpdatePill").style.display = "inline-flex";
           }
 
-          // Banner Status Kegiatan (Jeda / Libur)
+          // Banner Status Kegiatan (Jeda = Biru | Libur = Amber Emas)
           var sk = res.statusKegiatan || { mode: "AKTIF", keterangan: "" };
           var khCard = document.getElementById("kegiatanHomeCard");
           khCard.classList.remove("is-libur");
@@ -1250,6 +1729,11 @@
     window.addEventListener("DOMContentLoaded", function() {
       try { localStorage.removeItem("ma09_wali_saved_nis"); } catch (e) {}
 
+      try {
+        var savedFont = parseInt(localStorage.getItem(STORAGE_FONT_LVL) || "0", 10);
+        if (!isNaN(savedFont)) terapkanUkuranTeks(savedFont);
+      } catch (e) {}
+
       if (isStandaloneApp()) {
         var card = document.getElementById("btnInstallCard");
         if (card) card.style.display = "none";
@@ -1257,7 +1741,23 @@
         document.getElementById("wa-browser-notice").style.display = "block";
       }
 
+      renderRecentNis();
+      sinkronSemuaLabelToggle();
       muatInfoBeranda();
+
+      // Dukungan tautan langsung (?nis=13410)
+      try {
+        var params = new URLSearchParams(window.location.search);
+        var autoNis = (params.get("nis") || "").trim();
+        if (autoNis) {
+          document.getElementById("inputNis").value = autoNis;
+          muatDataSantri(autoNis);
+        }
+      } catch (e) {}
+    });
+
+    window.addEventListener("resize", function() {
+      sinkronSemuaLabelToggle();
     });
 
     function pasangAplikasiDiHp() {
@@ -1316,7 +1816,7 @@
     }
 
     // ============================================================
-    // HELPER UMUM, FORMAT REKAP & FOTO
+    // HELPER UMUM, FORMAT REKAP, FOTO CEPAT & PERBESAR FOTO
     // ============================================================
     function apiGet(params) {
       var q = new URLSearchParams(params).toString();
@@ -1369,12 +1869,21 @@
       document.getElementById("loading-overlay").style.display = "none";
     }
 
+    function ekstrakDriveId(url) {
+      if (url.indexOf("drive.google.com") === -1 && url.indexOf("docs.google.com") === -1 && url.indexOf("lh3.googleusercontent.com") === -1) return "";
+      var m1 = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/);
+      if (m1 && m1[1]) return m1[1];
+      var m2 = url.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+      return (m2 && m2[1]) ? m2[1] : "";
+    }
+
     function muatFoto(urlRaw) {
       var token = ++activePhotoToken;
       var imgMain = document.getElementById("fotoSantri");
       var imgMini = document.getElementById("topAvatar");
       var loader = document.getElementById("fotoLoader");
 
+      currentPhotoFinalUrl = "";
       imgMain.onload = null; imgMain.onerror = null;
       imgMain.style.opacity = "0";
       loader.style.display = "flex";
@@ -1388,41 +1897,225 @@
         return;
       }
 
-      var daftar = [url];
-      if (url.indexOf("i.ibb.co.com/") !== -1) {
+      var daftar = [];
+      function addUnik(v) { if (v && daftar.indexOf(v) === -1) daftar.push(v); }
+
+      var did = ekstrakDriveId(url);
+      if (did) {
+        var lh3 = "https://lh3.googleusercontent.com/d/" + did + "=w480";
+        addUnik("https://wsrv.nl/?url=" + encodeURIComponent(lh3) + "&w=360&output=webp&q=82");
+        addUnik(lh3);
+        addUnik("https://drive.google.com/thumbnail?id=" + did + "&sz=w600");
+      } else if (url.indexOf("i.ibb.co.com/") !== -1 || url.indexOf("i.ibb.co/") !== -1) {
         var std = url.replace("i.ibb.co.com/", "i.ibb.co/");
-        daftar.push(std);
-        daftar.push("https://wsrv.nl/?url=" + encodeURIComponent(url) + "&w=400&output=jpg");
-        daftar.push("https://wsrv.nl/?url=" + encodeURIComponent(std) + "&w=400&output=jpg");
-      } else if (url.indexOf("i.ibb.co/") !== -1) {
-        daftar.push("https://wsrv.nl/?url=" + encodeURIComponent(url) + "&w=400&output=jpg");
-      } else if (url.indexOf("drive.google.com/thumbnail?id=") !== -1) {
-        var m = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-        if (m && m[1]) daftar.push("https://lh3.googleusercontent.com/d/" + m[1] + "=w600");
+        addUnik("https://wsrv.nl/?url=" + encodeURIComponent(std) + "&w=360&output=webp&q=82");
+        addUnik("https://wsrv.nl/?url=" + encodeURIComponent(std) + "&w=360&output=jpg&q=82");
+        addUnik(std);
+        addUnik(url);
+      } else {
+        addUnik("https://wsrv.nl/?url=" + encodeURIComponent(url) + "&w=360&output=webp&q=82");
+        addUnik(url);
       }
 
       var idx = 0;
-      function selesai(finalSrc) {
+      function selesai(finalSrc, isValid) {
         if (token !== activePhotoToken) return;
         loader.style.display = "none";
         imgMain.style.opacity = "1";
         imgMini.src = finalSrc;
+        currentPhotoFinalUrl = isValid ? finalSrc : "";
       }
       function cobaBerikutnya() {
         if (token !== activePhotoToken) return;
         if (idx >= daftar.length) {
           imgMain.onload = null; imgMain.onerror = null;
           imgMain.src = DEFAULT_AVATAR;
-          selesai(DEFAULT_AVATAR);
+          selesai(DEFAULT_AVATAR, false);
           return;
         }
         var target = daftar[idx++];
-        imgMain.onload = function() { selesai(target); };
+        imgMain.onload = function() { selesai(target, true); };
         imgMain.onerror = function() { cobaBerikutnya(); };
         imgMain.src = target;
-        if (imgMain.complete && imgMain.naturalWidth > 1) selesai(target);
+        if (imgMain.complete && imgMain.naturalWidth > 1) selesai(target, true);
       }
       cobaBerikutnya();
+    }
+
+    function perbesarFotoSantri() {
+      if (!currentPhotoFinalUrl) return;
+      Swal.fire({
+        title: currentSantriNama || "Foto Santri",
+        imageUrl: currentPhotoFinalUrl,
+        imageAlt: currentSantriNama || "Foto Santri",
+        imageWidth: 280,
+        confirmButtonColor: '#065f46',
+        confirmButtonText: 'Tutup'
+      });
+    }
+
+    // ============================================================
+    // TOGGLE MODE KARTU <-> TABEL & RENDER KARTU RIWAYAT (HP-FRIENDLY)
+    // ============================================================
+    function isBoxShowingTable(wrapEl) {
+      if (!wrapEl) return false;
+      if (wrapEl.classList.contains("force-table")) return true;
+      if (wrapEl.classList.contains("force-card")) return false;
+      return window.innerWidth >= 768;
+    }
+
+    function sinkronLabelTombol(wrapId, btnId) {
+      var wrap = document.getElementById(wrapId);
+      var btn = document.getElementById(btnId);
+      if (!wrap || !btn) return;
+      if (isBoxShowingTable(wrap)) {
+        btn.innerHTML = '<i class="fa-solid fa-layer-group"></i> Lihat Kartu';
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-table"></i> Lihat Tabel';
+      }
+    }
+
+    function sinkronSemuaLabelToggle() {
+      sinkronLabelTombol("secRiilWrap", "btnToggleRiil");
+      sinkronLabelTombol("secRekapWrap", "btnToggleRekap");
+      sinkronLabelTombol("secPlgWrap", "btnTogglePlg");
+    }
+
+    function toggleModeRiwayat(wrapId, btnId) {
+      var wrap = document.getElementById(wrapId);
+      if (!wrap) return;
+      var currentlyTable = isBoxShowingTable(wrap);
+      wrap.classList.remove("force-table", "force-card");
+      wrap.classList.add(currentlyTable ? "force-card" : "force-table");
+      sinkronLabelTombol(wrapId, btnId);
+    }
+
+    function ekstrakBarisHtml(htmlRows) {
+      if (!htmlRows || !String(htmlRows).trim()) return [];
+      var tbl = document.createElement("table");
+      var tb = document.createElement("tbody");
+      tb.innerHTML = htmlRows;
+      tbl.appendChild(tb);
+      var hasil = [], trs = tb.querySelectorAll("tr");
+      for (var i = 0; i < trs.length; i++) {
+        var cells = [], tds = trs[i].querySelectorAll("td");
+        for (var j = 0; j < tds.length; j++) cells.push((tds[j].textContent || "").trim());
+        if (cells.length > 0) hasil.push(cells);
+      }
+      return hasil;
+    }
+
+    function renderKartuRiil() {
+      var box = document.getElementById("cardsHafalan");
+      if (!box) return;
+      if (dataKartuRiil.length === 0) {
+        var isKh = currentHafalanStats && currentHafalanStats.isKhatam;
+        box.innerHTML = '<div style="text-align:center; padding:1.1rem; color:' + (isKh ? '#047857' : '#64748b') + '; font-weight:700; font-size:0.86rem;">' +
+          (isKh ? 'Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.' : 'Belum ada riwayat hafalan riil yang tercatat.') + '</div>';
+        return;
+      }
+      var limit = expandState.riil ? dataKartuRiil.length : 6;
+      var slice = dataKartuRiil.slice(0, limit);
+      var html = slice.map(function(c) {
+        var kLow = String(c[5] || "").toLowerCase();
+        var pillCls = kLow.indexOf("kurang") !== -1 ? "hc-pill warn" : "hc-pill";
+        return '<div class="history-card">' +
+          '<div class="hc-top">' +
+            '<span class="hc-title">' + escapeHTML(c[0]) + ' &bull; Juz ' + escapeHTML(c[1]) + ' Hal. ' + escapeHTML(c[3]) + '</span>' +
+            '<span class="' + pillCls + '">' + escapeHTML(c[5] || "-") + '</span>' +
+          '</div>' +
+          '<div class="hc-grid">' +
+            '<div>Surat: <b>' + escapeHTML(c[2] || "-") + '</b></div>' +
+            '<div>Ayat: <b>' + escapeHTML(c[4] || "-") + '</b></div>' +
+          '</div>' +
+          (c[6] && c[6] !== "-" ? ('<div class="hc-note"><i class="fa-solid fa-comment-dots" style="color:#0d9488;"></i> ' + escapeHTML(c[6]) + '</div>') : '') +
+        '</div>';
+      }).join("");
+
+      if (dataKartuRiil.length > 6) {
+        html += '<button type="button" class="btn-expand-cards" onclick="toggleExpandKartu(\'riil\')">' +
+          (expandState.riil
+            ? '<i class="fa-solid fa-chevron-up"></i> Ringkas Riwayat'
+            : '<i class="fa-solid fa-chevron-down"></i> Tampilkan Semua (' + dataKartuRiil.length + ' Catatan)') +
+          '</button>';
+      }
+      box.innerHTML = html;
+    }
+
+    function renderKartuRekap() {
+      var box = document.getElementById("cardsRekapSetoran");
+      if (!box) return;
+      if (dataKartuRekap.length === 0) {
+        box.innerHTML = '<div style="text-align:center; padding:1.1rem; color:#64748b; font-weight:600; font-size:0.86rem;">Belum ada riwayat rekapan setoran mingguan yang tercatat.</div>';
+        return;
+      }
+      var limit = expandState.rekap ? dataKartuRekap.length : 6;
+      var slice = dataKartuRekap.slice(0, limit);
+      var html = slice.map(function(r) {
+        var pill = "";
+        if (r.statusTarget === "memenuhi") pill = '<span class="hc-pill">Memenuhi (Min. ' + escapeHTML(r.targetMinimal) + 'x)</span>';
+        else if (r.statusTarget === "kurang") pill = '<span class="hc-pill warn">Belum Memenuhi (Min. ' + escapeHTML(r.targetMinimal) + 'x)</span>';
+        else if (r.statusTarget === "pendek") pill = '<span class="hc-pill info">Pekan Pendek (' + escapeHTML(r.hariEfektif) + ' Hari)</span>';
+
+        return '<div class="history-card is-rekap">' +
+          '<div class="hc-top">' +
+            '<span class="hc-title">' + escapeHTML(r.periode || "-") + '</span>' + pill +
+          '</div>' +
+          '<div class="hc-grid">' +
+            '<div>Tambahan: <b>' + escapeHTML(formatRekapTambahan(r.tambahan)) + '</b></div>' +
+            '<div>Murojaah: <b>' + escapeHTML(formatRekapMurojaah(r.murojaah)) + '</b></div>' +
+            '<div>Keaktifan: <b>' + escapeHTML(formatRekapKeaktifan(r.keaktifan)) + '</b></div>' +
+            '<div>Hal. Terakhir: <b>' + escapeHTML(r.halamanTerakhir || "-") + '</b></div>' +
+          '</div>' +
+          (r.keterangan ? ('<div class="hc-note"><i class="fa-solid fa-note-sticky" style="color:#d97706;"></i> <b>Keterangan:</b> ' + escapeHTML(r.keterangan) + '</div>') : '') +
+        '</div>';
+      }).join("");
+
+      if (dataKartuRekap.length > 6) {
+        html += '<button type="button" class="btn-expand-cards" onclick="toggleExpandKartu(\'rekap\')">' +
+          (expandState.rekap
+            ? '<i class="fa-solid fa-chevron-up"></i> Ringkas Riwayat'
+            : '<i class="fa-solid fa-chevron-down"></i> Tampilkan Semua (' + dataKartuRekap.length + ' Pekan)') +
+          '</button>';
+      }
+      box.innerHTML = html;
+    }
+
+    function renderKartuPelanggaran() {
+      var box = document.getElementById("cardsPelanggaran");
+      if (!box) return;
+      if (dataKartuPlg.length === 0) {
+        box.innerHTML = '<div style="text-align:center; padding:1.2rem; border-radius:14px; background:#f0fdf4; border:1px solid #86efac; color:#065f46; font-weight:800; font-size:0.88rem;"><i class="fa-solid fa-circle-check"></i> Alhamdulillah, tidak ada catatan pelanggaran.</div>';
+        return;
+      }
+      var limit = expandState.plg ? dataKartuPlg.length : 6;
+      var slice = dataKartuPlg.slice(0, limit);
+      var html = slice.map(function(c) {
+        return '<div class="history-card is-plg">' +
+          '<div class="hc-top">' +
+            '<span class="hc-title">' + escapeHTML(c[0]) + '</span>' +
+            '<span class="hc-pill warn">' + escapeHTML(c[1]) + '</span>' +
+          '</div>' +
+          '<div style="font-size:0.86rem; font-weight:700; color:#0f172a;">' + escapeHTML(c[5]) + '</div>' +
+          '<div class="hc-note"><i class="fa-solid fa-gavel" style="color:#be123c;"></i> <b>Takzir / Pembinaan:</b> ' + escapeHTML(c[6]) + '</div>' +
+        '</div>';
+      }).join("");
+
+      if (dataKartuPlg.length > 6) {
+        html += '<button type="button" class="btn-expand-cards" onclick="toggleExpandKartu(\'plg\')">' +
+          (expandState.plg
+            ? '<i class="fa-solid fa-chevron-up"></i> Ringkas Riwayat'
+            : '<i class="fa-solid fa-chevron-down"></i> Tampilkan Semua (' + dataKartuPlg.length + ' Catatan)') +
+          '</button>';
+      }
+      box.innerHTML = html;
+    }
+
+    function toggleExpandKartu(jenis) {
+      expandState[jenis] = !expandState[jenis];
+      if (jenis === "riil") renderKartuRiil();
+      else if (jenis === "rekap") renderKartuRekap();
+      else if (jenis === "plg") renderKartuPelanggaran();
     }
 
     // ============================================================
@@ -1448,7 +2141,7 @@
       Swal.fire({
         icon: 'question',
         title: 'Keluar dari Data Santri?',
-        text: 'Anda akan kembali ke Halaman Depan dan perlu mengetik NIS lagi untuk membuka data ananda.',
+        text: 'Anda akan kembali ke Halaman Depan (pintasan NIS tetap tersimpan agar mudah dibuka lagi).',
         showCancelButton: true,
         confirmButtonColor: '#dc2626',
         cancelButtonColor: '#64748b',
@@ -1463,7 +2156,10 @@
       activeRequestId++;
       activePhotoToken++;
       nisAktif = "";
+      currentSantriNama = "";
+      currentPhotoFinalUrl = "";
       currentHafalanStats = null;
+      dataKartuRiil = []; dataKartuRekap = []; dataKartuPlg = [];
 
       if (chartInstance) {
         chartInstance.destroy();
@@ -1473,6 +2169,9 @@
       document.getElementById("resHafalan").innerHTML = "";
       document.getElementById("resRekapSetoran").innerHTML = "";
       document.getElementById("resPelanggaran").innerHTML = "";
+      document.getElementById("cardsHafalan").innerHTML = "";
+      document.getElementById("cardsRekapSetoran").innerHTML = "";
+      document.getElementById("cardsPelanggaran").innerHTML = "";
       document.getElementById("topNama").innerText = "-";
       document.getElementById("topMeta").innerText = "NIS - • Kamar MA 09";
       document.getElementById("inputNis").value = "";
@@ -1481,6 +2180,7 @@
       document.getElementById("app-screen").style.display = "none";
       document.getElementById("public-standalone-screen").style.display = "none";
       document.getElementById("home-screen").style.display = "block";
+      renderRecentNis();
       muatInfoBeranda();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -1514,6 +2214,8 @@
           }
 
           nisAktif = res.bio.nis || nis;
+          currentSantriNama = res.bio.nama || "";
+          simpanRecentNis(res.bio);
           isiSemuaDataSantri(res);
 
           document.getElementById("home-screen").style.display = "none";
@@ -1521,6 +2223,7 @@
           document.getElementById("app-screen").style.display = "block";
           document.body.classList.add("app-mode");
 
+          sinkronSemuaLabelToggle();
           pindahTab("hafalan");
           window.scrollTo({ top: 0, behavior: 'smooth' });
         })
@@ -1535,13 +2238,34 @@
       var bio = res.bio || {};
       var ortu = res.ortu || {};
       var st = res.hafalanStats || {};
-      var rk = res.rekapSetoran || { sudahDirekap: false, statusLabel: "Minggu Ini Belum Direkap", riwayatHTML: "" };
+      var rk = res.rekapSetoran || { sudahDirekap: false, statusLabel: "Minggu Ini Belum Direkap", riwayatHTML: "", riwayat: [] };
       var sk = res.statusKegiatan || { mode: "AKTIF", keterangan: "" };
+      expandState = { riil: false, rekap: false, plg: false };
 
-      // Topbar
+      // Topbar & Tombol WA Pembina
       document.getElementById("topNama").innerText = bio.nama || "-";
       document.getElementById("topMeta").innerText = "NIS " + (bio.nis || "-") + " • " + (bio.kelas || "Kamar MA 09");
       muatFoto(bio.foto);
+
+      var pesanPembina = "Assalamu'alaikum Ustadz Pembina Kamar Maqomin Amin 09, saya wali santri dari " + (bio.nama || "") + " (NIS " + (bio.nis || "") + "). Izin bertanya terkait perkembangan ananda.";
+      document.getElementById("btnWaPembinaApp").href = "https://wa.me/" + WA_PEMBINA + "?text=" + encodeURIComponent(pesanPembina);
+
+      // Pesan Motivasi Halus v4.0 (Non-Libur)
+      var boxMot = document.getElementById("motivasiHalusCard");
+      if (sk.mode !== "LIBUR" && (rk.kurangBeruntun || st.stagnanBeruntun)) {
+        var teksMot = "";
+        if (rk.kurangBeruntun && st.stagnanBeruntun) {
+          teksMot = "Dalam beberapa pekan terakhir, keaktifan setoran dan tambahan hafalan riil ananda sempat menurun. Mohon dukungan doa serta sapaan penyemangat dari Bapak/Ibu pada jadwal telepon hari Jum'at agar ananda kembali bersemangat.";
+        } else if (rk.kurangBeruntun) {
+          teksMot = "Dalam " + rk.jumlahKurangBeruntun + " pekan terakhir, keaktifan setoran ananda belum mencapai target minimal kamar. Mohon dukungan doa serta motivasi hangat dari Bapak/Ibu pada jadwal telepon hari Jum'at.";
+        } else {
+          teksMot = "Dalam " + st.jumlahStagnanBeruntun + " pekan terakhir, posisi hafalan riil ananda belum mengalami penambahan halaman. Mohon doa dan semangat dari Bapak/Ibu agar ananda semakin lancar dan istiqamah.";
+        }
+        document.getElementById("motivasiHalusTeks").innerText = teksMot;
+        boxMot.style.display = "flex";
+      } else {
+        boxMot.style.display = "none";
+      }
 
       // Tab Biodata
       document.getElementById("resNis").innerText = bio.nis || "-";
@@ -1566,7 +2290,7 @@
       document.getElementById("resHpIbu").innerText = ortu.hpIbu || "-";
 
       // ============================================================
-      // BLOK A: HAFALAN RIIL (STANDAR 604 HALAMAN)
+      // BLOK A: HAFALAN RIIL (STANDAR 604 HALAMAN) + KONSISTENSI v4.0
       // ============================================================
       currentHafalanStats = st;
       var heroCard = document.getElementById("kartuHeroHafalan");
@@ -1624,10 +2348,30 @@
         bmStrip.style.display = "none";
       }
 
+      // Isi Strip Konsistensi v4.0
+      document.getElementById("konTumbuhVal").innerText = st.isKhatam ? "Khatam 30 Juz" : ("+" + (st.totalPertumbuhanHalaman || 0) + " Halaman");
+      document.getElementById("konTumbuhSub").innerText = (st.posisiAwalRiil && st.posisiAwalRiil !== "-")
+        ? ("Sejak " + st.posisiAwalRiil + " (" + (st.tanggalAwalRiil || "-") + ")")
+        : ("Rata-rata: " + (st.rataRataPribadi || 0) + " hal/pekan");
+
+      if (rk.persenMemenuhiTarget !== null && rk.persenMemenuhiTarget !== undefined) {
+        document.getElementById("konTargetVal").innerText = rk.persenMemenuhiTarget + "% Memenuhi Target";
+        document.getElementById("konTargetSub").innerText = (rk.jumlahMemenuhiTarget || 0) + " dari " + (rk.jumlahDinilaiTarget || 0) + " pekan dinilai";
+      } else {
+        document.getElementById("konTargetVal").innerText = "Belum Dinilai";
+        document.getElementById("konTargetSub").innerText = "Menunggu rekap pekan efektif";
+      }
+
+      document.getElementById("konAktifVal").innerText = (rk.rataRataKeaktifan || 0) + "x / Pekan";
+      document.getElementById("konAktifSub").innerText = (rk.totalPekanRekap || 0) + " pekan rekapan tercatat";
+
+      // Tabel & Kartu Riwayat Hafalan Riil (Kartu HP terbaru di atas)
       var emptyHaf = st.isKhatam
         ? "<tr><td colspan='7' style='padding:1.4rem; font-weight:700; color:#047857;'>Alhamdulillah, ananda telah khatam 30 Juz dan kini fokus pada murojaah.</td></tr>"
         : "<tr><td colspan='7' style='padding:1.4rem; font-weight:600; color:#64748b;'>Belum ada riwayat hafalan riil yang tercatat.</td></tr>";
       document.getElementById("resHafalan").innerHTML = res.hafalanHTML || emptyHaf;
+      dataKartuRiil = ekstrakBarisHtml(res.hafalanHTML).reverse();
+      renderKartuRiil();
 
       // ============================================================
       // BLOK B: REKAPAN SETORAN MINGGUAN (+ TARGET KEAKTIFAN + JEDA/LIBUR)
@@ -1718,25 +2462,27 @@
 
       var emptyRekap = "<tr><td colspan='7' style='padding:1.35rem; font-weight:600; color:#64748b;'>Belum ada riwayat rekapan setoran mingguan yang tercatat.</td></tr>";
       document.getElementById("resRekapSetoran").innerHTML = rk.riwayatHTML || emptyRekap;
+      dataKartuRekap = Array.isArray(rk.riwayat) ? rk.riwayat : [];
+      renderKartuRekap();
 
-      // Tab Pelanggaran
+      // Tab Pelanggaran (Ringkasan + Tabel + Kartu HP)
       var tbodyPlg = document.getElementById("resPelanggaran");
-      if (res.pelanggaranHTML) {
+      var rowsPlgArr = ekstrakBarisHtml(res.pelanggaranHTML);
+      if (rowsPlgArr.length > 0) {
         tbodyPlg.innerHTML = res.pelanggaranHTML;
-        var rows = tbodyPlg.querySelectorAll("tr");
-        var lastCells = rows.length > 0 ? rows[rows.length - 1].querySelectorAll("td") : [];
-        var cK = lastCells[2] ? parseInt(lastCells[2].innerText, 10) || 0 : 0;
-        var cKp = lastCells[3] ? parseInt(lastCells[3].innerText, 10) || 0 : 0;
-        var cP = lastCells[4] ? parseInt(lastCells[4].innerText, 10) || 0 : 0;
-        setKartuPlg("cardPlgKamar", "cntPlgKamar", cK);
-        setKartuPlg("cardPlgKomplek", "cntPlgKomplek", cKp);
-        setKartuPlg("cardPlgPondok", "cntPlgPondok", cP);
+        var lastCells = rowsPlgArr[rowsPlgArr.length - 1];
+        setKartuPlg("cardPlgKamar", "cntPlgKamar", parseInt(lastCells[2], 10) || 0);
+        setKartuPlg("cardPlgKomplek", "cntPlgKomplek", parseInt(lastCells[3], 10) || 0);
+        setKartuPlg("cardPlgPondok", "cntPlgPondok", parseInt(lastCells[4], 10) || 0);
+        dataKartuPlg = rowsPlgArr.slice().reverse();
       } else {
         tbodyPlg.innerHTML = "<tr><td colspan='7' style='padding:1.4rem; font-weight:700; color:#059669;'>Alhamdulillah, tidak ada catatan pelanggaran.</td></tr>";
         setKartuPlg("cardPlgKamar", "cntPlgKamar", 0);
         setKartuPlg("cardPlgKomplek", "cntPlgKomplek", 0);
         setKartuPlg("cardPlgPondok", "cntPlgPondok", 0);
+        dataKartuPlg = [];
       }
+      renderKartuPelanggaran();
     }
 
     function setKartuPlg(cardId, valId, angka) {
@@ -1836,7 +2582,7 @@
               callbacks: {
                 title: function(items) {
                   var i = items[0].dataIndex;
-                  return stats.chartTooltips[i] || ("Tgl " + items[0].label);
+                  return (stats.chartTooltips && stats.chartTooltips[i]) ? stats.chartTooltips[i] : ("Tgl " + items[0].label);
                 },
                 label: function(item) {
                   if (item.datasetIndex === 1) return " Rata-rata Kamar: " + item.raw + " hal/pekan";
@@ -1878,7 +2624,7 @@
     }
 
     // ============================================================
-    // LAYAR PUBLIK (KHUSUS KEUANGAN & INVENTARIS)
+    // LAYAR PUBLIK (KHUSUS KEUANGAN & INVENTARIS + PENCARIAN INVENTARIS)
     // ============================================================
     function bukaPublik(jenis) {
       document.getElementById("home-screen").style.display = "none";
@@ -1998,8 +2744,10 @@
     }
 
     function muatInventaris() {
+      var inp = document.getElementById("cariInventaris");
+      if (inp) inp.value = "";
       if (cacheInventaris) {
-        renderInventaris(cacheInventaris);
+        renderInventaris(cacheInventaris, "");
         return;
       }
       var myReq = ++activeRequestId;
@@ -2013,7 +2761,7 @@
             return;
           }
           cacheInventaris = res;
-          renderInventaris(res);
+          renderInventaris(res, "");
         })
         .catch(function() {
           if (myReq !== activeRequestId) return;
@@ -2021,7 +2769,12 @@
         });
     }
 
-    function renderInventaris(res) {
+    function filterInventaris() {
+      var q = String(document.getElementById("cariInventaris").value || "").toLowerCase().trim();
+      renderInventaris(cacheInventaris, q);
+    }
+
+    function renderInventaris(res, keyword) {
       var data = (res && Array.isArray(res.data)) ? res.data : [];
       if (data.length === 0) {
         document.getElementById("headInventaris").innerHTML = "";
@@ -2033,12 +2786,19 @@
       h += "</tr>";
       document.getElementById("headInventaris").innerHTML = h;
 
+      var q = String(keyword || "").toLowerCase().trim();
       var b = "";
+      var ketemu = 0;
       for (var r = 1; r < data.length; r++) {
         if (!data[r]) continue;
+        if (q && data[r].join(" ").toLowerCase().indexOf(q) === -1) continue;
+        ketemu++;
         b += "<tr>";
         for (var k = 0; k < data[r].length; k++) b += "<td>" + formatCellWithBr(data[r][k] || "") + "</td>";
         b += "</tr>";
+      }
+      if (ketemu === 0) {
+        b = "<tr><td colspan='" + data[0].length + "' style='color:#64748b; font-weight:600; padding:1.2rem;'>Barang tidak ditemukan.</td></tr>";
       }
       document.getElementById("resInventaris").innerHTML = b;
     }
